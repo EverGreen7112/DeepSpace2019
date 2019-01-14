@@ -1,0 +1,16 @@
+•	Gripper:
+    o	2 motors, inverted directions
+    o	One limit
+•	Climbing:
+    o	1 motor
+    o	2 limits
+•	Climbing movement:
+    o	1 motor
+    o	No limit (will stop using encoder)
+•	Climbing front + elevator
+    o	2 motors, same direction
+    o	1 limit
+•	Chassis - V
+    o	4 motors (2 each side)
+    o	No limit 
+
