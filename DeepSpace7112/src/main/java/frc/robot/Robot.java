@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.TwoLimits;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 
@@ -26,13 +28,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
   public static OI oi;
   public static TankDrivetrain drivetrain;
+  public static BasicSubsystem shaft;
   SendableChooser<Command> chooser = new SendableChooser<>();
 
   @Override
   public void robotInit() {
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    
+    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.shaftMotor::set, new TwoLimits(SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
   }
 
   @Override

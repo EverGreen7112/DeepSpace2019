@@ -7,8 +7,13 @@
 
 package frc.robot;
 
+import java.util.function.Supplier;
+
+import com.spikes2212.dashboard.ConstantHandler;
+
 /**
  * Add your docs here.
  */
 public class SubsystemConstants {
+    public static final Supplier<Double> shaftMotorSpeedModifier = ConstantHandler.addConstantDouble("Shaft Motor Speed Modifier", 0.9);
 }

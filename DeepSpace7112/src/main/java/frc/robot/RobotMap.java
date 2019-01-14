@@ -22,5 +22,9 @@ public class RobotMap {
               chassisTalonFR = 3,
               chassisTalonBR = 4; //all temp
 
+  //----------ClimbingShaft----------
+public static final int shaftTalon = 5; //temp
+public static final int shaftTopLimiter = 0; //temp
+public static int shaftBottomLimiter = 1; //temp
 
 }
