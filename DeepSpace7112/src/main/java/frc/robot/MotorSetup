@@ -1,16 +1,16 @@
-•	Gripper:
+•	Gripper: - Adi
     o	2 motors, inverted directions
     o	One limit
-•	Climbing:
+•	Climbing: - Idan
     o	1 motor
     o	2 limits
-•	Climbing movement:
+•	Climbing movement: - Tom
     o	1 motor
     o	No limit (will stop using encoder)
-•	Climbing front + elevator
+•	Climbing front + elevator - Atai
     o	2 motors, same direction
     o	1 limit
-•	Chassis - V
+•	Chassis - Idan - complete
     o	4 motors (2 each side)
     o	No limit 
 
