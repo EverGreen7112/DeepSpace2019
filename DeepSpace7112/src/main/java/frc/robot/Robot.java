@@ -14,6 +14,7 @@ import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.SubsystemComponents.Gripper;
@@ -40,6 +41,7 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static TankDrivetrain drivetrain;
   public static BasicSubsystem gripper;
+  public static BasicSubsystem test;
   public DashBoardController dbc;
   SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -47,7 +49,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    gripper = new BasicSubsystem(SubsystemComponents.Gripper.gripperMotor::set, SubsystemComponents.Gripper.gripperMicroswitch::get);
+    gripper = new BasicSubsystem(SubsystemComponents.Gripper.gripperMotor::set, new TwoLimits(SubsystemComponents.Gripper.gripperMicroswitch::get, () -> false));
     dbc = new DashBoardController();
     oi = new OI();
         
