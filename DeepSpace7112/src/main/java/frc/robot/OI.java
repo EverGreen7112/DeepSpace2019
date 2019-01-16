@@ -10,6 +10,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
+
+import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
@@ -24,7 +26,12 @@ public class OI {
   //----------Joysticks----------
   private Joystick drivingJSLeft;
   private Joystick drivingJSRight;
+  private Joystick buttonJoystick;
 
+    //----------Buttons----------
+  private Button rollIn;
+  private Button rollOut;
+  
   	// receives input, returns the adjusted input for better sensitivity
 		private double adjustInput(double input){
 			return input * Math.abs(input);
@@ -39,16 +46,13 @@ public class OI {
 		}
 	
 	
-		private Joystick joystick = new Joystick(0);
 	
 		public OI() {
-			JoystickButton rollIn = new JoystickButton(joystick, 2);
-			JoystickButton stopgripper = new JoystickButton(joystick, 4);
-			JoystickButton rollOut = new JoystickButton(joystick, 3);	
+			rollIn = new JoystickButton(buttonJoystick, 2);
+			rollOut = new JoystickButton(buttonJoystick, 4);	
 
 		    rollIn.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperInSpeed));
 		    rollOut.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperOutSpeed));
-		    stopgripper.whenPressed(new MoveBasicSubsystem(Robot.gripper, 0));
 		
 		
 		}	
