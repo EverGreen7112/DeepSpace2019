@@ -26,6 +26,7 @@ import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsyst
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.TwoLimits;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -47,9 +48,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
-    drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    gripper = new BasicSubsystem(SubsystemComponents.Gripper.gripperMotor::set, new TwoLimits(SubsystemComponents.Gripper.gripperMicroswitch::get, () -> false));
+    //drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
+    //drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
+    SubsystemComponents.Gripper.gripperMotorLeft.setInverted(true);
+    SpeedControllerGroup gripperMotors =  new SpeedControllerGroup(SubsystemComponents.Gripper.gripperMotorLeft, SubsystemComponents.Gripper.gripperMotorRight);
+    gripper = new BasicSubsystem(gripperMotors::set, new TwoLimits(SubsystemComponents.Gripper.gripperMicroswitch::get, () -> false));
     dbc = new DashBoardController();
     oi = new OI();
         
