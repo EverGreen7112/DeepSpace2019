@@ -7,7 +7,11 @@
 
 package frc.robot;
 
+
 import edu.wpi.first.wpilibj.Joystick;
+import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -33,6 +37,17 @@ public class OI {
 		public double getRightJoystick() {
 			return adjustInput(drivingJSRight.getY());
 		}
-
+	
+	public class JS {
+			private Joystick joystick = new Joystick(0);
+	
+		public JS() {
+			JoystickButton rollIn = new JoystickButton(joystick, 2);
+			JoystickButton stopRoller = new JoystickButton(joystick, 4);
+			JoystickButton rollOut = new JoystickButton(joystick, 3);	
+		
+		
+		}	
+	}
 
 }

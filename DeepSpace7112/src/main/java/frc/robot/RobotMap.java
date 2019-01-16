@@ -23,4 +23,7 @@ public class RobotMap {
               chassisTalonBR = 4; //all temp
 
 
+  //----------Gripper----------
+    public static final int gripperMotor = 5; //temp
+    public static final int gripperMicroswitch = 1; //temp
 }
