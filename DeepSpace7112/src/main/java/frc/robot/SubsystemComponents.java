@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.VictorSP;
 
 
 /**
@@ -24,8 +25,10 @@ public class SubsystemComponents {
             public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.chassisTalonBR), new WPI_TalonSRX(RobotMap.chassisTalonFR));
     }
     public static class Gripper {
-                public static final SpeedController gripperMotor = new WPI_TalonSRX(RobotMap.gripperMotor);
-                public static final DigitalInput gripperMicroswitch = new DigitalInput(RobotMap.gripperMicroswitch);
+            public static final SpeedController gripperMotorLeft = new VictorSP(RobotMap.gripperMotorLeft);
+            public static final SpeedController gripperMotorRight = new WPI_TalonSRX(RobotMap.gripperMotorRight);
+            //public static final SpeedControllerGroup gripperMotors = new SpeedControllerGroup(new VictorSP(RobotMap.gripperMotorLeft), new WPI_TalonSRX(RobotMap.gripperMotorRight));
+            public static final DigitalInput gripperMicroswitch = new DigitalInput(RobotMap.gripperMicroswitch);
 	}
     
         

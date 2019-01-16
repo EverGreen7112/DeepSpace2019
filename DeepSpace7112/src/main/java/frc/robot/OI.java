@@ -31,7 +31,7 @@ public class OI {
     //----------Buttons----------
   private Button rollIn;
   private Button rollOut;
-  
+
   	// receives input, returns the adjusted input for better sensitivity
 		private double adjustInput(double input){
 			return input * Math.abs(input);
@@ -48,6 +48,7 @@ public class OI {
 	
 	
 		public OI() {
+			buttonJoystick = new Joystick(2);
 			rollIn = new JoystickButton(buttonJoystick, 2);
 			rollOut = new JoystickButton(buttonJoystick, 4);	
 
