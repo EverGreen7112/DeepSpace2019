@@ -16,6 +16,18 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.SubsystemComponents.Gripper;
+import frc.robot.SubsystemConstants.gripper;
+
+import com.spikes2212.dashboard.DashBoardController;
+import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.TwoLimits;
+
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,17 +39,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
   public static OI oi;
   public static TankDrivetrain drivetrain;
+  public static BasicSubsystem gripper;
+  public DashBoardController dbc;
   SendableChooser<Command> chooser = new SendableChooser<>();
 
   @Override
   public void robotInit() {
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    
+    gripper = new BasicSubsystem(SubsystemComponents.Gripper.gripperMotor::set, SubsystemComponents.Gripper.gripperMicroswitch::get);
+    dbc = new DashBoardController();
+    oi = new OI();
+        
   }
 
+  private void initDashboard(){
+    SmartDashboard.putData("Roll In", new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperInSpeed));
+		SmartDashboard.putData("Roll Out", new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperOutSpeed));
+		SmartDashboard.putData("Stop gripper", new MoveBasicSubsystem(Robot.gripper, 0));
+
+  }
   @Override
   public void robotPeriodic() {
+
   }
 
   @Override
@@ -47,6 +71,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
+    
   }
 
   @Override
@@ -67,9 +92,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    dbc.update();
+
   }
 
   @Override
   public void testPeriodic() {
   }
+
+	
+ 
 }

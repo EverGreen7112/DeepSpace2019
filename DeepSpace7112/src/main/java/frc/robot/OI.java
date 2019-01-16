@@ -38,16 +38,20 @@ public class OI {
 			return adjustInput(drivingJSRight.getY());
 		}
 	
-	public class JS {
-			private Joystick joystick = new Joystick(0);
 	
-		public JS() {
+		private Joystick joystick = new Joystick(0);
+	
+		public OI() {
 			JoystickButton rollIn = new JoystickButton(joystick, 2);
-			JoystickButton stopRoller = new JoystickButton(joystick, 4);
+			JoystickButton stopgripper = new JoystickButton(joystick, 4);
 			JoystickButton rollOut = new JoystickButton(joystick, 3);	
+
+		    rollIn.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperInSpeed));
+		    rollOut.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperOutSpeed));
+		    stopgripper.whenPressed(new MoveBasicSubsystem(Robot.gripper, 0));
 		
 		
 		}	
-	}
+	
 
 }
