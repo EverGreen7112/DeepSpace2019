@@ -17,10 +17,20 @@ public class RobotMap {
   
   //----------Chassis----------
   public static final int 
-              chassisTalonFL = 1,
-              chassisTalonBL = 2,
-              chassisTalonFR = 3,
-              chassisTalonBR = 4; //all temp
+              chassisTalonFL = 1, //CAN
+              chassisTalonBL = 2, //CAN
+              chassisTalonFR = 3, //CAN
+              chassisTalonBR = 4; //CAN
+//all temp
+  //----------Elevator----------
+  public static final int 
+              elevatorTalonL = 7, //CAN
+              elevatorTalonR = 8, //CAN
+              elevatorEncoderA = 3, //DIO
+              elevatorEncoderB = 4, //DIO
+              elevatorMicroswitch = 5, //DIO 
+              elevatorHallEffect = 6; //DIO
+//temp
 
 
 }

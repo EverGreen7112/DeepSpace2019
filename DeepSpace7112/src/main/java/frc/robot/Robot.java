@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.TwoLimits;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 
@@ -15,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.ElevatorEncoderReset;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,14 +29,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
   public static OI oi;
   public static TankDrivetrain drivetrain;
+  public static BasicSubsystem elevator;
   SendableChooser<Command> chooser = new SendableChooser<>();
 
   @Override
   public void robotInit() {
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    
+    elevator = new BasicSubsystem(SubsystemComponents.Elevator.elevatorMotors::set, new TwoLimits(() -> false, SubsystemComponents.Elevator.elevatorMicroswitch::get));
+    SubsystemComponents.Elevator.elevatorEncoder.setDistancePerPulse(SubsystemConstants.kelevatorDistancePerPulse.get());
+    elevator.setDefaultCommand(new ElevatorEncoderReset());
   }
+  
 
   @Override
   public void robotPeriodic() {

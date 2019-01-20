@@ -5,15 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot;
+package frc.robot.commands;
 
-import java.util.function.Supplier;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.SubsystemComponents;
 
-import com.spikes2212.dashboard.ConstantHandler;
-
-/**
- * Add your docs here.
- */
-public class SubsystemConstants {
-    public static Supplier<Double> kelevatorDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 1); //temp
+public class ElevatorEncoderReset extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public ElevatorEncoderReset() {
+    if(SubsystemComponents.Elevator.elevatorHallEffect.get()){
+      SubsystemComponents.Elevator.elevatorEncoder.reset();
+    }
+  }
 }
