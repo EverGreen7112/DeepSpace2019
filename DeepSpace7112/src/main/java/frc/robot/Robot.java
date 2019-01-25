@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
     elevator = new BasicSubsystem(SubsystemComponents.Elevator.elevatorMotors::set, new TwoLimits(() -> false, SubsystemComponents.Elevator.elevatorMicroswitch::get));
-    SubsystemComponents.Elevator.elevatorEncoder.setDistancePerPulse(SubsystemConstants.kelevatorDistancePerPulse.get());
+    SubsystemComponents.Elevator.elevatorEncoder.setDistancePerPulse(SubsystemConstants.Elevator.kDistancePerPulse.get());
     elevator.setDefaultCommand(new ElevatorEncoderReset());
   }
   
