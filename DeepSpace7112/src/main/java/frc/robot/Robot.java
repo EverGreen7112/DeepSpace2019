@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 
@@ -14,7 +15,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,12 +27,14 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static TankDrivetrain drivetrain;
   SendableChooser<Command> chooser = new SendableChooser<>();
+  public static BasicSubsystem climbing;
 
   @Override
   public void robotInit() {
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
     
+    climbing = new BasicSubsystem(SubsystemComponents.ClimbingMovement.ClimbingMovementMotor::set, (t) -> false);
   }
 
   @Override
