@@ -29,7 +29,7 @@ public class RobotMap {
               elevatorEncoderA = 3, //DIO
               elevatorEncoderB = 4, //DIO
               elevatorMicroswitch = 5, //DIO 
-              elevatorHallEffect = 6; //DIO
+              elevatorOpticSwitch = 6; //DIO
 //temp
 
 
