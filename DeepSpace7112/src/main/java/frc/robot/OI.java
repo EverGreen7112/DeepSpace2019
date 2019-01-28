@@ -7,7 +7,11 @@
 
 package frc.robot;
 
+import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -20,6 +24,21 @@ public class OI {
   //----------Joysticks----------
   private Joystick drivingJSLeft;
   private Joystick drivingJSRight;
+  private Joystick buttonsJoystick;
+
+  private Button A;
+  private Button Y;
+
+  public OI(){
+	  buttonsJoystick = new Joystick(2);
+
+	  A = new JoystickButton(buttonsJoystick, 2);
+	  Y = new JoystickButton(buttonsJoystick, 4);
+
+	  A.whileHeld(new MoveBasicSubsystem(Robot.elevator, - SubsystemConstants.Elevator.kElevatorMotorSpeedModifier.get()));
+	  Y.whileHeld(new MoveBasicSubsystem(Robot.elevator, SubsystemConstants.Elevator.kElevatorMotorSpeedModifier));
+
+  }
 
   	// receives input, returns the adjusted input for better sensitivity
 		private double adjustInput(double input){
