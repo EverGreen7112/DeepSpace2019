@@ -5,17 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot;
+package frc.robot.Commands;
 
-/**
- * Add your docs here.
- */
-public class SubsystemConstants {
-    public static interface cameras
-    {
-        public static final int
-            kCamerawidth = 320,
-            kCameraLength = 240,
-            kCameraExposure = 50;
-    }
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.Robot;
+import frc.robot.RobotMap;
+
+public class SwitchToCameraA extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public SwitchToCameraA() {
+    Robot.cameraHandler.switchCamera(RobotMap.cameraA);
+  }
 }

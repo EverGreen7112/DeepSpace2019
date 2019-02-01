@@ -20,7 +20,11 @@ public class RobotMap {
               chassisTalonFL = 1,
               chassisTalonBL = 2,
               chassisTalonFR = 3,
-              chassisTalonBR = 4; //all temp
+              chassisTalonBR = 4, //all temp
+  //----------camera----------
+              cameraA = 1,
+              cameraB = 2; 
+              //All temp
 
 
 }
