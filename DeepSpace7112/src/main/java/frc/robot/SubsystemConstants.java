@@ -7,8 +7,15 @@
 
 package frc.robot;
 
+import java.util.function.Supplier;
+
+import com.spikes2212.dashboard.ConstantHandler;
+
 /**
  * Add your docs here.
  */
-public class SubsystemConstants {
+public  class SubsystemConstants {
+   public static  Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("kClimbingSpeed", 0.5); //temp
+   public static  Supplier<Double> kGripperSpeed = ConstantHandler.addConstantDouble("kClimbingSpeed", 0.5); //temp   
+   
 }

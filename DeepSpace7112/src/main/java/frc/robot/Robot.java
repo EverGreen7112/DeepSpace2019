@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.TwoLimits;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 
@@ -14,7 +16,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,12 +27,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
   public static OI oi;
   public static TankDrivetrain drivetrain;
+  public static BasicSubsystem gripperMovement;
   SendableChooser<Command> chooser = new SendableChooser<>();
 
   @Override
   public void robotInit() {
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
+    gripperMovement = new BasicSubsystem(SubsystemComponents.GripperMovement.gripperMovementMotors::set, new TwoLimits(SubsystemComponents.GripperMovement.topMicroswitch::get,SubsystemComponents.GripperMovement.bottomMicroSwitch::get));
     
   }
 

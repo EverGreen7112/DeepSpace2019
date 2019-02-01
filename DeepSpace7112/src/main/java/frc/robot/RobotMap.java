@@ -22,5 +22,14 @@ public class RobotMap {
               chassisTalonFR = 3,
               chassisTalonBR = 4; //all temp
 
+  //----------Gripper Movement----------
+  public static final int
+              gripperMovementTalonA  = 0,
+              gripperMovementTalonB  = 1,
+              gripperMovementTopMicroswitch = 2, 
+              gripperMovementBottomMicroswitch = 3;  //All temp 
+
+
+
 
 }
