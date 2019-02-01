@@ -29,11 +29,10 @@ public class OI {
   private Joystick drivingJSRight;
   private Button switchToA;
   private Button switchToB;
-  private CamerasHandler camerasHandler;
 
 	public OI()
 	{
-		camerasHandler = Robot.cameraHandler;
+		drivingJSRight = new Joystick(1);
 		switchToA = new JoystickButton(drivingJSRight, 5);
 		switchToB = new JoystickButton(drivingJSRight, 6);
 		switchToA.whenPressed(new SwitchToCameraA());
