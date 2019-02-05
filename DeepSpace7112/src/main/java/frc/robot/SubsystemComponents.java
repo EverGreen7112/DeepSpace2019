@@ -8,7 +8,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.spikes2212.utils.PIDSettings;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -28,16 +27,12 @@ public class SubsystemComponents {
     * The elevator subsystem consists of 2 speed controllers inside a speed controller group
     * one encoder on the shaft of the motors
     * one microswitch which determines the maximum length the elevator can go mechanicly
+    * one optic switch to reset the encoder (refrence point)
     */
     public static class Elevator{
         public static final SpeedControllerGroup motors = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.elevatorTalonL), new WPI_TalonSRX(RobotMap.elevatorTalonR));
         public static final Encoder encoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB);
         public static final DigitalInput microswitch = new DigitalInput(RobotMap.elevatorMicroswitch);
         public static final DigitalInput opticSwitch = new DigitalInput(RobotMap.elevatorOpticSwitch);
-        public static final PIDSettings PIDSettings = new PIDSettings(SubsystemConstants.Elevator.kp.get(), 
-                                                                    SubsystemConstants.Elevator.ki.get(), 
-                                                                    SubsystemConstants.Elevator.kd.get(), 
-                                                                    SubsystemConstants.Elevator.kTolerance.get(), 
-                                                                    SubsystemConstants.Elevator.kWaitTime.get());
     }
 }
