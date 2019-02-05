@@ -23,6 +23,7 @@ public class SubsystemConstants {
     public static Supplier<Double> kRocketTopHatchHeight = ConstantHandler.addConstantDouble("Rocket top hatch hight", 3); //temp
     public static Supplier<Double> kElevatorMotorSpeedModifier = ConstantHandler.addConstantDouble("Elevator speed modifier", 0.8); //temp
 
+    //pid settings, currently not in use
     public static Supplier<Double> kp = ConstantHandler.addConstantDouble("Elevator - kp", 1); //temp
     public static Supplier<Double> ki = ConstantHandler.addConstantDouble("Elevator - ki", 0.01); //temp
     public static Supplier<Double> kd = ConstantHandler.addConstantDouble("Elevator - kd", 0.1); //temp
