@@ -1,3 +1,4 @@
+
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -5,20 +6,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot;
+package frc.robot.Commands;
 
-import java.awt.image.BufferedImage;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.Robot;
 
-/**
- * Add your docs here.
- */
-public class SubsystemConstants {
-    public static interface cameras
-    {
-        public static final int
-            kCamerawidth = 320,
-            kCameraHeight = 240,
-            kCameraExposure = 50,
-            kCameraImageType = BufferedImage.TYPE_3BYTE_BGR; //All temp.
-    }
+public class DecreaseZoom extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public DecreaseZoom() {
+    if(Robot.zoomLevel>1)
+      Robot.zoomLevel-=0.5;
+  }
 }

@@ -5,20 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot;
+package frc.robot.Commands;
+import frc.robot.Robot;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
-import java.awt.image.BufferedImage;
-
-/**
- * Add your docs here.
- */
-public class SubsystemConstants {
-    public static interface cameras
-    {
-        public static final int
-            kCamerawidth = 320,
-            kCameraHeight = 240,
-            kCameraExposure = 50,
-            kCameraImageType = BufferedImage.TYPE_3BYTE_BGR; //All temp.
-    }
+public class IncreaseZoom extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public IncreaseZoom() {
+    if(Robot.zoomLevel<4)
+      Robot.zoomLevel+=0.5;
+  }
 }
