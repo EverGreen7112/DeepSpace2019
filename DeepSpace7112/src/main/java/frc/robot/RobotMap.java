@@ -17,10 +17,10 @@ public class RobotMap {
   
   //----------Chassis----------
   public static final int 
-              chassisTalonL = 0,
-              chassisVictorL = 5,
-              chassisTalonR = 1,
-              chassisVictorR = 6; //all temp
+              chassisTalonL = 5,
+              chassisVictorL = 0,
+              chassisTalonR = 6,
+              chassisVictorR = 1; //all temp
 
 
 }

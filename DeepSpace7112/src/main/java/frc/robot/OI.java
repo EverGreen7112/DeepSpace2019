@@ -32,11 +32,11 @@ public class OI {
     }
     
     public double getLeftJoystick() {
-			return adjustInput(drivingJSLeft.getY());
+			return -adjustInput(drivingJSLeft.getY());
 		}
 		
 		public double getRightJoystick() {
-			return adjustInput(drivingJSRight.getY());
+			return -adjustInput(drivingJSRight.getY());
 		}
 
 
