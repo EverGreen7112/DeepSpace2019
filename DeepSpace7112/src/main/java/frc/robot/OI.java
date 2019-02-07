@@ -21,6 +21,11 @@ public class OI {
   private Joystick drivingJSLeft;
   private Joystick drivingJSRight;
 
+  public OI(){
+	  drivingJSLeft = new Joystick(0);
+	  drivingJSRight = new Joystick(1);
+  }
+
   	// receives input, returns the adjusted input for better sensitivity
 		private double adjustInput(double input){
 			return input * Math.abs(input);
