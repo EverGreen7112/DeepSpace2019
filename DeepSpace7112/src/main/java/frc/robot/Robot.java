@@ -42,7 +42,6 @@ public class Robot extends TimedRobot {
   public static BasicSubsystem elevator;
   public static BasicSubsystem elevatorEncoder;
   public static BasicSubsystem gripper;
-  public static BasicSubsystem test;
   public static BasicSubsystem shaft;
 
   private DashBoardController dbc;
