@@ -18,6 +18,5 @@ public  class SubsystemConstants {
 	public static interface ClimbingMovement{
 		public static  Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("ClimbingMovementSpeedModifier", 0.5); //temp
 		public static Supplier<Double> kTarget = ConstantHandler.addConstantDouble("ClimingMovement Target", 0); //temp
-		public static Supplier<Double> kEncoderDistancePerPulse = ConstantHandler.addConstantDouble("ClimbingMovement encoder DPP", 1);
 	}
 }
