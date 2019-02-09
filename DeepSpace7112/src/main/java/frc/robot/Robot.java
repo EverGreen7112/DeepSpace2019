@@ -23,6 +23,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
+import com.spikes2212.dashboard.DashBoardController;
+import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MinLimit;
+
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -36,6 +42,8 @@ public class Robot extends TimedRobot {
   public static BasicSubsystem elevator;
   public static BasicSubsystem elevatorEncoder;
   private DashBoardController dbc;
+  public static BasicSubsystem gripper;
+  public static BasicSubsystem test;
   SendableChooser<Command> chooser = new SendableChooser<>();
   public static CamerasHandler cameraHandler;
 
@@ -49,6 +57,16 @@ public class Robot extends TimedRobot {
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
     oi = new OI();
     dbc = new DashBoardController();
+    SubsystemComponents.Gripper.createMotorGroup();
+    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit(
+      () -> SubsystemComponents.Gripper.lazerSensor.getVoltage() > SubsystemConstants.gripper.kVoltageLimit));
+    dbc = new DashBoardController();
+    dbc.addBoolean("optic sensor", () -> SubsystemComponents.Gripper.lazerSensor.getVoltage() > SubsystemConstants.gripper.kVoltageLimit);
+    drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
+        
+  }
+
+  private void initDashboard(){
   }
 
   @Override
@@ -63,6 +81,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
+    
   }
 
   @Override
@@ -83,9 +102,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    dbc.update();
+
   }
 
   @Override
   public void testPeriodic() {
   }
+
+	
+ 
 }

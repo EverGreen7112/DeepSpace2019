@@ -33,4 +33,9 @@ public class RobotMap {
 //temp
 
 
+  //----------Gripper----------
+    public static final int gripperMotorRight = 5, 
+                            gripperMotorLeft = 0,
+                            gripperMicroswitch = 1,
+                            gripperAnalogLazerSensor = 0; //temp
 }

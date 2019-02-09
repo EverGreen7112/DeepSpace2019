@@ -7,7 +7,13 @@
 
 package frc.robot;
 
+
 import edu.wpi.first.wpilibj.Joystick;
+import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
+
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -22,12 +28,13 @@ public class OI {
   private Joystick drivingJSRight;
   private Joystick buttonsJoystick;
 
-  public OI(){
-	  drivingJSLeft = new Joystick(0);
-	  drivingJSRight = new Joystick(1);
-  }
+  private Joystick buttonJoystick;
 
-  	// receives input, returns the adjusted input for better sensitivity
+  //----------Buttons----------
+  
+  private Button catchButton;
+  private Button releaseButton;
+
 		private double adjustInput(double input){
 			return input * Math.abs(input);
     }
@@ -39,12 +46,19 @@ public class OI {
 		public double getRightJoystick() {
 			return adjustInput(drivingJSRight.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
 		}
-    // public double getLeftJoystick() {
-	// 	return -adjustInput(drivingJSLeft.getRawAxis(1)) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
-	// }
 	
-	// public double getRightJoystick() {
-	// 	return adjustInput(drivingJSLeft.getRawAxis(3)) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
-	// }
+	
+	
+		public OI() {
+			drivingJSLeft = new Joystick(0);
+			drivingJSRight = new Joystick(1);	  
+			buttonJoystick = new Joystick(2);
+			catchButton = new JoystickButton(buttonJoystick, 2);
+			releaseButton = new JoystickButton(buttonJoystick, 4);	
+
+		    catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperInSpeed));
+		    releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperOutSpeed));
+		}	
+	
 
 }
