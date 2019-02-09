@@ -34,8 +34,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    gripperMovement = new BasicSubsystem(SubsystemComponents.GripperMovement.gripperMovementMotors::set, new TwoLimits(SubsystemComponents.GripperMovement.topMicroswitch::get,SubsystemComponents.GripperMovement.bottomMicroSwitch::get));
-    
+    gripperMovement = new BasicSubsystem(SubsystemComponents.GripperMovement.motor::set, new TwoLimits(SubsystemComponents.GripperMovement.topMicroswitch::get,SubsystemComponents.GripperMovement.bottomMicroSwitch::get));
   }
 
   @Override

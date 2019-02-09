@@ -24,8 +24,7 @@ public class RobotMap {
 
   //----------Gripper Movement----------
   public static final int
-              gripperMovementTalonA  = 0,
-              gripperMovementTalonB  = 1,
+              gripperMovementVictor  = 0,
               gripperMovementTopMicroswitch = 2, 
               gripperMovementBottomMicroswitch = 3;  //All temp 
 

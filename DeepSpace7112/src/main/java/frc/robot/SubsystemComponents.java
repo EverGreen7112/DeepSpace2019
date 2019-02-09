@@ -8,8 +8,10 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 /**
@@ -17,18 +19,20 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
  */
 public class SubsystemComponents {
 
-    public static class DriveTrain {
-            public static final SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.chassisTalonBL), new WPI_TalonSRX(RobotMap.chassisTalonFL));
-            public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.chassisTalonBR), new WPI_TalonSRX(RobotMap.chassisTalonFR));
-        }
-    public static class GripperMovement {
-        public static final DigitalInput 
-            topMicroswitch = new DigitalInput(RobotMap.gripperMovementTopMicroswitch),
-            bottomMicroSwitch = new DigitalInput(RobotMap.gripperMovementBottomMicroswitch);
+        public static class DriveTrain {
+                public static final SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.chassisTalonBL), new WPI_TalonSRX(RobotMap.chassisTalonFL));
+                public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.chassisTalonBR), new WPI_TalonSRX(RobotMap.chassisTalonFR));
+                }
 
-        public static final SpeedControllerGroup gripperMovementMotors = 
-        new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.gripperMovementTalonA), new WPI_TalonSRX(RobotMap.gripperMovementTalonB));
-            
-    }
+        /**
+         * The subsystem that controlls the folding of the gripper.
+         * The subsystem contains one speed controller and limit switches for the points where the gripper is folded, and open.
+         */
+        public static class GripperMovement {
+                public static final DigitalInput 
+                topMicroswitch = new DigitalInput(RobotMap.gripperMovementTopMicroswitch),
+                bottomMicroSwitch = new DigitalInput(RobotMap.gripperMovementBottomMicroswitch);
+                public static final SpeedController motor = new WPI_VictorSPX(RobotMap.gripperMovementVictor);              
+        }
 
 }
