@@ -20,6 +20,11 @@ public class OI {
   //----------Joysticks----------
   private Joystick drivingJSLeft;
   private Joystick drivingJSRight;
+  private Joystick buttonsJoystick;
+
+  public OI(){
+
+  }
 
   public OI(){
 	  drivingJSLeft = new Joystick(0);
