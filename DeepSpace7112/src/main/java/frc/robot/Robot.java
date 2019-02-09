@@ -9,12 +9,13 @@ package frc.robot;
 
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
+import com.spikes2212.utils.CamerasHandler;
 
+import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,13 +28,17 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static TankDrivetrain drivetrain;
   SendableChooser<Command> chooser = new SendableChooser<>();
+  public static CamerasHandler cameraHandler;
+
 
   @Override
   public void robotInit() {
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
-   oi = new OI();
+    oi = new OI();
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    
+    cameraHandler = new CamerasHandler(SubsystemConstants.cameras.kCamerawidth, SubsystemConstants.cameras.kCameraHeight, RobotMap.cameraA);
+    cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure);
+
   }
 
   @Override

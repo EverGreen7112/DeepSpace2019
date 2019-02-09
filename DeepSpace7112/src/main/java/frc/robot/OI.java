@@ -32,12 +32,18 @@ public class OI {
     }
     
     public double getLeftJoystick() {
-			return -adjustInput(drivingJSLeft.getY());
+			return -adjustInput(drivingJSLeft.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
 		}
 		
 		public double getRightJoystick() {
-			return -adjustInput(drivingJSRight.getY());
+			return adjustInput(drivingJSRight.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
 		}
-
+    // public double getLeftJoystick() {
+	// 	return -adjustInput(drivingJSLeft.getRawAxis(1)) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
+	// }
+	
+	// public double getRightJoystick() {
+	// 	return adjustInput(drivingJSLeft.getRawAxis(3)) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
+	// }
 
 }
