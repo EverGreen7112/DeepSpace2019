@@ -8,6 +8,7 @@
 package frc.robot;
 
 import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.Limitless;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 
@@ -27,14 +28,13 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static TankDrivetrain drivetrain;
   SendableChooser<Command> chooser = new SendableChooser<>();
-  public static BasicSubsystem climbing;
+  public static BasicSubsystem climbingMovement;
 
   @Override
   public void robotInit() {
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    
-    climbing = new BasicSubsystem(SubsystemComponents.ClimbingMovement.ClimbingMovementMotor::set, (t) -> false);
+    climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new Limitless());
   }
 
   @Override
