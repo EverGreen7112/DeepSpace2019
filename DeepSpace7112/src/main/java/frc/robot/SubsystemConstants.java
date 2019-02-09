@@ -15,5 +15,8 @@ import com.spikes2212.dashboard.ConstantHandler;
  * Add your docs here.
  */
 public class SubsystemConstants {
-    public static final Supplier<Double> shaftMotorSpeedModifier = ConstantHandler.addConstantDouble("Shaft Motor Speed Modifier", 0.9);
+	
+	public static interface ClimbingShaft{
+    	public static final Supplier<Double> shaftMotorSpeedModifier = ConstantHandler.addConstantDouble("Shaft Motor Speed Modifier", 0.3);
+	}
 }

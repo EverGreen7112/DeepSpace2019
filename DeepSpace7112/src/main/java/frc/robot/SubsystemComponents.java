@@ -17,14 +17,19 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
  * Add your docs here.
  */
 public class SubsystemComponents {
-
-    public static class DriveTrain {
-       public static final SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.chassisTalonBL), new WPI_TalonSRX(RobotMap.chassisTalonFL));
-       public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.chassisTalonBR), new WPI_TalonSRX(RobotMap.chassisTalonFR));
+        
+        public static class DriveTrain {
+                public static final SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.chassisTalonBL), new WPI_TalonSRX(RobotMap.chassisTalonFL));
+                public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.chassisTalonBR), new WPI_TalonSRX(RobotMap.chassisTalonFR));
         }
-    public static class ClimbingShaft{
-        public static final SpeedController shaftMotor = new WPI_TalonSRX(RobotMap.shaftTalon);
-        public static final DigitalInput bottomLimiter = new DigitalInput(RobotMap.shaftBottomLimiter);
-        public static final DigitalInput topLimiter = new DigitalInput(RobotMap.shaftTopLimiter);
+        
+        /**
+         * The subsystem that controlls the shaft that is used to raise the back of the robot during the climbing process.
+         * The subsystem contains one speed controller and 2 limit switches that indicate the topmost and bottommost points that the shaft goes.
+         */
+        public static class ClimbingShaft{
+                public static final SpeedController Motor = new WPI_TalonSRX(RobotMap.shaftTalon);
+                public static final DigitalInput bottomLimiter = new DigitalInput(RobotMap.shaftBottomLimiter);
+                public static final DigitalInput topLimiter = new DigitalInput(RobotMap.shaftTopLimiter);
     }
 }

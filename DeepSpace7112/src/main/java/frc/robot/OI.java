@@ -29,7 +29,7 @@ public class OI {
   //----------Buttons----------  
   private Button A;
   private Button Y;
-	//--------------------Constructors--------------------
+  //--------------------Constructors--------------------
 
 	public OI(){
 
@@ -50,9 +50,9 @@ public class OI {
 	private void bindButtons(){
 
 		//Lowers the climbing shaft until reaching the bottom microswitch
-		A.whileHeld(new MoveBasicSubsystem(Robot.shaft, -SubsystemConstants.shaftMotorSpeedModifier.get()));
+		A.whileHeld(new MoveBasicSubsystem(Robot.shaft, -SubsystemConstants.ClimbingShaft.shaftMotorSpeedModifier.get()));
 		//Raises the climbing shaft until reaching the top microswitch
-		Y.whileHeld(new MoveBasicSubsystem(Robot.shaft, SubsystemConstants.shaftMotorSpeedModifier.get()));
+		Y.whileHeld(new MoveBasicSubsystem(Robot.shaft, SubsystemConstants.ClimbingShaft.shaftMotorSpeedModifier.get()));
 	}
 	
   	// receives input, returns the adjusted input for better sensitivity

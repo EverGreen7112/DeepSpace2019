@@ -37,14 +37,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.shaftMotor::set, new TwoLimits(SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
+    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new TwoLimits(SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
     dbc = new DashBoardController();
     oi = new OI();
-    initDashboard();
-  }
-
-  private void initDashboard(){
-    dbc.addBoolean("Shaft is lowered", SubsystemComponents.ClimbingShaft.bottomLimiter::get);
   }
 
   @Override
