@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
     cameraHandler = new CamerasHandler(SubsystemConstants.cameras.kCamerawidth, SubsystemConstants.cameras.kCameraHeight, RobotMap.cameraA);
     cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure);
 
-  }
+}
 
   @Override
   public void robotPeriodic() {
