@@ -72,4 +72,14 @@ public class SubsystemComponents {
                 return false;
             }
 	}
+                
+        /**
+         * The subsystem that controlls the shaft that is used to raise the back of the robot during the climbing process.
+         * The subsystem contains one speed controller and 2 limit switches that indicate the topmost and bottommost points that the shaft goes.
+         */
+        public static class ClimbingShaft{
+                public static final SpeedController Motor = new WPI_TalonSRX(RobotMap.shaftTalon);
+                public static final DigitalInput bottomLimiter = new DigitalInput(RobotMap.shaftBottomLimiter);
+                public static final DigitalInput topLimiter = new DigitalInput(RobotMap.shaftTopLimiter);
+    }
 }

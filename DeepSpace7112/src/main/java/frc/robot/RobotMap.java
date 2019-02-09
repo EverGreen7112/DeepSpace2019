@@ -32,6 +32,10 @@ public class RobotMap {
               elevatorOpticSwitch = 6; //DIO
 //temp
 
+  //----------ClimbingShaft----------
+public static final int shaftTalon = 5; //temp
+public static final int shaftTopLimiter = 0; //temp
+public static int shaftBottomLimiter = 1; //temp
 
   //----------Gripper----------
     public static final int gripperMotorRight = 5, 

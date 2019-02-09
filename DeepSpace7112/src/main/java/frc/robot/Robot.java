@@ -41,33 +41,37 @@ public class Robot extends TimedRobot {
   public static TankDrivetrain drivetrain;
   public static BasicSubsystem elevator;
   public static BasicSubsystem elevatorEncoder;
-  private DashBoardController dbc;
   public static BasicSubsystem gripper;
   public static BasicSubsystem test;
+  public static BasicSubsystem shaft;
+
+  private DashBoardController dbc;
   SendableChooser<Command> chooser = new SendableChooser<>();
   public static CamerasHandler cameraHandler;
 
 
   @Override
   public void robotInit() {
-    drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
-    elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit(SubsystemComponents.Elevator.microswitch::get));
-    SubsystemComponents.Elevator.encoder.setDistancePerPulse(SubsystemConstants.Elevator.kDistancePerPulse.get());
-    elevator.setDefaultCommand(new ElevatorEncoderReset());
-    drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    oi = new OI();
-    dbc = new DashBoardController();
+    //---------Sensor configs----------
     SubsystemComponents.Gripper.createMotorGroup();
+    SubsystemComponents.Elevator.encoder.setDistancePerPulse(SubsystemConstants.Elevator.kDistancePerPulse.get());
+
+    //----------BasicSubsystems----------
+    drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit(
       () -> SubsystemComponents.Gripper.lazerSensor.getVoltage() > SubsystemConstants.gripper.kVoltageLimit));
-    dbc = new DashBoardController();
-    dbc.addBoolean("optic sensor", () -> SubsystemComponents.Gripper.lazerSensor.getVoltage() > SubsystemConstants.gripper.kVoltageLimit);
-    drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-        
-  }
+    elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit(SubsystemComponents.Elevator.microswitch::get));
+    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new TwoLimits(SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
 
-  private void initDashboard(){
+    //----------DefaultCommands----------
+    elevator.setDefaultCommand(new ElevatorEncoderReset());
+    drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
+    
+    //----------Class constructors----------
+    oi = new OI();
+    dbc = new DashBoardController();        
   }
+  
 
   @Override
   public void robotPeriodic() {

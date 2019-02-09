@@ -7,13 +7,11 @@
 
 package frc.robot;
 
-
-import edu.wpi.first.wpilibj.Joystick;
 import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -26,16 +24,40 @@ public class OI {
   //----------Joysticks----------
   private Joystick drivingJSLeft;
   private Joystick drivingJSRight;
-  private Joystick buttonsJoystick;
+  private Joystick buttonJS; 
 
-  private Joystick buttonJoystick;
-
-  //----------Buttons----------
+  //----------Buttons----------  
+  private Button A;
+  private Button Y;
   
-  private Button catchButton;
-  private Button releaseButton;
+  //--------------------Constructors--------------------
 
-		private double adjustInput(double input){
+	public OI(){
+
+		  //----------Joysticks----------
+		drivingJSLeft = new Joystick(0);
+		drivingJSRight = new Joystick(1);
+		buttonJS = new Joystick(2);
+
+		  //----------Buttons----------
+		A = new JoystickButton(buttonJS, 2);
+		Y = new JoystickButton(buttonJS, 4);
+
+		bindButtons();
+	}
+
+	//--------------------Methods--------------------
+	
+	private void bindButtons(){
+
+		//Lowers the climbing shaft until reaching the bottom microswitch
+		A.whileHeld(new MoveBasicSubsystem(Robot.shaft, -SubsystemConstants.ClimbingShaft.shaftMotorSpeedModifier.get()));
+		//Raises the climbing shaft until reaching the top microswitch
+		Y.whileHeld(new MoveBasicSubsystem(Robot.shaft, SubsystemConstants.ClimbingShaft.shaftMotorSpeedModifier.get()));
+	}
+	
+  	// receives input, returns the adjusted input for better sensitivity
+	private double adjustInput(double input){
 			return input * Math.abs(input);
     }
     
@@ -46,19 +68,6 @@ public class OI {
 		public double getRightJoystick() {
 			return adjustInput(drivingJSRight.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
 		}
-	
-	
-	
-		public OI() {
-			drivingJSLeft = new Joystick(0);
-			drivingJSRight = new Joystick(1);	  
-			buttonJoystick = new Joystick(2);
-			catchButton = new JoystickButton(buttonJoystick, 2);
-			releaseButton = new JoystickButton(buttonJoystick, 4);	
-
-		    catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperInSpeed));
-		    releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperOutSpeed));
-		}	
 	
 
 }
