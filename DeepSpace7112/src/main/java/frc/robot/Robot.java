@@ -14,21 +14,13 @@ import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.SubsystemComponents.Gripper;
-import frc.robot.SubsystemConstants.gripper;
 
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
 import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.TwoLimits;
-
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -50,9 +42,10 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     SubsystemComponents.Gripper.createMotorGroup();
-    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new TwoLimits(SubsystemComponents.Gripper.gripperMicroswitch::get, () -> false));
+    initDashboard();
+    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new TwoLimits(() -> SubsystemComponents.Gripper.lazerSensor.getVoltage() > SubsystemConstants.gripper.kLimitVoltage, () -> false));
     dbc = new DashBoardController();
-    
+    dbc.addBoolean("optic sensor", () -> SubsystemComponents.Gripper.lazerSensor.getVoltage() > SubsystemConstants.gripper.kLimitVoltage);
     oi = new OI();
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
         
@@ -61,9 +54,9 @@ public class Robot extends TimedRobot {
   private void initDashboard(){
     SmartDashboard.putData("Roll In", new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperInSpeed));
 		SmartDashboard.putData("Roll Out", new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperOutSpeed));
-		SmartDashboard.putData("Stop gripper", new MoveBasicSubsystem(Robot.gripper, 0));
-
+    SmartDashboard.putData("Stop gripper", new MoveBasicSubsystem(Robot.gripper, 0));
   }
+
   @Override
   public void robotPeriodic() {
 

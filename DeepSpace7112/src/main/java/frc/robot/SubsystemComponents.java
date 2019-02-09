@@ -40,13 +40,12 @@ public class SubsystemComponents {
              * The method is required to be called before the gripper subsystem is created.
              * The method inverts the right motor, then creates the speedControllerGroup for the gripper.
              */
-            public static void createMotorGroup(){
+            public static void createMotorGroup() {
                 motorR.setInverted(true);
                 Motors = new SpeedControllerGroup(motorL,motorR);
             }
-
-
-            public static final AnalogInput lazersensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
+            
+            public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
             
             /**
              * 

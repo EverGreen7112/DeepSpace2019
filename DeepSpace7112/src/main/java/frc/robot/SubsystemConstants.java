@@ -17,5 +17,6 @@ public class SubsystemConstants {
     public static class gripper {
 		public static final Supplier<Double> gripperInSpeed = ConstantHandler.addConstantDouble("gripper In Speed", 0.3);
 		public static final Supplier<Double> gripperOutSpeed = ConstantHandler.addConstantDouble("gripper Out Speed", -0.3);
+		public static final double kLimitVoltage = 5; //temp
 	}
 }
