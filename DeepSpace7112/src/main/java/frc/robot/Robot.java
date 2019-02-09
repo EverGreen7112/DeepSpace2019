@@ -48,13 +48,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    //drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
-    //drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    SubsystemComponents.Gripper.gripperMotorLeft.setInverted(true);
-    SpeedControllerGroup gripperMotors =  new SpeedControllerGroup(SubsystemComponents.Gripper.gripperMotorLeft, SubsystemComponents.Gripper.gripperMotorRight);
-    gripper = new BasicSubsystem(gripperMotors::set, new TwoLimits(SubsystemComponents.Gripper.gripperMicroswitch::get, () -> false));
+    drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
+    SubsystemComponents.Gripper.createMotorGroup();
+    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new TwoLimits(SubsystemComponents.Gripper.gripperMicroswitch::get, () -> false));
     dbc = new DashBoardController();
+    
     oi = new OI();
+    drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
         
   }
 
