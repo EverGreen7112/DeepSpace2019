@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
 import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
-import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.TwoLimits;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MinLimit;
 
 
 /**
@@ -43,9 +43,10 @@ public class Robot extends TimedRobot {
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     SubsystemComponents.Gripper.createMotorGroup();
     initDashboard();
-    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new TwoLimits(() -> SubsystemComponents.Gripper.lazerSensor.getVoltage() > SubsystemConstants.gripper.kLimitVoltage, () -> false));
+    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit(
+      () -> SubsystemComponents.Gripper.lazerSensor.getVoltage() > SubsystemConstants.gripper.kVoltageLimit));
     dbc = new DashBoardController();
-    dbc.addBoolean("optic sensor", () -> SubsystemComponents.Gripper.lazerSensor.getVoltage() > SubsystemConstants.gripper.kLimitVoltage);
+    dbc.addBoolean("optic sensor", () -> SubsystemComponents.Gripper.lazerSensor.getVoltage() > SubsystemConstants.gripper.kVoltageLimit);
     oi = new OI();
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
         

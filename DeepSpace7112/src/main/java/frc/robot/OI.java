@@ -28,11 +28,11 @@ public class OI {
   private Joystick drivingJSRight;
   private Joystick buttonJoystick;
 
-    //----------Buttons----------
-  private Button rollIn;
-  private Button rollOut;
+  //----------Buttons----------
+  
+  private Button catchButton;
+  private Button releaseButton;
 
-  	// receives input, returns the adjusted input for better sensitivity
 		private double adjustInput(double input){
 			return input * Math.abs(input);
     }
@@ -49,11 +49,11 @@ public class OI {
 	
 		public OI() {
 			buttonJoystick = new Joystick(2);
-			rollIn = new JoystickButton(buttonJoystick, 2);
-			rollOut = new JoystickButton(buttonJoystick, 4);	
+			catchButton = new JoystickButton(buttonJoystick, 2);
+			releaseButton = new JoystickButton(buttonJoystick, 4);	
 
-		    rollIn.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperInSpeed));
-		    rollOut.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperOutSpeed));
+		    catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperInSpeed));
+		    releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperOutSpeed));
 		
 		
 		}	
