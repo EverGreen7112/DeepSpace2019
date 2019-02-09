@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
@@ -22,8 +23,20 @@ public class SubsystemComponents {
             public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.chassisTalonBR), new WPI_TalonSRX(RobotMap.chassisTalonFR));
         }
     
+        /**
+         * 
+         */
     public static class ClimbingMovement
     {
-        public static final SpeedController ClimbingMovementMotor = new WPI_TalonSRX(RobotMap.climbingMovementTalon);
+        public static final SpeedController Motor = new WPI_TalonSRX(RobotMap.climbingMovementTalon);
+        public static final Encoder encoder = new Encoder(RobotMap.climbingMovementEncoderA, RobotMap.climbingMovementEncoderB);
+
+        /**
+         * Sets the {@link Encoder} distance per pulse to the constant that was
+         * set in {@link SubsystemConstants}
+         */
+        public static void setupEncoder(){
+                encoder.setDistancePerPulse(SubsystemConstants.ClimbingMovement.kEncoderDistancePerPulse.get());
+        }
     }
 }

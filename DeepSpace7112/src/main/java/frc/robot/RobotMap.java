@@ -23,7 +23,9 @@ public class RobotMap {
               chassisTalonBR = 4; //all temp
 
 //----------Climbing Movement----------
-              public static final int climbingMovementTalon = 0;
-              //temp
+public static final int 
+              climbingMovementTalon = 0,
+              climbingMovementEncoderA = 1,
+              climbingMovementEncoderB = 2; //temp
 
 }
