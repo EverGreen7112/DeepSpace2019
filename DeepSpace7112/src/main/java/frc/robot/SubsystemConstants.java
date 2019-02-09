@@ -20,12 +20,13 @@ public class SubsystemConstants {
         public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Speed Modifier", 0.5);
     }
 
-    public static interface cameras
-    {
+    public static interface cameras{
         public static final int
             kCamerawidth = 320,
             kCameraHeight = 240,
-            kCameraExposure = 50;
+			kCameraExposure = 50;
+	}
+
     public static interface Elevator{
     public static Supplier<Double> kDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 1); //temp
     public static Supplier<Double> kRocketBottomHatchHeight = ConstantHandler.addConstantDouble("Rocket bottom hatch hight", 1); //temp
