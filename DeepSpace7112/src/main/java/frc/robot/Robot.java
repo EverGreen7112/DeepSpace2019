@@ -51,7 +51,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    //---------Sensor configs----------
+    //---------Sensor Configs----------
     SubsystemComponents.Gripper.createMotorGroup();
     SubsystemComponents.Elevator.encoder.setDistancePerPulse(SubsystemConstants.Elevator.kDistancePerPulse.get());
 
@@ -60,13 +60,14 @@ public class Robot extends TimedRobot {
     gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit(
       () -> SubsystemComponents.Gripper.lazerSensor.getVoltage() > SubsystemConstants.gripper.kVoltageLimit));
     elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit(SubsystemComponents.Elevator.microswitch::get));
-    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new TwoLimits(SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
+    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new TwoLimits
+      (SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
 
     //----------DefaultCommands----------
     elevator.setDefaultCommand(new ElevatorEncoderReset());
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
     
-    //----------Class constructors----------
+    //----------Class Constructors----------
     oi = new OI();
     dbc = new DashBoardController();        
   }
