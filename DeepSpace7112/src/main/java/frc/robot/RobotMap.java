@@ -44,6 +44,11 @@ public static int shaftBottomLimiter = 1; //temp
 
 
 
+//----------Climbing Movement----------
+public static final int 
+              climbingMovementTalon = 0,
+              climbingMovementEncoderA = 1,
+              climbingMovementEncoderB = 2; //temp
 
   //----------Gripper----------
     public static final int gripperMotorRight = 5, 

@@ -9,8 +9,10 @@ package frc.robot;
 
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MinLimit;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MaxLimit;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.TwoLimits;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.Limitless;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import com.spikes2212.utils.CamerasHandler;
@@ -22,7 +24,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
-import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MinLimit;
 
 
 /**
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> chooser = new SendableChooser<>();
   public static CamerasHandler cameraHandler;
 
+  public static BasicSubsystem climbingMovement;
 
   @Override
   public void robotInit() {
@@ -60,6 +62,7 @@ public class Robot extends TimedRobot {
     shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new TwoLimits
       (SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
     gripperMovement = new BasicSubsystem(SubsystemComponents.GripperMovement.motor::set, new TwoLimits(SubsystemComponents.GripperMovement.topMicroswitch::get,SubsystemComponents.GripperMovement.bottomMicroSwitch::get));
+    climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new Limitless());
 
     //----------DefaultCommands----------
     elevator.setDefaultCommand(new ElevatorEncoderReset());

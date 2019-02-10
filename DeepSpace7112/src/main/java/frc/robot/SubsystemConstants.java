@@ -10,6 +10,10 @@ import java.util.function.Supplier;
 
 import com.spikes2212.dashboard.ConstantHandler;
 
+import java.util.function.Supplier;
+
+import com.spikes2212.dashboard.ConstantHandler;
+
 /**
  * Add your docs here.
  */
@@ -53,5 +57,9 @@ public class SubsystemConstants {
 	public static interface GripperMovement{
 		public static  Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("kClimbingSpeed", 0.5); //temp
 		public static  Supplier<Double> kGripperSpeed = ConstantHandler.addConstantDouble("kClimbingSpeed", 0.5); //temp   
+	}
+		public static interface ClimbingMovement{
+		public static  Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("ClimbingMovementSpeedModifier", 0.5); //temp
+		public static Supplier<Double> kTarget = ConstantHandler.addConstantDouble("ClimingMovement Target", 0); //temp
 	}
 }
