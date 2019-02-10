@@ -36,6 +36,14 @@ public class RobotMap {
 public static final int shaftTalon = 5; //temp
 public static final int shaftTopLimiter = 0; //temp
 public static int shaftBottomLimiter = 1; //temp
+  //----------Gripper Movement----------
+  public static final int
+              gripperMovementVictor  = 0,
+              gripperMovementTopMicroswitch = 2, 
+              gripperMovementBottomMicroswitch = 3;  //All temp 
+
+
+
 
   //----------Gripper----------
     public static final int gripperMotorRight = 5, 

@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -82,4 +81,15 @@ public class SubsystemComponents {
                 public static final DigitalInput bottomLimiter = new DigitalInput(RobotMap.shaftBottomLimiter);
                 public static final DigitalInput topLimiter = new DigitalInput(RobotMap.shaftTopLimiter);
     }
+        /**
+         * The subsystem that controlls the folding of the gripper.
+         * The subsystem contains one speed controller and limit switches for the points where the gripper is folded, and open.
+         */
+        public static class GripperMovement {
+                public static final DigitalInput 
+                topMicroswitch = new DigitalInput(RobotMap.gripperMovementTopMicroswitch),
+                bottomMicroSwitch = new DigitalInput(RobotMap.gripperMovementBottomMicroswitch);
+                public static final SpeedController motor = new WPI_VictorSPX(RobotMap.gripperMovementVictor);              
+        }
+
 }

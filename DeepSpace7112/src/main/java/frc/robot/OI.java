@@ -59,7 +59,8 @@ public class OI {
   	// receives input, returns the adjusted input for better sensitivity
 	private double adjustInput(double input){
 			return input * Math.abs(input);
-    }
+	}
+	
     
     public double getLeftJoystick() {
 			return -adjustInput(drivingJSLeft.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
