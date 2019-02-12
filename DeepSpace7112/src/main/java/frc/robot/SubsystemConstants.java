@@ -47,7 +47,7 @@ public class SubsystemConstants {
     public static interface gripper {
 		public static final Supplier<Double> gripperInSpeed = ConstantHandler.addConstantDouble("gripper In Speed", 0.3);
 		public static final Supplier<Double> gripperOutSpeed = ConstantHandler.addConstantDouble("gripper Out Speed", -0.3);
-		public static final double kVoltageLimit = 5; //temp
+		public static final double kVoltageLimit = 1.5;
 	}
 	
 	public static interface ClimbingShaft{
