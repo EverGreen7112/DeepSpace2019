@@ -54,5 +54,5 @@ public static final int
     public static final int gripperMotorRight = 5, 
                             gripperMotorLeft = 0,
                             gripperMicroswitch = 1,
-                            gripperAnalogLazerSensor = 0; //temp
+                            gripperAnalogLazerSensor = 3; //temp
 }
