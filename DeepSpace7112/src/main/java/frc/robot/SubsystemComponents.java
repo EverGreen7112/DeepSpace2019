@@ -40,7 +40,12 @@ public class SubsystemComponents {
         public static final Encoder encoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB);
         public static final DigitalInput microswitch = new DigitalInput(RobotMap.elevatorMicroswitch);
         public static final DigitalInput opticSwitch = new DigitalInput(RobotMap.elevatorOpticSwitch);
-    }
+        public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.elevatorLazerDistanceSensor);
+
+        public static double getElevatorHightByLazer(){
+                return (SubsystemConstants.Elevator.kElevatorMaxHight.get() / 20) * lazerSensor.getValue();
+        }
+}
 
 
     /**
