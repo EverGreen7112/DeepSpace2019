@@ -21,15 +21,15 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
  * Add your docs here.
  */
 public class SubsystemComponents {
-        public static class DriveTrain {
-                public static final SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(
-                                new WPI_TalonSRX(RobotMap.chassisTalonBL), new WPI_TalonSRX(RobotMap.chassisTalonFL));
-                public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(
-                                new WPI_TalonSRX(RobotMap.chassisTalonBR), new WPI_TalonSRX(RobotMap.chassisTalonFR));
-        }
+    
+    public static class DriveTrain {
+        public static final SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(
+                            new WPI_TalonSRX(RobotMap.chassisTalonBL), new WPI_TalonSRX(RobotMap.chassisTalonFL));
+        public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(
+                            new WPI_TalonSRX(RobotMap.chassisTalonBR), new WPI_TalonSRX(RobotMap.chassisTalonFR));
+    }
 
-
-        /**
+    /**
     * The elevator subsystem consists of 2 speed controllers inside a speed controller group
     * one encoder on the shaft of the motors
     * one microswitch which determines the maximum length the elevator can go mechanicly
@@ -74,31 +74,33 @@ public class SubsystemComponents {
             }
 	}
                 
-        /**
-         * The subsystem that controlls the shaft that is used to raise the back of the robot during the climbing process.
-         * The subsystem contains one speed controller and 2 limit switches that indicate the topmost and bottommost points that the shaft goes.
-         */
-        public static class ClimbingShaft{
+    /**
+     * The subsystem that controlls the shaft that is used to raise the back of the robot during the climbing process.
+     * The subsystem contains one speed controller and 2 limit switches that indicate the topmost and bottommost points that the shaft goes.
+     */
+    public static class ClimbingShaft{
                 public static final SpeedController Motor = new WPI_TalonSRX(RobotMap.shaftTalon);
                 public static final DigitalInput bottomLimiter = new DigitalInput(RobotMap.shaftBottomLimiter);
                 public static final DigitalInput topLimiter = new DigitalInput(RobotMap.shaftTopLimiter);
     }
-        /**
-         * The subsystem that controlls the folding of the gripper.
-         * The subsystem contains one speed controller and limit switches for the points where the gripper is folded, and open.
-         */
-        public static class GripperMovement {
-                public static final DigitalInput 
-                topMicroswitch = new DigitalInput(RobotMap.gripperMovementTopMicroswitch),
-                bottomMicroSwitch = new DigitalInput(RobotMap.gripperMovementBottomMicroswitch);
-                public static final SpeedController motor = new WPI_VictorSPX(RobotMap.gripperMovementVictor);              
-        }
-                /**
-         * The subsystem that controlls the movement of the robot during the climbing process.
-         * The subsystem contains one speed controller.
-         */
-        public static class ClimbingMovement {
-                public static final SpeedController Motor = new WPI_TalonSRX(RobotMap.climbingMovementTalon);
-        }
+       
+    /**
+     * The subsystem that controlls the folding of the gripper.
+     * The subsystem contains one speed controller and limit switches for the points where the gripper is folded, and open.
+     */
+    public static class GripperMovement {
+            public static final DigitalInput 
+            topMicroswitch = new DigitalInput(RobotMap.gripperMovementTopMicroswitch),
+            bottomMicroSwitch = new DigitalInput(RobotMap.gripperMovementBottomMicroswitch);
+            public static final SpeedController motor = new WPI_VictorSPX(RobotMap.gripperMovementVictor);              
+    }
+
+    /**
+     * The subsystem that controlls the movement of the robot during the climbing process.
+     * The subsystem contains one speed controller.
+     */
+    public static class ClimbingMovement {
+            public static final SpeedController Motor = new WPI_TalonSRX(RobotMap.climbingMovementTalon);
+    }
 
 }
