@@ -56,8 +56,7 @@ public class Robot extends TimedRobot {
 
     //----------BasicSubsystems----------
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
-    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit(
-      () -> SubsystemComponents.Gripper.lazerSensor.getVoltage() > SubsystemConstants.gripper.kVoltageLimit));
+    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit(SubsystemComponents.Gripper::isCargoCaught));
     elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit(SubsystemComponents.Elevator.microswitch::get));
     shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new TwoLimits
       (SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
