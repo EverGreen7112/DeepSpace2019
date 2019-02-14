@@ -31,6 +31,11 @@ public class Climb extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
 
-    //Here build the sequence
+    //-----Dependencies-----
+    requires(Robot.climbingMovement);
+
+    //-----Sequence-----
+    addParallel(new ClimbBackMovement());
+    addSequential(new ClimbGripperMovement());
   }
 }

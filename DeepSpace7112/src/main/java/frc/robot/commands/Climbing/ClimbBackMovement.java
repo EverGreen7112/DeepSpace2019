@@ -10,9 +10,15 @@ package frc.robot.commands.Climbing;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class BackFrameMovement extends Command {
-  public BackFrameMovement() {
+
+private BasicSubsystem subsystem;
+private Supplier<Double> speed;
+
+  public BackFrameMovement(Supplier<Double> speed) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.climbingMovement);
+    this.speed = speed;
   }
 
   // Called just before this Command runs the first time
@@ -25,6 +31,7 @@ public class BackFrameMovement extends Command {
   protected void execute() {
     //This needs to move the back of the robot to push it up 
     //Needs to be operated at the same time as the gripper movement
+    subsystem.move(speed::get());
   }
 
   // Make this return true when this Command no longer needs to run execute()

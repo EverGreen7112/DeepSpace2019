@@ -57,11 +57,11 @@ public class SubsystemConstants {
 	}
 
 	public static interface GripperMovement{
-		public static  Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("kClimbingSpeed", 0.5); //temp
-		public static  Supplier<Double> kGripperSpeed = ConstantHandler.addConstantDouble("kClimbingSpeed", 0.5); //temp   
+		public static Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("kClimbingSpeed", 0.5); //temp
+		public static Supplier<Double> kGripperSpeed = ConstantHandler.addConstantDouble("kClimbingSpeed", 0.5); //temp   
 	}
 		public static interface ClimbingMovement{
-		public static  Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("ClimbingMovementSpeedModifier", 0.5); //temp
-		public static Supplier<Double> kTarget = ConstantHandler.addConstantDouble("ClimingMovement Target", 0); //temp
+		public static Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("ClimbingMovementSpeedModifier", 0.5); //temp
+		public static Supplier<Double> kTargetHeight = 1.0; //temp
 	}
 }
