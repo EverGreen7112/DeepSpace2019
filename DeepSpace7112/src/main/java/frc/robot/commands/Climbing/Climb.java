@@ -8,11 +8,17 @@
 package frc.robot.commands.Climbing;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.Robot;
+import frc.robot.SubsystemConstants;
+import frc.robot.commands.Elevator.*;
 
 public class Climb extends CommandGroup {
   /**
    * Add your docs here.
    */
+  private Supplier<Double> speed;
+  private BasicSubsystem subsystem;
+
   public Climb() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
@@ -31,11 +37,8 @@ public class Climb extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm.
 
-    //-----Dependencies-----
-    requires(Robot.climbingMovement);
-
     //-----Sequence-----
-    addParallel(new ClimbBackMovement());
-    addSequential(new ClimbGripperMovement());
+    addParallel(new ElevatorMoveToTarget(SubsystemConstants.ClimbingMovement.kClimbingSpeed, SubsystemConstants.ClimbingMovement.kTargetHeight));
+    addSequential(new MoveBasicSubsystem(subsystem, speed));
   }
 }

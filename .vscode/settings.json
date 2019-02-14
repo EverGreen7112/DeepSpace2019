@@ -1,4 +1,5 @@
 {
     "editor.fontFamily": "\"font family\" = \"FiraCode\"",
-    "editor.fontLigatures": true
+    "editor.fontLigatures": true,
+    "java.configuration.updateBuildConfiguration": "automatic"
 }
