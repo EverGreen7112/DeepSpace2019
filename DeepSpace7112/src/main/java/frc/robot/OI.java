@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import frc.robot.commands.GetPIDArcadeDrive;
 import frc.robot.commands.SwitchToCameraA;
 import frc.robot.commands.SwitchToCameraB;
 
@@ -25,16 +26,22 @@ public class OI {
   //----------Joysticks----------
   private Joystick drivingJSLeft;
   private Joystick drivingJSRight;
+  private Joystick buttonJS;
   private Button switchToA;
   private Button switchToB;
+  private Button backButton;
 
 	public OI()
 	{
 		drivingJSRight = new Joystick(1);
+		buttonJS = new Joystick(2);
 		switchToA = new JoystickButton(drivingJSRight, 5);
 		switchToB = new JoystickButton(drivingJSRight, 6);
+		backButton = new JoystickButton(buttonJS, 9);
 		switchToA.whenPressed(new SwitchToCameraA());
 		switchToB.whenPressed(new SwitchToCameraB());
+		backButton.whenPressed(new GetPIDArcadeDrive());
+
 	}
 
   	// receives input, returns the adjusted input for better sensitivity

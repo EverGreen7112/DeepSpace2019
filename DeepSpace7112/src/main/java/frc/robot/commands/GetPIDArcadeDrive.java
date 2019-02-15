@@ -7,28 +7,34 @@
 
 package frc.robot.commands;
 
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcadeWithPID;
+import com.spikes2212.utils.PIDSettings;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.ImageProccessingSuppliers;
+import frc.robot.Robot;
+import frc.robot.SubsystemConstants;
 
-public class GetCameraPID extends CommandGroup {
+public class GetPIDArcadeDrive extends CommandGroup {
   /**
-   * Add your docs here.
+   * Initilizes the Joystick and the PID program
    */
-  public GetCameraPID() {
-    // Add Commands here:
-    // e.g. addSequential(new Command1());
-    // addSequential(new Command2());
-    // these will run in order.
+  public GetPIDArcadeDrive() {
+        addSequential(new DriveArcadeWithPID(
+          Robot.drivetrain, //The DriveTrain Subsystem
+           ImageProccessingSuppliers.CENTER, //The PID source
+           SubsystemConstants.cameras.kSetPoint, //The set point 
+           ImageProccessingSuppliers.kMovement.get(), //The amount of forward movement. 
+           new PIDSettings( //The settings for the PID system:
+             ImageProccessingSuppliers.kP.get(), //The proportional part of the PID system
+             ImageProccessingSuppliers.kI.get(), //The Integral part of the PID system.
+             ImageProccessingSuppliers.kD.get(), //The Derivative part of the PID system.
+             ImageProccessingSuppliers.kTolerance.get(), //The Tolerance constant of the PID system.
+             ImageProccessingSuppliers.kWaitTime.get() //The Wait Time constant of the PID system.
+            ),
+           SubsystemConstants.cameras.kCameraOutputRange, //The range of values the PID system can output.
+           false) //Wheter or not the system is contionous (whether or not it resets to 0 after a full round).
+        );
 
-    // To run multiple commands at the same time,
-    // use addParallel()
-    // e.g. addParallel(new Command1());
-    // addSequential(new Command2());
-    // Command1 and Command2 will run in parallel.
-
-    // A command group will require all of the subsystems that each member
-    // would require.
-    // e.g. if Command1 requires chassis, and Command2 requires arm,
-    // a CommandGroup containing them would require both the chassis and the
-    // arm.
   }
 }

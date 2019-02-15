@@ -15,5 +15,13 @@ package frc.robot;
 public class SubsystemConstants {
     public static interface cameras
     {
+        public static final double
+         kSetPoint = 0.0; //temp
+
+        public static final int
+         kCameraWidth = 320,
+         kCameraHeight = 240,
+         kCameraExposure = 50,
+         kCameraOutputRange = 1; //All temp
     }
 }
