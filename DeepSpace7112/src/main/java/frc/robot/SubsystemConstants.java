@@ -7,7 +7,7 @@
 
 package frc.robot;
 
-import java.awt.image.BufferedImage;
+
 
 /**
  * Add your docs here.
@@ -15,10 +15,5 @@ import java.awt.image.BufferedImage;
 public class SubsystemConstants {
     public static interface cameras
     {
-        public static final int
-            kCamerawidth = 320,
-            kCameraHeight = 240,
-            kCameraExposure = 50,
-            kCameraImageType = BufferedImage.TYPE_3BYTE_BGR; //All temp.
     }
 }

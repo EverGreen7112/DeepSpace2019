@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
@@ -16,10 +15,7 @@ import com.spikes2212.utils.CamerasHandler;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -42,8 +38,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
    // drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
    // drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    cameraHandler = new CamerasHandler(SubsystemConstants.cameras.kCamerawidth, SubsystemConstants.cameras.kCameraHeight, RobotMap.cameraA, RobotMap.cameraB);
-    cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure);
+    cameraHandler = new CamerasHandler(ImageProccessingConstants.kCameraWidth, ImageProccessingConstants.kCameraHeight, RobotMap.cameraA, RobotMap.cameraB);
+    cameraHandler.setExposure(ImageProccessingConstants.kCameraExposure);
   }
 
   @Override
