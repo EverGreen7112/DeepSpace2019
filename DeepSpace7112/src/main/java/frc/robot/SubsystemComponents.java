@@ -74,7 +74,7 @@ public class SubsystemComponents {
              * 
              * @return true if a cargo is inside the gripper, false otherwise
              */
-            public static boolean isCargoCaught(){ //WIP
+            public static boolean isCargoCaught() {
                 return lazerSensor.getVoltage() >= SubsystemConstants.gripper.kVoltageLimit;
             }
 	}
