@@ -1,0 +1,24 @@
+- Chassis
+    - Speed modifier - How fast should the robot move?
+- PID
+    - P, I and D constants
+    - Set Point - Where does the system try to go?
+    - Tolerance - How much deviation should the system tolerate before trying to fix it?
+    - Movement - 
+    - Wait Time - How much time should the system tolerate deviation before trying to fix it?
+- Elevator
+    - Distance per Pulse - how much distance does the robot go each tick of the encoder?
+    - Speed Modifier - How fast should the elevator move?
+    - Max Height ?
+- Gripper
+    - In speed - how fast should the gripper move when catching things?
+    - Out speed - how fast should the gripper move when releasing things?
+    - Voltage limit - how much voltage does the optic sensor output when cargo is held?
+- Climbing Shaft
+    - Speed Modifier - how fast should the shaft move?
+- Gripper Movement
+    - Speed Modifier - how fast should the gripper move?
+- Climbing Movement
+    - Speed Modifier - 
+    - 
+

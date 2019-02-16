@@ -42,8 +42,8 @@ public class SubsystemComponents {
         public static final DigitalInput opticSwitch = new DigitalInput(RobotMap.elevatorOpticSwitch);
         public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.elevatorLazerDistanceSensor);
 
-        public static double getElevatorHightByLazer(){
-                return (SubsystemConstants.Elevator.kElevatorMaxHight.get() / 20) * lazerSensor.getValue();
+        public static double getElevatorHeightByLazer(){
+                return (SubsystemConstants.Elevator.kElevatorMaxHeight.get() / 20) * lazerSensor.getValue();
         }
 }
 
@@ -71,11 +71,10 @@ public class SubsystemComponents {
             public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
             
             /**
-             * 
              * @return true if a cargo is inside the gripper, false otherwise
              */
             public static boolean isCargoCaught() {
-                return lazerSensor.getVoltage() >= SubsystemConstants.gripper.kVoltageLimit;
+                return lazerSensor.getVoltage() >= SubsystemConstants.gripper.kVoltageLimit.get();
             }
 	}
                 

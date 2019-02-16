@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-import frc.robot.commands.GetPIDArcadeDrive;
 import frc.robot.commands.Cameras.SwitchToCameraA;
 import frc.robot.commands.Cameras.SwitchToCameraB;
 
@@ -14,6 +13,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcadeWithPID;
+import com.spikes2212.utils.PIDSettings;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -35,6 +36,7 @@ public class OI {
   private Button switchToA;
   private Button switchToB;
   private Button backButton;
+
 
 		private double adjustInput(double input){
 			return input * Math.abs(input);
@@ -58,17 +60,34 @@ public class OI {
      //----------Gripper Buttons----------
       catchButton = new JoystickButton(buttonJS, 2);
       releaseButton = new JoystickButton(buttonJS, 4);	
-      catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperInSpeed));
-      releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.gripperOutSpeed));
+      catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
+      releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
      //----------Camera Buttons---------
       switchToA = new JoystickButton(drivingJSRight, 5);
       switchToB = new JoystickButton(drivingJSRight, 6);
       backButton = new JoystickButton(buttonJS, 9);
       switchToA.whenPressed(new SwitchToCameraA());
       switchToB.whenPressed(new SwitchToCameraB());
-      backButton.whenPressed(new GetPIDArcadeDrive());
+      backButton.whenPressed(driveArcadeWithPID);
+   }
+
+     //----------Commands----------
+  DriveArcadeWithPID driveArcadeWithPID = new DriveArcadeWithPID (
+    Robot.drivetrain, //The DriveTrain Subsystem
+    ImageProccessingSuppliers.center, //The PID source
+    SubsystemConstants.PID.kSetPoint.get(), //The set point 
+    SubsystemConstants.PID.kMovement.get(), //The amount of forward movement. 
+    new PIDSettings ( //The settings for the PID system:
+      SubsystemConstants.PID.kP.get(), //The proportional constant of the PID system
+      SubsystemConstants.PID.kI.get(), //The Integral constant of the PID system.
+      SubsystemConstants.PID.kD.get(), //The Derivative constant of the PID system.
+      SubsystemConstants.PID.kTolerance.get(), //The Tolerance constant of the PID system.
+      SubsystemConstants.PID.kWaitTime.get() //The Wait Time constant of the PID system.
+     ),
+    SubsystemConstants.PID.kOutputRange.get(), //The range of values the PID system can output.
+    false); //Wheter or not the system is contionous (whether or not it resets to 0 after a full round).
 		
 		
-		}	
+			
 
 }

@@ -19,9 +19,7 @@ import com.spikes2212.utils.CamerasHandler;
 
 import frc.robot.commands.Elevator.ElevatorEncoderReset;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 
 /**
@@ -43,7 +41,6 @@ public class Robot extends TimedRobot {
   
   public static CamerasHandler cameraHandler;
   private DashBoardController dbc;
-  SendableChooser<Command> chooser = new SendableChooser<>();
 
 
   @Override
@@ -52,19 +49,22 @@ public class Robot extends TimedRobot {
     SubsystemComponents.Gripper.createMotorGroup();
     SubsystemComponents.Elevator.encoder.setDistancePerPulse(SubsystemConstants.Elevator.kDistancePerPulse.get());
     cameraHandler = new CamerasHandler (
-      SubsystemConstants.cameras.kCameraWidth, 
-      SubsystemConstants.cameras.kCameraHeight, 
+      SubsystemConstants.cameras.kCameraWidth.get(), 
+      SubsystemConstants.cameras.kCameraHeight.get(), 
       RobotMap.cameraA,
       RobotMap.cameraB);
-    cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure);
+    cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get());
     
     //----------BasicSubsystems----------
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
-    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit(SubsystemComponents.Gripper::isCargoCaught));
-    elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit(SubsystemComponents.Elevator.microswitch::get));
-    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new TwoLimits
-      (SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
-    gripperMovement = new BasicSubsystem(SubsystemComponents.GripperMovement.motor::set, new TwoLimits(SubsystemComponents.GripperMovement.topMicroswitch::get,SubsystemComponents.GripperMovement.bottomMicroSwitch::get));
+    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit(
+      SubsystemComponents.Gripper::isCargoCaught));
+    elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit(
+      SubsystemComponents.Elevator.microswitch::get));
+    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new TwoLimits(
+      SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
+    gripperMovement = new BasicSubsystem(SubsystemComponents.GripperMovement.motor::set, new TwoLimits(
+      SubsystemComponents.GripperMovement.topMicroswitch::get,SubsystemComponents.GripperMovement.bottomMicroSwitch::get));
     climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new Limitless());
 
     //----------DefaultCommands----------
