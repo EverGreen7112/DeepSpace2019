@@ -6,12 +6,15 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
-import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
+import frc.robot.commands.Cameras.SwitchToCameraA;
+import frc.robot.commands.Cameras.SwitchToCameraB;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcadeWithPID;
+import com.spikes2212.utils.PIDSettings;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -24,50 +27,67 @@ public class OI {
   //----------Joysticks----------
   private Joystick drivingJSLeft;
   private Joystick drivingJSRight;
-  private Joystick buttonJS; 
+  private Joystick buttonJS;
 
-  //----------Buttons----------  
-  private Button A;
-  private Button Y;
+  //----------Buttons----------
   
-  //--------------------Constructors--------------------
+  private Button catchButton;
+  private Button releaseButton;
+  private Button switchToA;
+  private Button switchToB;
+  private Button backButton;
 
-	public OI(){
 
-		  //----------Joysticks----------
-		drivingJSLeft = new Joystick(0);
-		drivingJSRight = new Joystick(1);
-		buttonJS = new Joystick(2);
-
-		  //----------Buttons----------
-		A = new JoystickButton(buttonJS, 2);
-		Y = new JoystickButton(buttonJS, 4);
-
-		bindButtons();
-	}
-
-	//--------------------Methods--------------------
-	
-	private void bindButtons(){
-		//Lowers the climbing shaft until reaching the bottom microswitch
-		A.whileHeld(new MoveBasicSubsystem(Robot.shaft, -SubsystemConstants.ClimbingShaft.shaftMotorSpeedModifier.get()));
-		//Raises the climbing shaft until reaching the top microswitch
-		Y.whileHeld(new MoveBasicSubsystem(Robot.shaft, SubsystemConstants.ClimbingShaft.shaftMotorSpeedModifier.get()));
-	}
-	
-  	// receives input, returns the adjusted input for better sensitivity
-	private double adjustInput(double input){
+		private double adjustInput(double input){
 			return input * Math.abs(input);
-	}
-	
+    }
     
     public double getLeftJoystick() {
-			return -adjustInput(drivingJSLeft.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
+			return adjustInput(drivingJSLeft.getY());
 		}
-		
+		 
 		public double getRightJoystick() {
-			return adjustInput(drivingJSRight.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
+			return adjustInput(drivingJSRight.getY());
 		}
 	
+	
+	
+  //--------------------Initializations--------------------
+		public OI() {
+      //----------Joysticks----------
+      drivingJSRight = new Joystick(1);
+      buttonJS = new Joystick(2);
+     //----------Gripper Buttons----------
+      catchButton = new JoystickButton(buttonJS, 2);
+      releaseButton = new JoystickButton(buttonJS, 4);	
+      catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
+      releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
+     //----------Camera Buttons---------
+      switchToA = new JoystickButton(drivingJSRight, 5);
+      switchToB = new JoystickButton(drivingJSRight, 6);
+      backButton = new JoystickButton(buttonJS, 9);
+      switchToA.whenPressed(new SwitchToCameraA());
+      switchToB.whenPressed(new SwitchToCameraB());
+      backButton.whenPressed(driveArcadeWithPID);
+   }
+
+     //----------Commands----------
+  DriveArcadeWithPID driveArcadeWithPID = new DriveArcadeWithPID (
+    Robot.drivetrain, //The DriveTrain Subsystem
+    ImageProccessingSuppliers.center, //The PID source
+    SubsystemConstants.PID.kSetPoint.get(), //The set point 
+    SubsystemConstants.PID.kMovement.get(), //The amount of forward movement. 
+    new PIDSettings ( //The settings for the PID system:
+      SubsystemConstants.PID.kP.get(), //The proportional constant of the PID system
+      SubsystemConstants.PID.kI.get(), //The Integral constant of the PID system.
+      SubsystemConstants.PID.kD.get(), //The Derivative constant of the PID system.
+      SubsystemConstants.PID.kTolerance.get(), //The Tolerance constant of the PID system.
+      SubsystemConstants.PID.kWaitTime.get() //The Wait Time constant of the PID system.
+     ),
+    SubsystemConstants.PID.kOutputRange.get(), //The range of values the PID system can output.
+    false); //Wheter or not the system is contionous (whether or not it resets to 0 after a full round).
+		
+		
+			
 
 }
