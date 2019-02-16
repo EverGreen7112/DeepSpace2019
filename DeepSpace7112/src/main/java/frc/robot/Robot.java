@@ -18,12 +18,10 @@ import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import com.spikes2212.utils.CamerasHandler;
 
 import frc.robot.commands.Elevator.ElevatorEncoderReset;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-
 
 
 /**
@@ -32,8 +30,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the build.gradle file in the
  * project.
- * 
- * my name a jeff
  */
 public class Robot extends TimedRobot {
   public static OI oi;
@@ -41,12 +37,19 @@ public class Robot extends TimedRobot {
   public static BasicSubsystem elevator;
   public static BasicSubsystem elevatorEncoder;
   public static BasicSubsystem gripper;
-  public static BasicSubsystem shaft;
-
-  private DashBoardController dbc;
   public static BasicSubsystem gripperMovement;
-  SendableChooser<Command> chooser = new SendableChooser<>();
+  public static BasicSubsystem shaft;
+  
   public static CamerasHandler cameraHandler;
+  private DashBoardController dbc;
+  SendableChooser<Command> chooser = new SendableChooser<>();
+
+  @Override
+  public void robotInit() {
+   // drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
+   // drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
+ 
+
 
   public static BasicSubsystem climbingMovement;
 
@@ -55,7 +58,13 @@ public class Robot extends TimedRobot {
     //---------Sensor Configs----------
     SubsystemComponents.Gripper.createMotorGroup();
     SubsystemComponents.Elevator.encoder.setDistancePerPulse(SubsystemConstants.Elevator.kDistancePerPulse.get());
-
+    cameraHandler = new CamerasHandler (
+      SubsystemConstants.cameras.kCameraWidth, 
+      SubsystemConstants.cameras.kCameraHeight, 
+      RobotMap.cameraA,
+      RobotMap.cameraB);
+    cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure);
+    
     //----------BasicSubsystems----------
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit(SubsystemComponents.Gripper::isCargoCaught));
@@ -116,6 +125,4 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
   }
 
-	
- 
 }

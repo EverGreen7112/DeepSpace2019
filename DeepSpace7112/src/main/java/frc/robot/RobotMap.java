@@ -22,6 +22,12 @@ public class RobotMap {
               chassisTalonFR = 3, //CAN
               chassisTalonBR = 4; //CAN
 //all temp
+  
+  //----------cameras----------
+  public static final int
+              cameraA = 0,
+              cameraB = 1;  //All temp
+  
   //----------Elevator----------
   public static final int 
               elevatorTalonL = 7, //CAN
@@ -43,7 +49,7 @@ public static final int
   public static final int
               gripperMovementVictor  = 0,
               gripperMovementTopMicroswitch = 2, 
-              gripperMovementBottomMicroswitch = 3;  //All temp 
+              gripperMovementBottomMicroswitch = 3;  //All temp
 
 //----------Climbing Movement----------
 public static final int 

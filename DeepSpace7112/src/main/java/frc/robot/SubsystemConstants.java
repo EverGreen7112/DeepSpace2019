@@ -14,21 +14,28 @@ import java.util.function.Supplier;
 
 import com.spikes2212.dashboard.ConstantHandler;
 
+
+
 /**
  * Add your docs here.
  */
 public class SubsystemConstants {
-
     public static interface chassis{
         public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Speed Modifier", 0.5);
     }
 
-    public static interface cameras{
+    
+    public static interface cameras
+    {
+        public static final double
+         kSetPoint = 0.0; //temp
+
         public static final int
-            kCamerawidth = 320,
-            kCameraHeight = 240,
-			kCameraExposure = 50;
-	}
+         kCameraWidth = 320,
+         kCameraHeight = 240,
+         kCameraExposure = 50,
+         kCameraOutputRange = 1; //All temp
+    }
 
     public static interface Elevator{
 		public static Supplier<Double> kDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 1); //temp
@@ -64,4 +71,5 @@ public class SubsystemConstants {
 		public static Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("ClimbingMovementSpeedModifier", 0.5); //temp
 		public static Supplier<Double> kTargetHeight = ConstantHandler.addConstantDouble("ClimbingMovementTargeteight", 1); //temp
 	}
+
 }
