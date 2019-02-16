@@ -49,7 +49,6 @@ public class OI {
 	//--------------------Methods--------------------
 	
 	private void bindButtons(){
-
 		//Lowers the climbing shaft until reaching the bottom microswitch
 		A.whileHeld(new MoveBasicSubsystem(Robot.shaft, -SubsystemConstants.ClimbingShaft.shaftMotorSpeedModifier.get()));
 		//Raises the climbing shaft until reaching the top microswitch

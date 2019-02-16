@@ -32,12 +32,21 @@ public class SubsystemConstants {
 
     public static interface Elevator{
 		public static Supplier<Double> kDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 1); //temp
+		
 		public static Supplier<Double> kRocketBottomHatchHeight = ConstantHandler.addConstantDouble("Rocket bottom hatch hight", 1); //temp
 		public static Supplier<Double> kRocketMiddleHatchHeight = ConstantHandler.addConstantDouble("Rocket middle hatch hight", 2); //temp
 		public static Supplier<Double> kRocketTopHatchHeight = ConstantHandler.addConstantDouble("Rocket top hatch hight", 3); //temp
+		
+		public static Supplier<Double> kRocketBottomCargoHeight = ConstantHandler.addConstantDouble("Rocket bottom cargo hight", 1); //temp
+		public static Supplier<Double> kRocketMiddleCargoHeight = ConstantHandler.addConstantDouble("Rocket middle cargo hight", 2); //temp
+		public static Supplier<Double> kRocketTopCargoHeight = ConstantHandler.addConstantDouble("Rocket top cargo hight", 3); //temp
+		
 		public static Supplier<Double> kElevatorMotorSpeedModifier = ConstantHandler.addConstantDouble("Elevator speed modifier", 0.8); //temp
 		public static Supplier<Double> kElevatorMaxHight = ConstantHandler.addConstantDouble("Elevator Max hight", 2.25);
-		
+		public static Supplier<Double> kElevatorEncoderMaxHight = ConstantHandler.addConstantDouble("Elevator Encoder max hight", 1.4); //temp
+		public static Supplier<Double> kElevatorEncoderMinHight = ConstantHandler.addConstantDouble("Elevator Encoder max hight", -1); //temp
+
+
 		//pid settings, currently not in use
 		public static Supplier<Double> kp = ConstantHandler.addConstantDouble("Elevator - kp", 1); //temp
 		public static Supplier<Double> ki = ConstantHandler.addConstantDouble("Elevator - ki", 0.01); //temp

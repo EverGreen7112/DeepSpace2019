@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
  * Add your docs here.
  */
 public class SubsystemComponents {
-    
     public static class DriveTrain {
         public static final SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(
                             new WPI_TalonSRX(RobotMap.chassisTalonBL), new WPI_TalonSRX(RobotMap.chassisTalonFL));
@@ -44,6 +43,23 @@ public class SubsystemComponents {
 
         public static double getElevatorHightByLazer(){
                 return (SubsystemConstants.Elevator.kElevatorMaxHight.get() / 20) * lazerSensor.getValue();
+        }
+
+        public static double getElevatorHight(){
+            if(getElevatorHightByLazer() < SubsystemConstants.Elevator.kElevatorMaxHight.get()){
+                if(encoder.getDistance() != 0 && encoder.getDistance() > SubsystemConstants.Elevator.kElevatorEncoderMinHight.get()
+                && encoder.getDistance() < SubsystemConstants.Elevator.kElevatorEncoderMaxHight.get()){
+                    return (getElevatorHightByLazer() + encoder.getDistance()) / 2;
+                }
+                else return getElevatorHightByLazer();
+            }
+            else 
+                if(encoder.getDistance() != 0 && encoder.getDistance() > SubsystemConstants.Elevator.kElevatorEncoderMinHight.get()
+                    && encoder.getDistance() < SubsystemConstants.Elevator.kElevatorEncoderMaxHight.get()){
+                        return encoder.getDistance();
+                }
+            else
+                return -1;
         }
 }
 
