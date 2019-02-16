@@ -41,7 +41,7 @@ public class RobotMap {
 
   //----------ClimbingShaft----------
 public static final int 
-              shaftTalon = 5, 
+              shaftTalon = 1, 
               shaftTopLimiter = 0, 
               shaftBottomLimiter = 1; //temp
 
@@ -59,7 +59,7 @@ public static final int
 
   //----------Gripper----------
     public static final int 
-              gripperMotorRight = 5, 
+              gripperMotorRight = 1, 
               gripperMotorLeft = 0,
               gripperMicroswitch = 1,
               gripperAnalogLazerSensor = 3; //analog

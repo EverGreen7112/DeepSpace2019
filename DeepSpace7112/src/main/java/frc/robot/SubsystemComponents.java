@@ -48,6 +48,23 @@ public class SubsystemComponents {
         public static double getElevatorHeightByLazer(){
                 return (SubsystemConstants.Elevator.kElevatorMaxHeight.get() / 20) * lazerSensor.getValue();
         }
+
+        public static double getElevatorHeight(){
+            if(getElevatorHeightByLazer() < SubsystemConstants.Elevator.kElevatorMaxHeight.get()){
+                if(encoder.getDistance() != 0 && encoder.getDistance() > SubsystemConstants.Elevator.kElevatorEncoderMinHeight.get()
+                && encoder.getDistance() < SubsystemConstants.Elevator.kElevatorEncoderMaxHeight.get()){
+                    return (getElevatorHeightByLazer() + encoder.getDistance()) / 2;
+                }
+                else return getElevatorHeightByLazer();
+            }
+            else 
+                if(encoder.getDistance() != 0 && encoder.getDistance() > SubsystemConstants.Elevator.kElevatorEncoderMinHeight.get()
+                    && encoder.getDistance() < SubsystemConstants.Elevator.kElevatorEncoderMaxHeight.get()){
+                        return encoder.getDistance();
+                }
+            else
+                return -1;
+        }
 }
 
 

@@ -47,11 +47,20 @@ public class SubsystemConstants { //ALL TEMP
 
     public static interface Elevator{
 		public static Supplier<Double> kDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 1); //temp
+		
 		public static Supplier<Double> kRocketBottomHatchHeight = ConstantHandler.addConstantDouble("Rocket bottom hatch height", 1); //temp
 		public static Supplier<Double> kRocketMiddleHatchHeight = ConstantHandler.addConstantDouble("Rocket middle hatch height", 2); //temp
 		public static Supplier<Double> kRocketTopHatchHeight = ConstantHandler.addConstantDouble("Rocket top hatch hight", 3); //temp
+		
+		public static Supplier<Double> kRocketBottomCargoHeight = ConstantHandler.addConstantDouble("Rocket bottom cargo hight", 1); //temp
+		public static Supplier<Double> kRocketMiddleCargoHeight = ConstantHandler.addConstantDouble("Rocket middle cargo hight", 2); //temp
+		public static Supplier<Double> kRocketTopCargoHeight = ConstantHandler.addConstantDouble("Rocket top cargo hight", 3); //temp
+		
 		public static Supplier<Double> kElevatorMotorSpeedModifier = ConstantHandler.addConstantDouble("Elevator speed modifier", 0.8); //temp
 		public static Supplier<Double> kElevatorMaxHeight = ConstantHandler.addConstantDouble("Elevator Max height", 2.25);
+		public static Supplier<Double> kElevatorEncoderMaxHeight = ConstantHandler.addConstantDouble("Elevator Encoder max hight", 1.4); //temp
+		public static Supplier<Double> kElevatorEncoderMinHeight = ConstantHandler.addConstantDouble("Elevator Encoder max hight", -1); //temp
+
 	}
 	
     public static interface gripper {

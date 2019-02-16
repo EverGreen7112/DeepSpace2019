@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MinLimit;
@@ -70,7 +71,7 @@ public class Robot extends TimedRobot {
     
     //----------Class Constructors----------
     oi = new OI();
-    dbc = new DashBoardController();        
+    dbc = new DashBoardController(); 
   }
   
 
