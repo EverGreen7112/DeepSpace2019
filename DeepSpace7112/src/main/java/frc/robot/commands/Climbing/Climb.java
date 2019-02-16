@@ -15,7 +15,6 @@ import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
 import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.Robot;
 import frc.robot.SubsystemConstants;
 import frc.robot.commands.Elevator.*;
 

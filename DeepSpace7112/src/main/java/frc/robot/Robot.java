@@ -39,19 +39,12 @@ public class Robot extends TimedRobot {
   public static BasicSubsystem gripper;
   public static BasicSubsystem gripperMovement;
   public static BasicSubsystem shaft;
+  public static BasicSubsystem climbingMovement;
   
   public static CamerasHandler cameraHandler;
   private DashBoardController dbc;
   SendableChooser<Command> chooser = new SendableChooser<>();
 
-  @Override
-  public void robotInit() {
-   // drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
-   // drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
- 
-
-
-  public static BasicSubsystem climbingMovement;
 
   @Override
   public void robotInit() {

@@ -5,18 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Cameras;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class SwitchToCameraB extends CommandGroup {
+public class SwitchToCameraA extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public SwitchToCameraB() {
-    
-    Robot.cameraHandler.switchCamera(RobotMap.cameraB);
+  public SwitchToCameraA() {
+    Robot.cameraHandler.switchCamera(RobotMap.cameraA);
   }
 }
