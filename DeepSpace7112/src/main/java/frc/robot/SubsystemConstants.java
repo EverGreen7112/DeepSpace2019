@@ -68,10 +68,6 @@ public class SubsystemConstants { //ALL TEMP
     	public static final Supplier<Double> shaftMotorSpeedModifier = ConstantHandler.addConstantDouble("Shaft Motor Speed Modifier", 0.3);
 	}
 
-	public static interface GripperMovement {
-		public static Supplier<Double> kGripperSpeed = ConstantHandler.addConstantDouble("Gripper speed modifier", 0.5); //temp   
-	}
-
 	public static interface ClimbingMovement {
 		public static Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("Climbing movement speed modifier", 0.5); //temp
 		public static Supplier<Double> kTargetHeight = ConstantHandler.addConstantDouble("Climbing movement target height", 1); //temp

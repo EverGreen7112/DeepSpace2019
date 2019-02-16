@@ -35,7 +35,6 @@ public class Robot extends TimedRobot {
   public static BasicSubsystem elevator;
   public static BasicSubsystem elevatorEncoder;
   public static BasicSubsystem gripper;
-  public static BasicSubsystem gripperMovement;
   public static BasicSubsystem shaft;
   public static BasicSubsystem climbingMovement;
   
@@ -63,8 +62,6 @@ public class Robot extends TimedRobot {
       SubsystemComponents.Elevator.microswitch::get));
     shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new TwoLimits(
       SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
-    gripperMovement = new BasicSubsystem(SubsystemComponents.GripperMovement.motor::set, new TwoLimits(
-      SubsystemComponents.GripperMovement.topMicroswitch::get,SubsystemComponents.GripperMovement.bottomMicroSwitch::get));
     climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new Limitless());
 
     //----------DefaultCommands----------
