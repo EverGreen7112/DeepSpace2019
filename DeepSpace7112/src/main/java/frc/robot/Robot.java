@@ -7,15 +7,22 @@
 
 package frc.robot;
 
-
+import com.spikes2212.dashboard.DashBoardController;
+import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MinLimit;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MaxLimit;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.TwoLimits;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.Limitless;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import com.spikes2212.utils.CamerasHandler;
 
-
+import frc.robot.commands.Elevator.ElevatorEncoderReset;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,23 +34,59 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 public class Robot extends TimedRobot {
   public static OI oi;
   public static TankDrivetrain drivetrain;
-  SendableChooser<Command> chooser = new SendableChooser<>();
+  public static BasicSubsystem elevator;
+  public static BasicSubsystem elevatorEncoder;
+  public static BasicSubsystem gripper;
+  public static BasicSubsystem gripperMovement;
+  public static BasicSubsystem shaft;
+  
   public static CamerasHandler cameraHandler;
+  private DashBoardController dbc;
+  SendableChooser<Command> chooser = new SendableChooser<>();
 
   @Override
   public void robotInit() {
    // drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
    // drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    cameraHandler = new CamerasHandler(
-        SubsystemConstants.cameras.kCameraWidth, 
-        SubsystemConstants.cameras.kCameraHeight, 
-        RobotMap.cameraA,
-        RobotMap.cameraB);
+ 
+
+
+  public static BasicSubsystem climbingMovement;
+
+  @Override
+  public void robotInit() {
+    //---------Sensor Configs----------
+    SubsystemComponents.Gripper.createMotorGroup();
+    SubsystemComponents.Elevator.encoder.setDistancePerPulse(SubsystemConstants.Elevator.kDistancePerPulse.get());
+    cameraHandler = new CamerasHandler (
+      SubsystemConstants.cameras.kCameraWidth, 
+      SubsystemConstants.cameras.kCameraHeight, 
+      RobotMap.cameraA,
+      RobotMap.cameraB);
     cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure);
+    
+    //----------BasicSubsystems----------
+    drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
+    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit(SubsystemComponents.Gripper::isCargoCaught));
+    elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit(SubsystemComponents.Elevator.microswitch::get));
+    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new TwoLimits
+      (SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
+    gripperMovement = new BasicSubsystem(SubsystemComponents.GripperMovement.motor::set, new TwoLimits(SubsystemComponents.GripperMovement.topMicroswitch::get,SubsystemComponents.GripperMovement.bottomMicroSwitch::get));
+    climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new Limitless());
+
+    //----------DefaultCommands----------
+    elevator.setDefaultCommand(new ElevatorEncoderReset());
+    drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
+    
+    //----------Class Constructors----------
+    oi = new OI();
+    dbc = new DashBoardController();        
   }
+  
 
   @Override
   public void robotPeriodic() {
+    dbc.update();
   }
 
   @Override
@@ -53,6 +96,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
+    
   }
 
   @Override
@@ -73,6 +117,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    dbc.update();
+
   }
 
   @Override

@@ -17,15 +17,51 @@ public class RobotMap {
   
   //----------Chassis----------
   public static final int 
-              chassisTalonFL = 1,
-              chassisTalonBL = 2,
-              chassisTalonFR = 3,
-              chassisTalonBR = 4; //all temp
-  //----------camera----------
+              chassisTalonFL = 1, //CAN
+              chassisTalonBL = 2, //CAN
+              chassisTalonFR = 3, //CAN
+              chassisTalonBR = 4; //CAN
+//all temp
+  
+  //----------cameras----------
   public static final int
               cameraA = 0,
-              cameraB = 1; 
-              //All temp
+              cameraB = 1;  //All temp
+  
+  //----------Elevator----------
+  public static final int 
+              elevatorTalonL = 7, //CAN
+              elevatorTalonR = 8, //CAN
+              elevatorEncoderA = 3, //DIO
+              elevatorEncoderB = 4, //DIO
+              elevatorMicroswitch = 5, //DIO 
+              elevatorOpticSwitch = 6, //DIO
+              elevatorLazerDistanceSensor = 1; //Analog
+//temp
 
+  //----------ClimbingShaft----------
+public static final int 
+              shaftTalon = 5, 
+              shaftTopLimiter = 0, 
+              shaftBottomLimiter = 1; //temp
 
+  //----------Gripper Movement----------
+  public static final int
+              gripperMovementVictor  = 0,
+              gripperMovementTopMicroswitch = 2, 
+              gripperMovementBottomMicroswitch = 3;  //All temp
+
+//----------Climbing Movement----------
+public static final int 
+              climbingMovementTalon = 0,
+              climbingMovementEncoderA = 1,
+              climbingMovementEncoderB = 2; //temp
+
+  //----------Gripper----------
+    public static final int 
+              gripperMotorRight = 5, 
+              gripperMotorLeft = 0,
+              gripperMicroswitch = 1,
+              gripperAnalogLazerSensor = 3; //analog
+              //temp
 }
