@@ -6,13 +6,14 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
-import frc.robot.Commands.SwitchToCameraA;
-import frc.robot.Commands.SwitchToCameraB;
+import frc.robot.commands.driveArcadeWithPID;
+import frc.robot.commands.Cameras.SwitchToCameraA;
+import frc.robot.commands.Cameras.SwitchToCameraB;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -25,31 +26,51 @@ public class OI {
   //----------Joysticks----------
   private Joystick drivingJSLeft;
   private Joystick drivingJSRight;
-  private Joystick buttonsJoystick;
+  private Joystick buttonJS;
 
-  public OI(){
-	  drivingJSLeft = new Joystick(0);
-	  drivingJSRight = new Joystick(1);
+  //----------Buttons----------
+  
+  private Button catchButton;
+  private Button releaseButton;
+  private Button switchToA;
+  private Button switchToB;
+  private Button backButton;
+
+
+  private double adjustInput(double input){
+    return input * Math.abs(input);
+  }
+  
+  public double getLeftJoystick() {
+    return adjustInput(drivingJSLeft.getY());
+  }
+    
+  public double getRightJoystick() {
+    return adjustInput(drivingJSRight.getY());
   }
 
-  	// receives input, returns the adjusted input for better sensitivity
-	private double adjustInput(double input) {
-		return input * Math.abs(input);
-    }
-    
-    public double getLeftJoystick() {
-			return -adjustInput(drivingJSLeft.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
-		}
+
+
+  //--------------------Initializations--------------------
+  public OI() {
+    //----------Joysticks----------
+    drivingJSRight = new Joystick(1);
+    buttonJS = new Joystick(2);
+    //----------Gripper Buttons----------
+    catchButton = new JoystickButton(buttonJS, 2);
+    releaseButton = new JoystickButton(buttonJS, 4);	
+    catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
+    releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
+    //----------Camera Buttons---------
+    switchToA = new JoystickButton(drivingJSRight, 5);
+    switchToB = new JoystickButton(drivingJSRight, 6);
+    backButton = new JoystickButton(buttonJS, 9);
+    switchToA.whenPressed(new SwitchToCameraA());
+    switchToB.whenPressed(new SwitchToCameraB());
+    backButton.whenPressed(new driveArcadeWithPID());
+  }
 		
-		public double getRightJoystick() {
-			return adjustInput(drivingJSRight.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
-		}
-    // public double getLeftJoystick() {
-	// 	return -adjustInput(drivingJSLeft.getRawAxis(1)) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
-	// }
-	
-	// public double getRightJoystick() {
-	// 	return adjustInput(drivingJSLeft.getRawAxis(3)) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
-	// }
+		
+			
 
 }
