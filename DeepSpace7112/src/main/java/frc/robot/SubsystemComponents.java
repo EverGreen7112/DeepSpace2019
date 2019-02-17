@@ -22,11 +22,14 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
  */
 public class SubsystemComponents {
     
+    /**The DriveTrain is the part that controls the robot's wheels.
+     * It consists of two sets of motors - two left ones and two right ones.
+     */
     public static class DriveTrain {
-        public static final SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(
-                            new WPI_TalonSRX(RobotMap.chassisTalonBL), new WPI_TalonSRX(RobotMap.chassisTalonFL));
-        public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(
-                            new WPI_TalonSRX(RobotMap.chassisTalonBR), new WPI_TalonSRX(RobotMap.chassisTalonFR));
+        public static final SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup (
+            new WPI_TalonSRX(RobotMap.chassisTalonBL), new WPI_TalonSRX(RobotMap.chassisTalonFL));
+        public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup (
+            new WPI_TalonSRX(RobotMap.chassisTalonBR), new WPI_TalonSRX(RobotMap.chassisTalonFR));
     }
 
     /**
@@ -42,8 +45,25 @@ public class SubsystemComponents {
         public static final DigitalInput opticSwitch = new DigitalInput(RobotMap.elevatorOpticSwitch);
         public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.elevatorLazerDistanceSensor);
 
-        public static double getElevatorHightByLazer(){
-                return (SubsystemConstants.Elevator.kElevatorMaxHight.get() / 20) * lazerSensor.getValue();
+        public static double getElevatorHeightByLazer(){
+                return (SubsystemConstants.Elevator.kElevatorMaxHeight.get() / 20) * lazerSensor.getValue();
+        }
+
+        public static double getElevatorHeight(){
+            if(getElevatorHeightByLazer() < SubsystemConstants.Elevator.kElevatorMaxHeight.get()){
+                if(encoder.getDistance() != 0 && encoder.getDistance() > SubsystemConstants.Elevator.kElevatorEncoderMinHeight.get()
+                && encoder.getDistance() < SubsystemConstants.Elevator.kElevatorEncoderMaxHeight.get()){
+                    return (getElevatorHeightByLazer() + encoder.getDistance()) / 2;
+                }
+                else return getElevatorHeightByLazer();
+            }
+            else 
+                if(encoder.getDistance() != 0 && encoder.getDistance() > SubsystemConstants.Elevator.kElevatorEncoderMinHeight.get()
+                    && encoder.getDistance() < SubsystemConstants.Elevator.kElevatorEncoderMaxHeight.get()){
+                        return encoder.getDistance();
+                }
+            else
+                return -1;
         }
 }
 
@@ -71,11 +91,10 @@ public class SubsystemComponents {
             public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
             
             /**
-             * 
-             * @return true if a cargo is inside the gripper, false otherwise
+             * @return true if a cargo is inside the gripper, false otherwise.
              */
-            public static boolean isCargoCaught(){ //WIP
-                return lazerSensor.getVoltage() >= SubsystemConstants.gripper.kVoltageLimit;
+            public static boolean isCargoCaught() {
+                return lazerSensor.getVoltage() >= SubsystemConstants.gripper.kVoltageLimit.get();
             }
 	}
                 
@@ -89,17 +108,6 @@ public class SubsystemComponents {
                 public static final DigitalInput topLimiter = new DigitalInput(RobotMap.shaftTopLimiter);
     }
        
-    /**
-     * The subsystem that controlls the folding of the gripper.
-     * The subsystem contains one speed controller and limit switches for the points where the gripper is folded, and open.
-     */
-    public static class GripperMovement {
-            public static final DigitalInput 
-            topMicroswitch = new DigitalInput(RobotMap.gripperMovementTopMicroswitch),
-            bottomMicroSwitch = new DigitalInput(RobotMap.gripperMovementBottomMicroswitch);
-            public static final SpeedController motor = new WPI_VictorSPX(RobotMap.gripperMovementVictor);              
-    }
-
     /**
      * The subsystem that controlls the movement of the robot during the climbing process.
      * The subsystem contains one speed controller.

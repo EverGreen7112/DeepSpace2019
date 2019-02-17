@@ -10,58 +10,75 @@ import java.util.function.Supplier;
 
 import com.spikes2212.dashboard.ConstantHandler;
 
-import java.util.function.Supplier;
 
-import com.spikes2212.dashboard.ConstantHandler;
-
-/**
- * Add your docs here.
- */
-public class SubsystemConstants {
+public class SubsystemConstants { //ALL TEMP
 
     public static interface chassis{
         public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Speed Modifier", 0.5);
     }
 
+	public static interface PID  { 
+		//All temp.
+		/**The point the system will try to drive to - the center of the reflectives seen by the camera. */
+		public static final Supplier<Double> kSetPoint = ConstantHandler.addConstantDouble("Arcade PID - Set point", 0);
+		/**The range of SpeedMultipliers the system can output for the fix - here, from -0.5 to 0.5. */
+		public static final Supplier<Double> kOutputRange = ConstantHandler.addConstantDouble("PID Output Range", 1);
+		/** The proportional constant for the PID */
+        public static final Supplier<Double> kP = ConstantHandler.addConstantDouble("Arcade PID proportional constant", 1);
+        /**The Integral Constant for the PID. */ 
+        public static final Supplier<Double> kI = ConstantHandler.addConstantDouble("Arcade PID integral constant", 0.01);
+        /**The Derviative constant for the PID. */
+        public static final Supplier<Double> kD = ConstantHandler.addConstantDouble("Arcade PID derivative constant", 0.1);
+        /**The tolerance constant for the PID - how much deviation should the robot tolerate before trying to move back to the line? */
+        public static final Supplier<Double> kTolerance = ConstantHandler.addConstantDouble("Arcade PID tolerance", 0.02);
+        /**The Wait Time constant for the PID - How much time should the robot stay in a too deviated position before trying to move back to the line? */
+        public static final Supplier<Double> kWaitTime = ConstantHandler.addConstantDouble("Arcade PID wait time", 1);
+        /**The Movement  Constant for the PID - How fast will the system move when driven. */
+		public static final Supplier<Double> kMovement = ConstantHandler.addConstantDouble("Arcade PID movement speed.", 5); //All temp	
+	}
+
     public static interface cameras{
-        public static final int
-            kCamerawidth = 320,
-            kCameraHeight = 240,
-			kCameraExposure = 50;
+
+		public static final Supplier<Integer> kCameraWidth = ConstantHandler.addConstantInt("Camera Width", 320);
+		public static final Supplier<Integer> kCameraHeight = ConstantHandler.addConstantInt("Camera Height", 240);
+		public static final Supplier<Integer> kCameraExposure = ConstantHandler.addConstantInt("Camera Exposure", 50);
+
 	}
 
     public static interface Elevator{
 		public static Supplier<Double> kDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 1); //temp
-		public static Supplier<Double> kRocketBottomHatchHeight = ConstantHandler.addConstantDouble("Rocket bottom hatch hight", 1); //temp
-		public static Supplier<Double> kRocketMiddleHatchHeight = ConstantHandler.addConstantDouble("Rocket middle hatch hight", 2); //temp
-		public static Supplier<Double> kRocketTopHatchHeight = ConstantHandler.addConstantDouble("Rocket top hatch hight", 3); //temp
-		public static Supplier<Double> kElevatorMotorSpeedModifier = ConstantHandler.addConstantDouble("Elevator speed modifier", 0.8); //temp
-		public static Supplier<Double> kElevatorMaxHight = ConstantHandler.addConstantDouble("Elevator Max hight", 2.25);
 		
-		//pid settings, currently not in use
-		public static Supplier<Double> kp = ConstantHandler.addConstantDouble("Elevator - kp", 1); //temp
-		public static Supplier<Double> ki = ConstantHandler.addConstantDouble("Elevator - ki", 0.01); //temp
-		public static Supplier<Double> kd = ConstantHandler.addConstantDouble("Elevator - kd", 0.1); //temp
-		public static Supplier<Double> kTolerance = ConstantHandler.addConstantDouble("Elevator - tolerance", 0.02); //temp
-		public static Supplier<Double> kWaitTime = ConstantHandler.addConstantDouble("Elevator - wait time", 1);
+		public static Supplier<Double> kRocketBottomHatchHeight = ConstantHandler.addConstantDouble("Rocket bottom hatch height", 1); //temp
+		public static Supplier<Double> kRocketMiddleHatchHeight = ConstantHandler.addConstantDouble("Rocket middle hatch height", 2); //temp
+		public static Supplier<Double> kRocketTopHatchHeight = ConstantHandler.addConstantDouble("Rocket top hatch hight", 3); //temp
+		
+		public static Supplier<Double> kRocketBottomCargoHeight = ConstantHandler.addConstantDouble("Rocket bottom cargo hight", 1); //temp
+		public static Supplier<Double> kRocketMiddleCargoHeight = ConstantHandler.addConstantDouble("Rocket middle cargo hight", 2); //temp
+		public static Supplier<Double> kRocketTopCargoHeight = ConstantHandler.addConstantDouble("Rocket top cargo hight", 3); //temp
+		
+		public static Supplier<Double> kElevatorMotorSpeedModifier = ConstantHandler.addConstantDouble("Elevator speed modifier", 0.8); //temp
+		public static Supplier<Double> kElevatorMaxHeight = ConstantHandler.addConstantDouble("Elevator Max height", 2.25);
+		public static Supplier<Double> kElevatorEncoderMaxHeight = ConstantHandler.addConstantDouble("Elevator Encoder max hight", 1.4); //temp
+		public static Supplier<Double> kElevatorEncoderMinHeight = ConstantHandler.addConstantDouble("Elevator Encoder max hight", -1); //temp
+
 	}
 	
     public static interface gripper {
-		public static final Supplier<Double> gripperInSpeed = ConstantHandler.addConstantDouble("gripper In Speed", 0.3);
-		public static final Supplier<Double> gripperOutSpeed = ConstantHandler.addConstantDouble("gripper Out Speed", -0.3);
-		public static final double kVoltageLimit = 1.5;
+		//All temp
+		/**The speed of the gripper when it catches things.*/
+		public static final Supplier<Double> kGripperInSpeed = ConstantHandler.addConstantDouble("Gripper In Speed", 0.3);
+		/**The speed of the geipper when it releases things. */
+		public static final Supplier<Double> kGripperOutSpeed = ConstantHandler.addConstantDouble("Gripper Out Speed", -0.3);
+		/**The voltage of the optic sensor, which when reached, means the gripper catched the cargo.  */
+		public static final Supplier<Double> kVoltageLimit = ConstantHandler.addConstantDouble("Optic Sensor voltage limit", 1.5);
 	}
 	
-	public static interface ClimbingShaft{
+	public static interface ClimbingShaft {
     	public static final Supplier<Double> shaftMotorSpeedModifier = ConstantHandler.addConstantDouble("Shaft Motor Speed Modifier", 0.3);
 	}
 
-	public static interface GripperMovement{
-		public static Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("kClimbingSpeed", 0.5); //temp
-		public static Supplier<Double> kGripperSpeed = ConstantHandler.addConstantDouble("kClimbingSpeed", 0.5); //temp   
-	}
-		public static interface ClimbingMovement{
-		public static Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("ClimbingMovementSpeedModifier", 0.5); //temp
-		public static Supplier<Double> kTargetHeight = ConstantHandler.addConstantDouble("ClimbingMovementTargeteight", 1); //temp
+	public static interface ClimbingMovement {
+		public static Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("Climbing movement speed modifier", 0.5); //temp
+		public static Supplier<Double> kTargetHeight = ConstantHandler.addConstantDouble("Climbing movement target height", 1); //temp
 	}
 }

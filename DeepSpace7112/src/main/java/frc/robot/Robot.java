@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MinLimit;
@@ -18,12 +19,8 @@ import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import com.spikes2212.utils.CamerasHandler;
 
 import frc.robot.commands.Elevator.ElevatorEncoderReset;
-
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-
 
 
 /**
@@ -32,8 +29,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the build.gradle file in the
  * project.
- * 
- * my name a jeff
  */
 public class Robot extends TimedRobot {
   public static OI oi;
@@ -42,27 +37,32 @@ public class Robot extends TimedRobot {
   public static BasicSubsystem elevatorEncoder;
   public static BasicSubsystem gripper;
   public static BasicSubsystem shaft;
-
-  private DashBoardController dbc;
-  public static BasicSubsystem gripperMovement;
-  SendableChooser<Command> chooser = new SendableChooser<>();
-  public static CamerasHandler cameraHandler;
-
   public static BasicSubsystem climbingMovement;
+  
+  public static CamerasHandler cameraHandler;
+  private DashBoardController dbc;
+
 
   @Override
   public void robotInit() {
     //---------Sensor Configs----------
     SubsystemComponents.Gripper.createMotorGroup();
     SubsystemComponents.Elevator.encoder.setDistancePerPulse(SubsystemConstants.Elevator.kDistancePerPulse.get());
-
+    cameraHandler = new CamerasHandler (
+      SubsystemConstants.cameras.kCameraWidth.get(), 
+      SubsystemConstants.cameras.kCameraHeight.get(), 
+      RobotMap.cameraA,
+      RobotMap.cameraB);
+    cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get());
+    
     //----------BasicSubsystems----------
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
-    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit(SubsystemComponents.Gripper::isCargoCaught));
-    elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit(SubsystemComponents.Elevator.microswitch::get));
-    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new TwoLimits
-      (SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
-    gripperMovement = new BasicSubsystem(SubsystemComponents.GripperMovement.motor::set, new TwoLimits(SubsystemComponents.GripperMovement.topMicroswitch::get,SubsystemComponents.GripperMovement.bottomMicroSwitch::get));
+    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit(
+      SubsystemComponents.Gripper::isCargoCaught));
+    elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit(
+      SubsystemComponents.Elevator.microswitch::get));
+    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new TwoLimits(
+      SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
     climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new Limitless());
 
     //----------DefaultCommands----------
@@ -71,7 +71,7 @@ public class Robot extends TimedRobot {
     
     //----------Class Constructors----------
     oi = new OI();
-    dbc = new DashBoardController();        
+    dbc = new DashBoardController(); 
   }
   
 
@@ -116,6 +116,4 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
   }
 
-	
- 
 }
