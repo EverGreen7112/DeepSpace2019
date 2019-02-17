@@ -13,9 +13,11 @@ import java.util.function.Supplier;
 
 import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
 import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.TwoLimits;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
+import frc.robot.SubsystemComponents;
 import frc.robot.SubsystemConstants;
 import frc.robot.commands.Elevator.*;
 
@@ -46,7 +48,7 @@ public class Climb extends CommandGroup {
     // a CommandGroup containing them would require both the chassis and the
     // arm
 
-    subsystem = new BasicSubsystem(speedConsumer, canMove);
+    subsystem = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new TwoLimits(SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
 
     //-----Sequence-----
     addParallel(new ElevatorMoveToTarget(SubsystemConstants.ClimbingMovement.kClimbingSpeed, SubsystemConstants.ClimbingMovement.kTargetHeight));
