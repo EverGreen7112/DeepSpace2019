@@ -7,8 +7,8 @@
 
 package frc.robot;
 
-import frc.robot.Commands.SwitchToCameraA;
-import frc.robot.Commands.SwitchToCameraB;
+import frc.robot.commands.Cameras.SwitchToCameraA;
+import frc.robot.commands.Cameras.SwitchToCameraB;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
