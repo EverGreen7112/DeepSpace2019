@@ -13,12 +13,11 @@ import com.spikes2212.dashboard.ConstantHandler;
 
 public class SubsystemConstants { //ALL TEMP
 
-    public static interface chassis{
+    public static interface chassis {
         public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Speed Modifier", 0.5);
     }
 
 	public static interface PID  { 
-		//All temp.
 		/**The point the system will try to drive to - the center of the reflectives seen by the camera. */
 		public static final Supplier<Double> kSetPoint = ConstantHandler.addConstantDouble("Arcade PID - Set point", 0);
 		/**The range of SpeedMultipliers the system can output for the fix - here, from -0.5 to 0.5. */
@@ -46,6 +45,7 @@ public class SubsystemConstants { //ALL TEMP
 	}
 
     public static interface Elevator{
+		/**The distance the elevator passes between the encoder's ticks. */
 		public static Supplier<Double> kDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 1); //temp
 		
 		public static Supplier<Double> kRocketBottomHatchHeight = ConstantHandler.addConstantDouble("Rocket bottom hatch height", 1); //temp
@@ -64,10 +64,9 @@ public class SubsystemConstants { //ALL TEMP
 	}
 	
     public static interface gripper {
-		//All temp
 		/**The speed of the gripper when it catches things.*/
 		public static final Supplier<Double> kGripperInSpeed = ConstantHandler.addConstantDouble("Gripper In Speed", 0.3);
-		/**The speed of the geipper when it releases things. */
+		/**The speed of the gripper when it releases things. */
 		public static final Supplier<Double> kGripperOutSpeed = ConstantHandler.addConstantDouble("Gripper Out Speed", -0.3);
 		/**The voltage of the optic sensor, which when reached, means the gripper catched the cargo.  */
 		public static final Supplier<Double> kVoltageLimit = ConstantHandler.addConstantDouble("Optic Sensor voltage limit", 1.5);

@@ -17,15 +17,15 @@ import frc.robot.SubsystemConstants;
 
 public class driveArcadeWithPID extends CommandGroup {
   /**
-   * Add your docs here.
+   * This is simply the our robot's command to drive the .
    */
   public driveArcadeWithPID() {
     addSequential(new DriveArcadeWithPID (
       Robot.drivetrain, //The DriveTrain Subsystem
-      ImageProccessingSuppliers.center, //The PID source
-      SubsystemConstants.PID.kSetPoint.get(), //The set point 
+      ImageProccessingSuppliers.center, //The PID source - the center of the objects seen on the camera.
+      SubsystemConstants.PID.kSetPoint.get(), //The set point - the thing the robot will try to move towards.
       SubsystemConstants.PID.kMovement.get(), //The amount of forward movement. 
-      new PIDSettings ( //The settings for the PID system:
+      new PIDSettings ( //The settings for the PID system (its constants):
         SubsystemConstants.PID.kP.get(), //The proportional constant of the PID system
         SubsystemConstants.PID.kI.get(), //The Integral constant of the PID system.
         SubsystemConstants.PID.kD.get(), //The Derivative constant of the PID system.

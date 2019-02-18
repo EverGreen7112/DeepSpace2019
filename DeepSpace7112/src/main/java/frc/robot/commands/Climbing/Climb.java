@@ -8,24 +8,22 @@
 package frc.robot.commands.Climbing;
 
 import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
-import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.TwoLimits;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import frc.robot.Robot;
-import frc.robot.SubsystemComponents;
 import frc.robot.SubsystemConstants;
 import frc.robot.commands.Elevator.*;
 
 public class Climb extends CommandGroup {
   /**
-   * Add your docs here.
+   * This is the command that makes the Robot climb - it lifts the shaft, .
    */
 
   public Climb() {
 
     //-----Sequence-----
-    addParallel(new ElevatorMoveToTarget(SubsystemConstants.ClimbingMovement.kClimbingSpeed, SubsystemConstants.ClimbingMovement.kTargetHeight));
+    addParallel(new ElevatorMoveToTarget(SubsystemConstants.ClimbingMovement.kClimbingSpeed, SubsystemConstants.ClimbingMovement.kTargetHeight)); //Move the elevator
     addSequential(new MoveBasicSubsystem(Robot.shaft, SubsystemConstants.ClimbingShaft.shaftMotorSpeedModifier));
     addSequential(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
     addSequential(new MoveBasicSubsystem(Robot.shaft, -SubsystemConstants.ClimbingShaft.shaftMotorSpeedModifier.get()));

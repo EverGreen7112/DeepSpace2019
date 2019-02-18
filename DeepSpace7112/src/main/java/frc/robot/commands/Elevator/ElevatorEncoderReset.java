@@ -12,7 +12,7 @@ import frc.robot.Robot;
 import frc.robot.SubsystemComponents;
 
 /**
- * Resets the encoder when the optic switch is triggered
+ * Resets the encoder when the optic switch is triggered.
  */
 public class ElevatorEncoderReset extends Command {
   public ElevatorEncoderReset() {
@@ -28,7 +28,7 @@ public class ElevatorEncoderReset extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(SubsystemComponents.Elevator.opticSwitch.get()){
+    if(SubsystemComponents.Elevator.opticSwitch.get()) {
       SubsystemComponents.Elevator.encoder.reset();
     }
   }

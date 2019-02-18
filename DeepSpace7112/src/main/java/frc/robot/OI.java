@@ -24,13 +24,19 @@ public class OI {
   //--------------------Declerations--------------------
 
   //----------Joysticks----------
+
+  /**The joystick that controlls the left motors. */
   private Joystick drivingJSLeft;
+  /**The Joystick that conntrols the right motors. */
   private Joystick drivingJSRight;
+  /**The button joysticks which is used to execute the various commands to the robot - Climbing, catching, releasing and controlling the PID. */
   private Joystick buttonJS;
 
   //----------Buttons----------
   
+  /**The button that is used to catch objects with the gripper. The */
   private Button catchButton;
+  /**The button that is used to release objects cought with the gripper. */
   private Button releaseButton;
   private Button switchToA;
   private Button switchToB;

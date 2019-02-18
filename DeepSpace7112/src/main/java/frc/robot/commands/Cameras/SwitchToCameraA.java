@@ -13,7 +13,7 @@ import frc.robot.RobotMap;
 
 public class SwitchToCameraA extends CommandGroup {
   /**
-   * Add your docs here.
+   * The command to switch the CameraHandler to view camera A (from port 0).
    */
   public SwitchToCameraA() {
     Robot.cameraHandler.switchCamera(RobotMap.cameraA);
