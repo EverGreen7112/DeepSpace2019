@@ -6,10 +6,10 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-import frc.robot.commands.driveArcadeWithPID;
+import frc.robot.commands.PID.driveArcadeWithPID;
 import frc.robot.commands.Cameras.SwitchToCameraA;
 import frc.robot.commands.Cameras.SwitchToCameraB;
-
+import frc.robot.commands.Gripper.GripperPistons;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -35,6 +35,7 @@ public class OI {
   private Button switchToA;
   private Button switchToB;
   private Button backButton;
+  private Button gripperPistons;
 
 
   private double adjustInput(double input){
@@ -59,6 +60,7 @@ public class OI {
     releaseButton = new JoystickButton(buttonJS, 4);	
     catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
     releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
+    gripperPistons = new JoystickButton(buttonJS, 5); //**temp button** button for the gripper pistons
     //----------Camera Buttons---------
     switchToA = new JoystickButton(drivingJSRight, 5);
     switchToB = new JoystickButton(drivingJSRight, 6);
@@ -66,9 +68,6 @@ public class OI {
     switchToA.whenPressed(new SwitchToCameraA());
     switchToB.whenPressed(new SwitchToCameraB());
     backButton.whenPressed(new driveArcadeWithPID());
+    gripperPistons.whenPressed(new GripperPistons());
   }
-		
-		
-			
-
 }
