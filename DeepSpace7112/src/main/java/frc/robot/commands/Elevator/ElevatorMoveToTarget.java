@@ -65,7 +65,6 @@ public class ElevatorMoveToTarget extends Command {
       return SubsystemComponents.Elevator.encoder.getDistance() <= target.get();
     else
       return SubsystemComponents.Elevator.encoder.getDistance() >= target.get();
-
   }
 
   // Called once after isFinished returns true

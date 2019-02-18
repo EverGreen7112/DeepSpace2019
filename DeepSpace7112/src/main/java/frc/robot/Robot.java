@@ -21,7 +21,7 @@ import com.spikes2212.utils.CamerasHandler;
 import frc.robot.commands.Elevator.ElevatorEncoderReset;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-
+import frc.robot.commands.GUI;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -72,6 +72,9 @@ public class Robot extends TimedRobot {
     //----------Class Constructors----------
     oi = new OI();
     dbc = new DashBoardController(); 
+
+    //----------GUI----------
+    GUI gui = new GUI();
   }
   
 
@@ -115,5 +118,4 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
-
 }

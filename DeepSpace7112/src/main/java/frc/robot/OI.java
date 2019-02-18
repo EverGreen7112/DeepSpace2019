@@ -49,8 +49,6 @@ public class OI {
     return adjustInput(drivingJSRight.getY());
   }
 
-
-
   //--------------------Initializations--------------------
   public OI() {
     //----------Joysticks----------

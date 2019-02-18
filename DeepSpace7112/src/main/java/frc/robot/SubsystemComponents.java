@@ -38,7 +38,7 @@ public class SubsystemComponents {
     * one microswitch which determines the maximum length the elevator can go mechanicly
     * one optic switch to reset the encoder (refrence point)
     */
-    public static class Elevator{
+    public static class Elevator {
         public static final SpeedControllerGroup motors = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.elevatorTalonL), new WPI_TalonSRX(RobotMap.elevatorTalonR));
         public static final Encoder encoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB);
         public static final DigitalInput microswitch = new DigitalInput(RobotMap.elevatorMicroswitch);
