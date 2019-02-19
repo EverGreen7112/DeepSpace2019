@@ -50,7 +50,7 @@ public class ImageProccessingSuppliers {
         xSupplier = () -> camNetworkTable.getEntry("x1").getDouble(0),
         ySupplier = () -> camNetworkTable.getEntry("y1").getDouble(0);
 
-        /**Predicate for whether or not the Reflective is seen - 
+        /**Supplier for whether or not the Reflective is seen - 
          *  True if information about the small reflective is recieved, and false if not.*/
         public static final Supplier<Boolean>
          isUpdated = () -> camNetworkTable.getEntry("isUpdated1").getBoolean(false);
