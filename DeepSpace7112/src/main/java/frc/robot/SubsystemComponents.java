@@ -68,7 +68,6 @@ public class SubsystemComponents {
         }
 }
 
-
     /**
     * The Gripper subsystem consists of 2 speed controllers inside a speed controller group, the right motor is inverted
     * The subsystem contains one analog proximity lazer based sensor.

@@ -37,6 +37,8 @@ public class Robot extends TimedRobot {
   public static BasicSubsystem shaft;
   public static BasicSubsystem climbingMovement;
   
+  public static Compressor compressor;
+
   public static CamerasHandler cameraHandler;
   private DashBoardController dbc;
 
@@ -52,6 +54,8 @@ public class Robot extends TimedRobot {
       RobotMap.cameraB);
     cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get());
     
+    compressor = new Compressor();
+
     //----------BasicSubsystems----------
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit (

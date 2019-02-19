@@ -46,7 +46,6 @@ public class OI {
   /**The button to strighten the robot (make it fix deviation from a painted line.) */
   private Button strighten;
 
-
   private double adjustInput(double input){
     return input * Math.abs(input);
   }
@@ -65,9 +64,18 @@ public class OI {
     drivingJSLeft = new Joystick(0);
     drivingJSRight = new Joystick(1);
     buttonJS = new Joystick(2);
+
+    //----------Elevator Buttons----------
+    bottomHatch = new JoystickButton(drivingJSLeft, 12);
+    middleHatch= new JoystickButton(drivingJSLeft, 10);
+    topHatch = new JoystickButton(drivingJSLeft, 8);
+    bottomCargo = new JoystickButton(drivingJSLeft, 11);
+    middleCargo = new JoystickButton(drivingJSLeft, 9);
+    topCargo = new JoystickButton(drivingJSLeft, 7);
+
     //----------Gripper Buttons----------
-    catchButton = new JoystickButton(buttonJS, 2);
-    releaseButton = new JoystickButton(buttonJS, 4);	
+    catchButton = new JoystickButton(buttonJS, 1);
+    releaseButton = new JoystickButton(buttonJS, 3);	
     catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
     releaseButton.whileHeld(new GripperRelease());
     //----------Camera Buttons---------
