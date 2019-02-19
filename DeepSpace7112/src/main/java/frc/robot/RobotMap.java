@@ -29,7 +29,7 @@ public class RobotMap {
               cameraB = 1;  //All temp
   
   //----------Elevator----------
-  public static final int 
+  public static final int  
               elevatorTalonL = 7, //CAN
               elevatorTalonR = 8, //CAN
               elevatorEncoderA = 3, //DIO
@@ -37,19 +37,15 @@ public class RobotMap {
               elevatorMicroswitch = 5, //DIO 
               elevatorOpticSwitch = 6, //DIO
               elevatorLazerDistanceSensor = 1; //Analog
-//temp
+              //All tem
 
-  //----------ClimbingShaft----------
+//----------ClimbingShaft----------
 public static final int 
-              shaftTalon = 1, 
-              shaftTopLimiter = 0, 
-              shaftBottomLimiter = 1; //temp
+            shaftTalon = 1, 
+            shaftTopLimiter = 0, 
+            shaftBottomLimiter = 1; //temp
 
-  //----------Gripper Movement----------
-  public static final int
-              gripperMovementVictor  = 0,
-              gripperMovementTopMicroswitch = 2, 
-              gripperMovementBottomMicroswitch = 3;  //All temp
+
 
 //----------Climbing Movement----------
 public static final int 
@@ -57,11 +53,18 @@ public static final int
               climbingMovementEncoderA = 1,
               climbingMovementEncoderB = 2; //temp
 
-  //----------Gripper----------
-    public static final int 
-              gripperMotorRight = 1, 
-              gripperMotorLeft = 0,
-              gripperMicroswitch = 1,
-              gripperAnalogLazerSensor = 3; //analog
-              //temp
+//----------Gripper----------
+  public static final int 
+            gripperMotorRight = 1, 
+            gripperMotorLeft = 0,
+            gripperMicroswitch = 1,
+            gripperAnalogLazerSensor = 3; //analog
+            //temp
+
+            
+//----------Gripper Movement----------
+public static final int
+gripperMovementVictor  = 0,
+gripperMovementTopMicroswitch = 2, 
+gripperMovementBottomMicroswitch = 3;  //All temp
 }

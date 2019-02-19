@@ -5,32 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Elevator;
+package frc.robot.commands.Gripper;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.SubsystemComponents;
 
-/**
- * Resets the encoder when the optic switch is triggered.
- */
-public class ElevatorEncoderReset extends Command {
-  public ElevatorEncoderReset() {
-    requires(Robot.elevator);
+public class GripperMovementPistons extends Command {
+  public GripperMovementPistons() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    
+    Robot.gripperMovementLeftPiston.set(!Robot.gripperMovementLeftPiston.get());
+    Robot.gripperMovementRightPiston.set(!Robot.gripperMovementRightPiston.get());
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(SubsystemComponents.Elevator.opticSwitch.get()) {
-      SubsystemComponents.Elevator.encoder.reset();
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -48,6 +43,5 @@ public class ElevatorEncoderReset extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

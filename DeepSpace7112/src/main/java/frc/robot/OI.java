@@ -6,10 +6,10 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-import frc.robot.commands.driveArcadeWithPID;
+import frc.robot.commands.PID.driveArcadeWithPID;
 import frc.robot.commands.Cameras.SwitchToCameraA;
 import frc.robot.commands.Cameras.SwitchToCameraB;
-
+import frc.robot.commands.Gripper.GripperPistons;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -24,13 +24,19 @@ public class OI {
   //--------------------Declerations--------------------
 
   //----------Joysticks----------
+
+  /**The joystick that controlls the left motors. */
   private Joystick drivingJSLeft;
+  /**The Joystick that conntrols the right motors. */
   private Joystick drivingJSRight;
+  /**The button joysticks which is used to execute the various commands to the robot - Climbing, catching, releasing and controlling the PID. */
   private Joystick buttonJS;
 
   //----------Buttons----------
   
+  /**The button that is used to catch objects with the gripper. The */
   private Button catchButton;
+  /**The button that is used to release objects cought with the gripper. */
   private Button releaseButton;
   private Button switchToA;
   private Button switchToB;
@@ -81,9 +87,6 @@ public class OI {
     switchToA.whenPressed(new SwitchToCameraA());
     switchToB.whenPressed(new SwitchToCameraB());
     backButton.whenPressed(new driveArcadeWithPID());
+    gripperPistons.whenPressed(new GripperPistons());
   }
-		
-		
-			
-
 }
