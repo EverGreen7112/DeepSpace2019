@@ -87,6 +87,5 @@ public class OI {
     switchToA.whenPressed(new SwitchToCameraA());
     switchToB.whenPressed(new SwitchToCameraB());
     backButton.whenPressed(new driveArcadeWithPID());
-    gripperPistons.whenPressed(new GripperPistons());
   }
 }

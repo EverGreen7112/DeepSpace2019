@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -67,7 +68,6 @@ public class SubsystemComponents {
         }
 }
 
-
     /**
     * The Gripper subsystem consists of 2 speed controllers inside a speed controller group, the right motor is inverted
     * The subsystem contains one analog proximity lazer based sensor.
@@ -75,7 +75,9 @@ public class SubsystemComponents {
     public static class Gripper {
             private static final SpeedController motorL = new WPI_VictorSPX(RobotMap.gripperMotorLeft);
             private static final SpeedController motorR = new WPI_VictorSPX(RobotMap.gripperMotorRight);
-            
+            public static final DoubleSolenoid gripperLeftPiston = new DoubleSolenoid(1, 2); //Left gripper piston setting the port
+            public static final DoubleSolenoid gripperRightPiston = new DoubleSolenoid(3, 4); //Right griper piston setting the port
+        
 
             public static SpeedControllerGroup Motors;
 
@@ -96,7 +98,12 @@ public class SubsystemComponents {
             public static boolean isCargoCaught() {
                 return lazerSensor.getVoltage() >= SubsystemConstants.gripper.kVoltageLimit.get();
             }
-	}
+    }
+    
+    public static class GripperMovement{
+        public static final DoubleSolenoid gripperMovementLeftPiston = new DoubleSolenoid(5, 6); //Left gripper movement piston setting the port
+        public static final DoubleSolenoid gripperMovementRightPiston = new DoubleSolenoid(7, 8); //Right gripper movement piston setting the port    
+    }
                 
     /**
      * The subsystem that controlls the shaft that is used to raise the back of the robot during the climbing process.

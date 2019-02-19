@@ -9,6 +9,7 @@ package frc.robot.commands.Gripper;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.SubsystemComponents;
 
 public class GripperMovementPistons extends Command {
   public GripperMovementPistons() {
@@ -19,8 +20,8 @@ public class GripperMovementPistons extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.gripperMovementLeftPiston.set(!Robot.gripperMovementLeftPiston.get());
-    Robot.gripperMovementRightPiston.set(!Robot.gripperMovementRightPiston.get());
+    //SubsystemComponents.GripperMovement.gripperMovementLeftPiston.set(!SubsystemComponents.GripperMovement.gripperMovementLeftPiston.);
+    //Robot.gripperMovementRightPiston.set(!Robot.gripperMovementRightPiston.get());
   }
 
   // Called repeatedly when this Command is scheduled to run

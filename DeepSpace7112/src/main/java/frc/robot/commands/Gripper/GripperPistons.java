@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.SubsystemComponents;
 
 public class GripperPistons extends Command {
 
@@ -22,8 +23,8 @@ public class GripperPistons extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.gripperLeftPiston.set(Value.kForward); //temp
-    Robot.gripperRightPiston.set(Value.kForward);
+    SubsystemComponents.Gripper.gripperLeftPiston.set(Value.kForward); //temp
+    SubsystemComponents.Gripper.gripperRightPiston.set(Value.kForward);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -40,8 +41,8 @@ public class GripperPistons extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.gripperLeftPiston.set(Value.kOff);
-    Robot.gripperRightPiston.set(Value.kOff);
+    SubsystemComponents.Gripper.gripperRightPiston.set(Value.kOff);
+    SubsystemComponents.Gripper.gripperLeftPiston.set(Value.kOff);
   }
 
   // Called when another command which requires one or more of the same
