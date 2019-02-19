@@ -13,8 +13,9 @@ import frc.robot.RobotMap;
 
 public class SwitchToCameraA extends CommandGroup {
   /**
-   * The command to switch the CameraHandler to view camera A (from port 0).
+   * The command to switch the CameraHandler (that is, the viewr in the shuffleboard) to camera A (from port 0).
    */
+
   public SwitchToCameraA() {
     Robot.cameraHandler.switchCamera(RobotMap.cameraA);
   }

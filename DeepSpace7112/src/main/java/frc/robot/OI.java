@@ -6,10 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+
 import frc.robot.commands.PID.driveArcadeWithPID;
 import frc.robot.commands.Cameras.SwitchToCameraA;
 import frc.robot.commands.Cameras.SwitchToCameraB;
-import frc.robot.commands.Gripper.GripperPistons;
+import frc.robot.commands.Gripper.GripperRelease;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -36,12 +37,14 @@ public class OI {
   
   /**The button that is used to catch objects with the gripper. The */
   private Button catchButton;
-  /**The button that is used to release objects cought with the gripper. */
+  /**The button that is used to release objects cought with the gripper. When it's released, the gripper catches back an object not fully released.*/
   private Button releaseButton;
+  /**The button to switch the StreamViewer on the shuffleboard to view the Camera from port 0.  */
   private Button switchToA;
+  /**The button to switch the StreamViewer on the shuffleboard to view the Camera from port 1.  */
   private Button switchToB;
-  private Button backButton;
-  private Button gripperPistons;
+  /**The button to strighten the robot (make it fix deviation from a painted line.) */
+  private Button strighten;
 
 
   private double adjustInput(double input){
@@ -59,21 +62,20 @@ public class OI {
   //--------------------Initializations--------------------
   public OI() {
     //----------Joysticks----------
+    drivingJSLeft = new Joystick(0);
     drivingJSRight = new Joystick(1);
     buttonJS = new Joystick(2);
     //----------Gripper Buttons----------
     catchButton = new JoystickButton(buttonJS, 2);
     releaseButton = new JoystickButton(buttonJS, 4);	
     catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
-    releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
-    gripperPistons = new JoystickButton(buttonJS, 5); //**temp button** button for the gripper pistons
+    releaseButton.whileHeld(new GripperRelease());
     //----------Camera Buttons---------
     switchToA = new JoystickButton(drivingJSRight, 5);
     switchToB = new JoystickButton(drivingJSRight, 6);
-    backButton = new JoystickButton(buttonJS, 9);
+    strighten = new JoystickButton(buttonJS, 9);
     switchToA.whenPressed(new SwitchToCameraA());
     switchToB.whenPressed(new SwitchToCameraB());
-    backButton.whenPressed(new driveArcadeWithPID());
-    gripperPistons.whenPressed(new GripperPistons());
+    strighten.whenPressed(new driveArcadeWithPID());
   }
 }

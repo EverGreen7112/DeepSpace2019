@@ -18,8 +18,6 @@ import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import com.spikes2212.utils.CamerasHandler;
 
 import frc.robot.commands.Elevator.ElevatorEncoderReset;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -41,10 +39,6 @@ public class Robot extends TimedRobot {
   
   public static CamerasHandler cameraHandler;
   private DashBoardController dbc;
-  public static DoubleSolenoid gripperLeftPiston;
-  public static DoubleSolenoid gripperRightPiston;
-  public static DoubleSolenoid gripperMovementLeftPiston;
-  public static DoubleSolenoid gripperMovementRightPiston;
 
   @Override
   public void robotInit() {
@@ -67,10 +61,6 @@ public class Robot extends TimedRobot {
     shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new TwoLimits (
       SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
     climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new Limitless());
-    gripperLeftPiston = new DoubleSolenoid(1, 2); //Left gripper piston setting the port
-    gripperRightPiston = new DoubleSolenoid(3, 4); //Right griper piston setting the port
-    gripperMovementLeftPiston = new DoubleSolenoid(5, 6); //Left gripper movement piston setting the port
-    gripperMovementRightPiston = new DoubleSolenoid(7, 8); //Right gripper movement piston setting the port
 
     //----------DefaultCommands----------
     elevator.setDefaultCommand(new ElevatorEncoderReset());

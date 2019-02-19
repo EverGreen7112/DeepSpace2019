@@ -55,16 +55,23 @@ public static final int
 
 //----------Gripper----------
   public static final int 
-            gripperMotorRight = 1, 
-            gripperMotorLeft = 0,
-            gripperMicroswitch = 1,
-            gripperAnalogLazerSensor = 3; //analog
-            //temp
-
+            gripperLeftPistonF= 0, //Left Forward
+            gripperLeftPistonR= 1, //Left Reverse
+            gripperRightPistonF = 2, //Right Forward
+            gripperRightPistonR = 3, //Right Reverse
+            gripperMicroswitch = 4, 
+            gripperAnalogLazerSensor = 5, //analog
+            gripperMotorLeft = 6,
+            gripperMotorRight = 7;
+            //All temp
             
 //----------Gripper Movement----------
-public static final int
-gripperMovementVictor  = 0,
-gripperMovementTopMicroswitch = 2, 
-gripperMovementBottomMicroswitch = 3;  //All temp
+ public static final int
+            gripperMovementLeftPistonF = 0, //Left Forward 
+            gripperMovementLeftPistonR = 1, //Left Reverse
+            gripperMovementRightPistonF = 2, //Left Forward
+            gripperMovementRightPistonR = 3, //Left Reverse
+            gripperMovementTopMicroswitch = 4,
+            gripperMovementBottomMicroSwitch = 5;
 }
+
