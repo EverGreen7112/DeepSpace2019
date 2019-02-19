@@ -35,7 +35,12 @@ public class OI {
   private Button switchToA;
   private Button switchToB;
   private Button backButton;
-
+  private Button bottomHatch;
+  private Button middleHatch;
+  private Button topHatch;
+  private Button bottomCargo;
+  private Button middleCargo;
+  private Button topCargo;
 
   private double adjustInput(double input){
     return input * Math.abs(input);
@@ -54,11 +59,21 @@ public class OI {
     //----------Joysticks----------
     drivingJSRight = new Joystick(1);
     buttonJS = new Joystick(2);
+
+    //----------Elevator Buttons----------
+    bottomHatch = new JoystickButton(drivingJSLeft, 12);
+    middleHatch= new JoystickButton(drivingJSLeft, 10);
+    topHatch = new JoystickButton(drivingJSLeft, 8);
+    bottomCargo = new JoystickButton(drivingJSLeft, 11);
+    middleCargo = new JoystickButton(drivingJSLeft, 9);
+    topCargo = new JoystickButton(drivingJSLeft, 7);
+
     //----------Gripper Buttons----------
-    catchButton = new JoystickButton(buttonJS, 2);
-    releaseButton = new JoystickButton(buttonJS, 4);	
+    catchButton = new JoystickButton(buttonJS, 1);
+    releaseButton = new JoystickButton(buttonJS, 3);	
     catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
     releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
+    
     //----------Camera Buttons---------
     switchToA = new JoystickButton(drivingJSRight, 5);
     switchToB = new JoystickButton(drivingJSRight, 6);
