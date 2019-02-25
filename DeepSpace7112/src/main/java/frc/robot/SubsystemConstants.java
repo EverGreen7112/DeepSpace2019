@@ -45,8 +45,10 @@ public class SubsystemConstants { //ALL TEMP
 
     public static interface Elevator{
 		/**The distance the elevator passes between the encoder's ticks. */
-		public static Supplier<Double> kDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 1); //temp
-		
+		public static Supplier<Double> kDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 0.8157894); //19 ticks per motor turn, 15.5 cm per crank turn
+		public static Supplier<Double> kElevatorMotorSpeedModifier = ConstantHandler.addConstantDouble("Elevator speed modifier", 0.8); //temp
+		public static Supplier<Double> kElevatorStallSpeedModifier = ConstantHandler.addConstantDouble("Elevator Stall speed modfier", 0.17); //temp
+
 		public static Supplier<Double> kRocketBottomHatchHeight = ConstantHandler.addConstantDouble("Rocket bottom hatch height", 48.26); 
 		public static Supplier<Double> kRocketMiddleHatchHeight = ConstantHandler.addConstantDouble("Rocket middle hatch height", 119.38); 
 		public static Supplier<Double> kRocketTopHatchHeight = ConstantHandler.addConstantDouble("Rocket top hatch hight", 190.5); 
@@ -55,10 +57,9 @@ public class SubsystemConstants { //ALL TEMP
 		public static Supplier<Double> kRocketMiddleCargoHeight = ConstantHandler.addConstantDouble("Rocket middle cargo hight", 140.97); 
 		public static Supplier<Double> kRocketTopCargoHeight = ConstantHandler.addConstantDouble("Rocket top cargo hight", 212.09); 
 		
-		public static Supplier<Double> kElevatorMotorSpeedModifier = ConstantHandler.addConstantDouble("Elevator speed modifier", 0.8); //temp
-		public static Supplier<Double> kElevatorMaxHeight = ConstantHandler.addConstantDouble("Elevator Max height", 2.25);
-		public static Supplier<Double> kElevatorEncoderMaxHeight = ConstantHandler.addConstantDouble("Elevator Encoder max hight", 1.4); //temp
-		public static Supplier<Double> kElevatorEncoderMinHeight = ConstantHandler.addConstantDouble("Elevator Encoder max hight", -1); //temp
+		public static Supplier<Double> kElevatorMaxHeight = ConstantHandler.addConstantDouble("Elevator Max height", 225);
+		public static Supplier<Double> kElevatorEncoderMaxHeight = ConstantHandler.addConstantDouble("Elevator Encoder max hight", 250); //temp
+		public static Supplier<Double> kElevatorEncoderMinHeight = ConstantHandler.addConstantDouble("Elevator Encoder max hight", 0); //temp
 
 	}
 	
@@ -88,7 +89,8 @@ public class SubsystemConstants { //ALL TEMP
 	}
 	
 	public static interface ClimbingShaft {
-    	public static final Supplier<Double> shaftMotorSpeedModifier = ConstantHandler.addConstantDouble("Shaft Motor Speed Modifier", 0.3);
+    	public static final Supplier<Double> shaftMotorSpeedModifier = ConstantHandler.addConstantDouble("Shaft Motor Speed Modifier", 0.6);
+		public static final Supplier<Double> kShaftMotorStallSpeed = ConstantHandler.addConstantDouble("Shaft Stall speed", 0.3);
 	}
 
 	public static interface ClimbingMovement {
