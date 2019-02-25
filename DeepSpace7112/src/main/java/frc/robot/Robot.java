@@ -7,8 +7,11 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MinLimit;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MaxLimit;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.TwoLimits;
@@ -19,8 +22,6 @@ import com.spikes2212.utils.CamerasHandler;
 
 import frc.robot.commands.Elevator.ElevatorEncoderReset;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -49,7 +50,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     //---------Sensor Configs----------
     SubsystemComponents.Gripper.createMotorGroup();
-    SubsystemComponents.Elevator.encoder.setDistancePerPulse(SubsystemConstants.Elevator.kDistancePerPulse.get());
+    SubsystemComponents.Elevator.setupSensors();
     cameraHandler = new CamerasHandler (
       SubsystemConstants.cameras.kCameraWidth.get(), 
       SubsystemConstants.cameras.kCameraHeight.get(), 
@@ -57,26 +58,27 @@ public class Robot extends TimedRobot {
       RobotMap.cameraB);
     cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get());
     
+    
     compressor = new Compressor();
-
+    compressor.start();
+    compressor.setClosedLoopControl(true);
     //----------BasicSubsystems----------
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit (
       SubsystemComponents.Gripper::isCargoCaught));
     elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
-      SubsystemComponents.Elevator.microswitch::get));
-    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new TwoLimits (
-      SubsystemComponents.ClimbingShaft.bottomLimiter::get, SubsystemComponents.ClimbingShaft.topLimiter::get));
+      () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kElevatorEncoderMaxHeight.get())));
+    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new MinLimit(
+      SubsystemComponents.ClimbingShaft.bottomLimiter::get));
     climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new Limitless());
 
+        //----------Class Constructors----------
+        oi = new OI();
+        dbc = new DashBoardController(); 
     //----------DefaultCommands----------
-    elevator.setDefaultCommand(new ElevatorEncoderReset());
+    shaft.setDefaultCommand(new MoveBasicSubsystem(shaft, oi::getBTJoystick));
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    
-    //----------Class Constructors----------
-    oi = new OI();
-    dbc = new DashBoardController(); 
-  }
+    }
 
   @Override
   public void robotPeriodic() {
