@@ -76,7 +76,7 @@ public class Robot extends TimedRobot {
         oi = new OI();
         dbc = new DashBoardController(); 
     //----------DefaultCommands----------
-    shaft.setDefaultCommand(new MoveBasicSubsystem(shaft, oi::getBTJoystick));
+    
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
     }
 
