@@ -26,6 +26,6 @@ public class Climb extends CommandGroup {
     addParallel(new ElevatorMoveToTarget(SubsystemConstants.ClimbingMovement.kClimbingSpeed, SubsystemConstants.ClimbingMovement.kTargetHeight)); //Move the elevator
     addSequential(new MoveBasicSubsystem(Robot.shaft, SubsystemConstants.ClimbingShaft.shaftMotorSpeedModifier));
     addSequential(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
-    addSequential(new MoveBasicSubsystem(Robot.shaft, -SubsystemConstants.ClimbingShaft.shaftMotorSpeedModifier.get()));
+    addSequential(new MoveBasicSubsystem(Robot.shaft, -SubsystemConstants.ClimbingShaft.kShaftMotorStallSpeed.get()));
   }
 }

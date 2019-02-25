@@ -14,6 +14,7 @@ import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.SubsystemComponents;
+import frc.robot.SubsystemConstants;
 
 /**
  * A {@link Command} that moves the the elevator to a target, at a set speed.
@@ -70,7 +71,7 @@ public class ElevatorMoveToTarget extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    subsystem.stop();
+    subsystem.move(SubsystemConstants.Elevator.kElevatorStallSpeedModifier.get());
   }
 
   // Called when another command which requires one or more of the same
