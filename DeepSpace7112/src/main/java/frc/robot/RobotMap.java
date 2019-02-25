@@ -17,10 +17,10 @@ public class RobotMap {
   
   //----------Chassis----------
   public static final int 
-              chassisTalonFL = 1, //CAN
-              chassisTalonBL = 2, //CAN
-              chassisTalonFR = 3, //CAN
-              chassisTalonBR = 4; //CAN
+              chassisVictorFL = 7, //CAN
+              chassisVictorBL = 8, //CAN
+              chassisVictorFR = 2, //CAN
+              chassisVictorBR = 5; //CAN
 //all temp
   
   //----------cameras----------
@@ -30,41 +30,36 @@ public class RobotMap {
   
   //----------Elevator----------
   public static final int  
-              elevatorTalonL = 7, //CAN
-              elevatorTalonR = 8, //CAN
-              elevatorEncoderA = 3, //DIO
-              elevatorEncoderB = 4, //DIO
-              elevatorMicroswitch = 5, //DIO 
+              elevatorMotorL = 3, //CAN
+              elevatorMotorR = 4, //CAN
+              elevatorEncoderA = 0, //DIO
+              elevatorEncoderB = 1, //DIO
               elevatorOpticSwitch = 6, //DIO
               elevatorLazerDistanceSensor = 1; //Analog
               //All tem
 
 //----------ClimbingShaft----------
 public static final int 
-            shaftTalon = 1, 
-            shaftTopLimiter = 0, 
-            shaftBottomLimiter = 1; //temp
+            shaftTalon = 6, //CAN
+            shaftBottomLimiter = 2; //DIO
 
 
 
 //----------Climbing Movement----------
 public static final int 
-              climbingMovementTalon = 0,
-              climbingMovementEncoderA = 1,
-              climbingMovementEncoderB = 2; //temp
+              climbingMovementMotor = 1, //CAN
+              climbingMovementEncoderA = 1, //DIO
+              climbingMovementEncoderB = 2; //DIO
 
 //----------Gripper----------
   public static final int 
-            gripperMotorRight = 1, 
-            gripperMotorLeft = 0,
-            gripperMicroswitch = 1,
+            gripperMotorRight = 9, //CAN
+            gripperMotorLeft = 10, //CAN
             gripperAnalogLazerSensor = 3; //analog
-            //temp
+            
 
             
 //----------Gripper Movement----------
 public static final int
-gripperMovementVictor  = 0,
-gripperMovementTopMicroswitch = 2, 
-gripperMovementBottomMicroswitch = 3;  //All temp
+            gripperMovementVictor  = 0; //CAN
 }
