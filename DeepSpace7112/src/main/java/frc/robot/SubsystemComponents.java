@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -28,9 +29,9 @@ public class SubsystemComponents {
      */
     public static class DriveTrain {
         public static final SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup (
-            new WPI_TalonSRX(RobotMap.chassisTalonBL), new WPI_TalonSRX(RobotMap.chassisTalonFL));
+            new WPI_TalonSRX(RobotMap.chassisVictorBL), new WPI_TalonSRX(RobotMap.chassisVictorFL));
         public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup (
-            new WPI_TalonSRX(RobotMap.chassisTalonBR), new WPI_TalonSRX(RobotMap.chassisTalonFR));
+            new WPI_VictorSPX(RobotMap.chassisVictorBR), new WPI_VictorSPX(RobotMap.chassisVictorFR));
     }
 
     /**
@@ -40,12 +41,14 @@ public class SubsystemComponents {
     * one optic switch to reset the encoder (refrence point)
     */
     public static class Elevator {
-        public static final SpeedControllerGroup motors = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.elevatorTalonL), new WPI_TalonSRX(RobotMap.elevatorTalonR));
+        public static final  SpeedControllerGroup motors = new SpeedControllerGroup(new WPI_VictorSPX(RobotMap.elevatorMotorL), new WPI_VictorSPX(RobotMap.elevatorMotorR));
         public static final Encoder encoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB);
-        public static final DigitalInput microswitch = new DigitalInput(RobotMap.elevatorMicroswitch);
         public static final DigitalInput opticSwitch = new DigitalInput(RobotMap.elevatorOpticSwitch);
         public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.elevatorLazerDistanceSensor);
-
+        public static void setupSensors(){
+            motors.setInverted(true);
+            encoder.setDistancePerPulse(SubsystemConstants.Elevator.kDistancePerPulse.get());
+        }
         public static double getElevatorHeightByLazer(){
                 return (SubsystemConstants.Elevator.kElevatorMaxHeight.get() / 20) * lazerSensor.getValue();
         }
@@ -77,7 +80,7 @@ public class SubsystemComponents {
             private static final SpeedController motorR = new WPI_VictorSPX(RobotMap.gripperMotorRight);
             public static final DoubleSolenoid gripperLeftPiston = new DoubleSolenoid(1, 2); //Left gripper piston setting the port
             public static final DoubleSolenoid gripperRightPiston = new DoubleSolenoid(3, 4); //Right griper piston setting the port
-        
+            
 
             public static SpeedControllerGroup Motors;
 
@@ -110,9 +113,8 @@ public class SubsystemComponents {
      * The subsystem contains one speed controller and 2 limit switches that indicate the topmost and bottommost points that the shaft goes.
      */
     public static class ClimbingShaft{
-                public static final SpeedController Motor = new WPI_TalonSRX(RobotMap.shaftTalon);
+                public static final WPI_VictorSPX Motor = new WPI_VictorSPX(RobotMap.shaftTalon);
                 public static final DigitalInput bottomLimiter = new DigitalInput(RobotMap.shaftBottomLimiter);
-                public static final DigitalInput topLimiter = new DigitalInput(RobotMap.shaftTopLimiter);
     }
        
     /**
@@ -120,7 +122,7 @@ public class SubsystemComponents {
      * The subsystem contains one speed controller.
      */
     public static class ClimbingMovement {
-            public static final SpeedController Motor = new WPI_TalonSRX(RobotMap.climbingMovementTalon);
+            public static final SpeedController Motor = new WPI_VictorSPX(RobotMap.climbingMovementMotor);
     }
 
 }
