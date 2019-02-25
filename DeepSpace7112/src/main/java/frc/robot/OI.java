@@ -9,6 +9,7 @@ package frc.robot;
 import frc.robot.commands.PID.driveArcadeWithPID;
 import frc.robot.commands.Cameras.SwitchToCameraA;
 import frc.robot.commands.Cameras.SwitchToCameraB;
+import frc.robot.commands.Elevator.ElevatorMoveToTarget;
 import frc.robot.commands.Gripper.GripperPistons;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -52,6 +53,10 @@ public class OI {
     return input * Math.abs(input);
   }
   
+  public double getBTJoystick(){
+    return buttonJS.getRawAxis(1) * 0.45;
+  }
+
   public double getLeftJoystick() {
     return adjustInput(drivingJSLeft.getY());
   }
@@ -63,6 +68,7 @@ public class OI {
   //--------------------Initializations--------------------
   public OI() {
     //----------Joysticks----------
+    drivingJSLeft = new Joystick(0);
     drivingJSRight = new Joystick(1);
     buttonJS = new Joystick(2);
 
@@ -77,15 +83,20 @@ public class OI {
     //----------Gripper Buttons----------
     catchButton = new JoystickButton(buttonJS, 1);
     releaseButton = new JoystickButton(buttonJS, 3);	
-    catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
-    releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
     
     //----------Camera Buttons---------
     switchToA = new JoystickButton(drivingJSRight, 5);
     switchToB = new JoystickButton(drivingJSRight, 6);
     backButton = new JoystickButton(buttonJS, 9);
-    switchToA.whenPressed(new SwitchToCameraA());
-    switchToB.whenPressed(new SwitchToCameraB());
-    backButton.whenPressed(new driveArcadeWithPID());
+    // switchToA.whenPressed(new SwitchToCameraA());
+    // switchToB.whenPressed(new SwitchToCameraB());
+    // backButton.whenPressed(new driveArcadeWithPID());
+    bindButtons();
+  }
+
+  private void bindButtons(){
+    bottomHatch.whenPressed(new ElevatorMoveToTarget(() -> 0.15, SubsystemConstants.Elevator.kRocketBottomHatchHeight));
+    catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
+    releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
   }
 }
