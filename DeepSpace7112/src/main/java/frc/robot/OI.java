@@ -6,11 +6,12 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+
 import frc.robot.commands.PID.driveArcadeWithPID;
 import frc.robot.commands.Cameras.SwitchToCameraA;
 import frc.robot.commands.Cameras.SwitchToCameraB;
 import frc.robot.commands.Elevator.ElevatorMoveToTarget;
-import frc.robot.commands.Gripper.GripperPistons;
+import frc.robot.commands.Gripper.GripperRelease;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -37,10 +38,16 @@ public class OI {
   
   /**The button that is used to catch objects with the gripper. The */
   private Button catchButton;
-  /**The button that is used to release objects cought with the gripper. */
+  /**The button that is used to release objects cought with the gripper. When it's released, the gripper catches back an object not fully released.*/
   private Button releaseButton;
+  /**The button to switch the StreamViewer on the shuffleboard to view the Camera from port 0.  */
   private Button switchToA;
+  /**The button to switch the StreamViewer on the shuffleboard to view the Camera from port 1.  */
   private Button switchToB;
+  /**The button to strighten the robot (make it fix deviation from a painted line.) */
+  private Button strighten;
+
+  
   private Button backButton;
   private Button bottomHatch;
   private Button middleHatch;
@@ -48,6 +55,7 @@ public class OI {
   private Button bottomCargo;
   private Button middleCargo;
   private Button topCargo;
+
 
   private double adjustInput(double input){
     return input * Math.abs(input);

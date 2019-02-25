@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Gripper;
+package frc.robot.commands.GripperMovement;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
@@ -13,20 +13,18 @@ import frc.robot.SubsystemComponents;
 
 public class GripperMovementPistons extends Command {
   public GripperMovementPistons() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.gripper);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //SubsystemComponents.GripperMovement.gripperMovementLeftPiston.set(!SubsystemComponents.GripperMovement.gripperMovementLeftPiston.);
-    //Robot.gripperMovementRightPiston.set(!Robot.gripperMovementRightPiston.get());
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -43,6 +41,6 @@ public class GripperMovementPistons extends Command {
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted() {
+  protected void interrupted() { 
   }
 }

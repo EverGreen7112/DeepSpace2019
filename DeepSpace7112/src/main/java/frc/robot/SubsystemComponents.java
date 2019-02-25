@@ -80,32 +80,37 @@ public class SubsystemComponents {
             private static final SpeedController motorR = new WPI_VictorSPX(RobotMap.gripperMotorRight);
             public static final DoubleSolenoid gripperLeftPiston = new DoubleSolenoid(1, 2); //Left gripper piston setting the port
             public static final DoubleSolenoid gripperRightPiston = new DoubleSolenoid(3, 4); //Right griper piston setting the port
-            
-
             public static SpeedControllerGroup Motors;
 
-            /**
-             * The method is required to be called before the gripper subsystem is created.
-             * The method inverts the right motor, then creates the speedControllerGroup for the gripper.
-             */
-            public static void createMotorGroup() {
-                motorR.setInverted(true);
-                Motors = new SpeedControllerGroup(motorL,motorR);
-            }
+        /**
+         * The method is required to be called before the gripper subsystem is created.
+         * The method inverts the right motor, then creates the speedControllerGroup for the gripper.
+         */
+        public static void createMotorGroup() {
+            motorR.setInverted(true);
+            Motors = new SpeedControllerGroup(motorL,motorR);
+        }
+        
+        public static final DoubleSolenoid leftPiston = new DoubleSolenoid (
+            RobotMap.gripperMovementLeftPistonF, RobotMap.gripperMovementLeftPistonR); 
+        public static final DoubleSolenoid rightPiston = new DoubleSolenoid (
+            RobotMap.gripperMovementRightPistonF, RobotMap.gripperMovementRightPistonR); 
             
-            public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
+        public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
             
-            /**
-             * @return true if a cargo is inside the gripper, false otherwise.
-             */
-            public static boolean isCargoCaught() {
-                return lazerSensor.getVoltage() >= SubsystemConstants.gripper.kVoltageLimit.get();
-            }
+        /**
+         * @return true if a cargo is inside the gripper, false otherwise.
+         */
+        public static boolean isCargoCaught() {
+            return lazerSensor.getVoltage() >= SubsystemConstants.gripper.kVoltageLimit.get();
+        }
     }
     
-    public static class GripperMovement{
-        public static final DoubleSolenoid gripperMovementLeftPiston = new DoubleSolenoid(5, 6); //Left gripper movement piston setting the port
-        public static final DoubleSolenoid gripperMovementRightPiston = new DoubleSolenoid(7, 8); //Right gripper movement piston setting the port    
+    public static class GripperMovement {
+        DoubleSolenoid leftPiston = new DoubleSolenoid (
+            RobotMap.gripperMovementLeftPistonF, RobotMap.gripperMovementLeftPistonR);
+        DoubleSolenoid rightPiston = new DoubleSolenoid (
+            RobotMap.gripperMovementRightPistonF, RobotMap.gripperMovementRightPistonR);
     }
                 
     /**

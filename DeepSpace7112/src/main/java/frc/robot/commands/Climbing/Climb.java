@@ -17,8 +17,7 @@ import frc.robot.commands.Elevator.*;
 
 public class Climb extends CommandGroup {
   /**
-   * This is the command that makes the Robot climb - it lifts the shaft, .
-   */
+   * This is the command that makes the Robot climb.*/
 
   public Climb() {
 
