@@ -51,16 +51,16 @@ public class SubsystemConstants { //ALL TEMP
 
 		public static Supplier<Double> kRocketBottomHatchHeight = ConstantHandler.addConstantDouble("Rocket bottom hatch height", 48.26); 
 		public static Supplier<Double> kRocketMiddleHatchHeight = ConstantHandler.addConstantDouble("Rocket middle hatch height", 119.38); 
-		public static Supplier<Double> kRocketTopHatchHeight = ConstantHandler.addConstantDouble("Rocket top hatch hight", 190.5); 
+		public static Supplier<Double> kRocketTopHatchHeight = ConstantHandler.addConstantDouble("Rocket top hatch height", 190.5); 
 		
-		public static Supplier<Double> kRocketBottomCargoHeight = ConstantHandler.addConstantDouble("Rocket bottom cargo hight", 69.85); 
-		public static Supplier<Double> kRocketMiddleCargoHeight = ConstantHandler.addConstantDouble("Rocket middle cargo hight", 140.97); 
-		public static Supplier<Double> kRocketTopCargoHeight = ConstantHandler.addConstantDouble("Rocket top cargo hight", 212.09); 
+		public static Supplier<Double> kRocketBottomCargoHeight = ConstantHandler.addConstantDouble("Rocket bottom cargo height", 69.85); 
+		public static Supplier<Double> kRocketMiddleCargoHeight = ConstantHandler.addConstantDouble("Rocket middle cargo height", 140.97); 
+		public static Supplier<Double> kRocketTopCargoHeight = ConstantHandler.addConstantDouble("Rocket top cargo height", 212.09); 
 		
 		public static Supplier<Double> kElevatorMaxHeight = ConstantHandler.addConstantDouble("Elevator Max height", 225);
-		public static Supplier<Double> kElevatorEncoderMaxHeight = ConstantHandler.addConstantDouble("Elevator Encoder max hight", 250); //temp
-		public static Supplier<Double> kElevatorEncoderMinHeight = ConstantHandler.addConstantDouble("Elevator Encoder max hight", 0); //temp
-
+		public static Supplier<Double> kElevatorEncoderMaxHeight = ConstantHandler.addConstantDouble("Elevator Encoder max height", 250); //temp
+		public static Supplier<Double> kElevatorEncoderMinHeight = ConstantHandler.addConstantDouble("Elevator Encoder max height", 0); //temp
+		public static Supplier<Double> kElevatorEncoderBonusHeight = ConstantHandler.addConstantDouble("Elevator bonus height", 40); //temp
 	}
 	
     public static interface gripper {
