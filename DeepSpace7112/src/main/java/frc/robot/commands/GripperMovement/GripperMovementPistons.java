@@ -9,7 +9,6 @@ package frc.robot.commands.GripperMovement;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.SubsystemComponents;
 
 public class GripperMovementPistons extends Command {
   public GripperMovementPistons() {

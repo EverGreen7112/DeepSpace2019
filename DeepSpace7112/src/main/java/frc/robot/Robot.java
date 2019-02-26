@@ -7,20 +7,15 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
-import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MinLimit;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MaxLimit;
-import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.TwoLimits;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.Limitless;
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import com.spikes2212.utils.CamerasHandler;
 
-import frc.robot.commands.Elevator.ElevatorEncoderReset;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;

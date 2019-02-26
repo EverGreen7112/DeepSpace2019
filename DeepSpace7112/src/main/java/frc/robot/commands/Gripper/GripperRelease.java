@@ -20,7 +20,7 @@ public class GripperRelease extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    SubsystemComponents.Gripper.leftPiston.set(Value.kForward;
+    SubsystemComponents.Gripper.leftPiston.set(Value.kForward);
     SubsystemComponents.Gripper.rightPiston.set(Value.kForward);
   }
 
@@ -37,7 +37,7 @@ public class GripperRelease extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    SubsystemComponents.Gripper.leftPiston.set(Value.kReverse;
+    SubsystemComponents.Gripper.leftPiston.set(Value.kReverse);
     SubsystemComponents.Gripper.rightPiston.set(Value.kReverse);
   }
 

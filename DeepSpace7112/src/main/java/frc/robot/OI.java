@@ -45,7 +45,7 @@ public class OI {
   /**The button to switch the StreamViewer on the shuffleboard to view the Camera from port 1.  */
   private Button switchToB;
   /**The button to strighten the robot (make it fix deviation from a painted line.) */
-  private Button strighten;
+  private Button straighten;
 
   
   private Button backButton;
@@ -98,7 +98,7 @@ public class OI {
     backButton = new JoystickButton(buttonJS, 9);
     // switchToA.whenPressed(new SwitchToCameraA());
     // switchToB.whenPressed(new SwitchToCameraB());
-    // backButton.whenPressed(new driveArcadeWithPID());
+    //straighten.whenPressed(new driveArcadeWithPID());
     bindButtons();
   }
 

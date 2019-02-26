@@ -17,10 +17,10 @@ public class RobotMap {
   
   //----------Chassis----------
   public static final int 
-              chassisVictorFL = 7, //CAN
-              chassisVictorBL = 8, //CAN
+              chassisVictorFL = 8, //CAN
+              chassisVictorBL = 5, //CAN
               chassisVictorFR = 2, //CAN
-              chassisVictorBR = 5; //CAN
+              chassisVictorBR = 7; //CAN
 //all temp
   
   //----------cameras----------
@@ -40,21 +40,21 @@ public class RobotMap {
 
 //----------ClimbingShaft----------
 public static final int 
-            shaftTalon = 6, //CAN
+            shaftTalon = 1, //CAN
             shaftBottomLimiter = 2; //DIO
 
 
 
 //----------Climbing Movement----------
 public static final int 
-              climbingMovementMotor = 1, //CAN
+              climbingMovementMotor = 0, //CAN
               climbingMovementEncoderA = 1, //DIO
               climbingMovementEncoderB = 2; //DIO
 
 //----------Gripper----------
   public static final int 
-            gripperMotorLeft = 6, //CAN
-            gripperMotorRight = 7, //CAN
+            gripperMotorLeft = 9  , //CAN
+            gripperMotorRight = 4, //CAN
             gripperLeftPistonF= 0, //Left Forward
             gripperLeftPistonR= 1, //Left Reverse
             gripperRightPistonF = 2, //Right Forward
