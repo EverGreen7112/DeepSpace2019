@@ -62,7 +62,7 @@ public class OI {
   }
   
   public double getBTJoystick(){
-    return buttonJS.getRawAxis(1) * 0.45;
+    return buttonJS.getRawAxis(1) * 0.5;
   }
 
   public double getLeftJoystick() {

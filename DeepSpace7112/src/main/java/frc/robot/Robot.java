@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MinLimit;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MaxLimit;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.Limitless;
@@ -71,7 +72,7 @@ public class Robot extends TimedRobot {
         oi = new OI();
         dbc = new DashBoardController(); 
     //----------DefaultCommands----------
-    
+    elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick));
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
     }
 

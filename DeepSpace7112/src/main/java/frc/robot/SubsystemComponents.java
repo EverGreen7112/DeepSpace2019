@@ -28,7 +28,7 @@ public class SubsystemComponents {
      */
     public static class DriveTrain {
         public static final SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup (
-            new WPI_TalonSRX(RobotMap.chassisVictorBL), new WPI_TalonSRX(RobotMap.chassisVictorFL));
+            new WPI_VictorSPX(RobotMap.chassisVictorBL), new WPI_VictorSPX(RobotMap.chassisVictorFL));
         public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup (
             new WPI_VictorSPX(RobotMap.chassisVictorBR), new WPI_VictorSPX(RobotMap.chassisVictorFR));
     }
@@ -82,8 +82,8 @@ public class SubsystemComponents {
     public static class Gripper {
             private static final SpeedController motorL = new WPI_VictorSPX(RobotMap.gripperMotorLeft);
             private static final SpeedController motorR = new WPI_VictorSPX(RobotMap.gripperMotorRight);
-            public static final DoubleSolenoid gripperLeftPiston = new DoubleSolenoid(1, 2); //Left gripper piston setting the port
-            public static final DoubleSolenoid gripperRightPiston = new DoubleSolenoid(3, 4); //Right griper piston setting the port
+            // public static final DoubleSolenoid gripperLeftPiston = new DoubleSolenoid(1, 2); //Left gripper piston setting the port
+            // public static final DoubleSolenoid gripperRightPiston = new DoubleSolenoid(3, 4); //Right griper piston setting the port
             public static SpeedControllerGroup Motors;
 
         /**
@@ -95,10 +95,10 @@ public class SubsystemComponents {
             Motors = new SpeedControllerGroup(motorL,motorR);
         }
         
-        public static final DoubleSolenoid leftPiston = new DoubleSolenoid (
-            RobotMap.gripperMovementLeftPistonF, RobotMap.gripperMovementLeftPistonR); 
-        public static final DoubleSolenoid rightPiston = new DoubleSolenoid (
-            RobotMap.gripperMovementRightPistonF, RobotMap.gripperMovementRightPistonR); 
+        // public static final DoubleSolenoid leftPiston = new DoubleSolenoid (
+        //     RobotMap.gripperMovementLeftPistonF, RobotMap.gripperMovementLeftPistonR); 
+        // public static final DoubleSolenoid rightPiston = new DoubleSolenoid (
+        //     RobotMap.gripperMovementRightPistonF, RobotMap.gripperMovementRightPistonR); 
             
         public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
             
@@ -111,10 +111,10 @@ public class SubsystemComponents {
     }
     
     public static class GripperMovement {
-        DoubleSolenoid leftPiston = new DoubleSolenoid (
-            RobotMap.gripperMovementLeftPistonF, RobotMap.gripperMovementLeftPistonR);
-        DoubleSolenoid rightPiston = new DoubleSolenoid (
-            RobotMap.gripperMovementRightPistonF, RobotMap.gripperMovementRightPistonR);
+        // DoubleSolenoid leftPiston = new DoubleSolenoid (
+        //     RobotMap.gripperMovementLeftPistonF, RobotMap.gripperMovementLeftPistonR);
+        // DoubleSolenoid rightPiston = new DoubleSolenoid (
+        //     RobotMap.gripperMovementRightPistonF, RobotMap.gripperMovementRightPistonR);
     }
                 
     /**
