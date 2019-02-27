@@ -40,7 +40,7 @@ public class SubsystemComponents {
     * one optic switch to reset the encoder (refrence point)
     */
     public static class Elevator {
-        public static final  SpeedControllerGroup motors = new SpeedControllerGroup(new WPI_VictorSPX(RobotMap.elevatorMotorL), new WPI_VictorSPX(RobotMap.elevatorMotorR));
+        public static final  SpeedControllerGroup motors = new SpeedControllerGroup(new WPI_VictorSPX(RobotMap.elevatorMotorF), new WPI_VictorSPX(RobotMap.elevatorMotorB));
         public static final Encoder encoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB);
         public static final DigitalInput opticSwitch = new DigitalInput(RobotMap.elevatorOpticSwitch);
         public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.elevatorLazerDistanceSensor);
