@@ -34,7 +34,7 @@ public class OI {
   private Joystick drivingJSLeft;
   /**The Joystick that conntrols the right motors. */
   private Joystick drivingJSRight;
-  /**The button joysticks which is used to execute the various commands to the robot - Climbing, catching, releasing and controlling the PID. */
+  /**The button joystick which is used to execute the various commands to the robot - Climbing, catching, releasing and controlling the PID. */
   private Joystick buttonJS;
 
   //----------Buttons----------
@@ -47,7 +47,7 @@ public class OI {
   private Button switchToA;
   /**The button to switch the StreamViewer on the shuffleboard to view the Camera from port 1.  */
   private Button switchToB;
-  /**The button to strighten the robot (make it fix deviation from a painted line.) */
+  /**The button to straighten the robot (make it fix deviation from a painted line.) */
   private Button straighten;
   /**The button to move the gripper to the bottom hatch of the rocket or to the hatch of the cargo ship. */
   private Button bottomHatch;
