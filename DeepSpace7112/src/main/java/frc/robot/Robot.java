@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
     compressor.setClosedLoopControl(true);
     //----------BasicSubsystems----------
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
-    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit (
+    gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new MinLimit (
       SubsystemComponents.Gripper::isCargoCaught));
     elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
       () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kElevatorEncoderMaxHeight.get())));
@@ -92,7 +92,6 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
-    
   }
 
   @Override
@@ -114,7 +113,6 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     dbc.update();
-
   }
 
   @Override

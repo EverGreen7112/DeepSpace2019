@@ -36,14 +36,12 @@ public class RobotMap {
               elevatorEncoderB = 1, //DIO
               elevatorOpticSwitch = 6, //DIO
               elevatorLazerDistanceSensor = 1; //Analog
-              //All tem
+              //All temp
 
 //----------ClimbingShaft----------
 public static final int 
             shaftTalon = 6, //CAN
             shaftBottomLimiter = 2; //DIO
-
-
 
 //----------Climbing Movement----------
 public static final int 
