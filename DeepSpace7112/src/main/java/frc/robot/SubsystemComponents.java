@@ -114,21 +114,16 @@ public class SubsystemComponents {
     * The subsystem contains one analog proximity lazer based sensor.
     */
     public static class Gripper {
-            public static final WPI_VictorSPX motorL = new WPI_VictorSPX(RobotMap.gripperMotorLeft);
-            public static final WPI_VictorSPX motorR = new WPI_VictorSPX(RobotMap.gripperMotorRight);
-            //public static final DoubleSolenoid gripperLeftPiston = new DoubleSolenoid(1, 2); //Left gripper piston setting the port //Commented since RobotB does not have solenoids/
-            //public static final DoubleSolenoid gripperRightPiston = new DoubleSolenoid(3, 4); //Right griper piston setting the port //Commented since RobotB does not have solenoids/
-            public static SpeedControllerGroup Motors;
+            private static final SpeedController motorL = new WPI_VictorSPX(RobotMap.gripperMotorLeft);
+            private static final SpeedController motorR = new WPI_VictorSPX(RobotMap.gripperMotorRight);
+            // public static final DoubleSolenoid gripperLeftPiston = new DoubleSolenoid(1, 2); //Left gripper piston setting the port
+            // public static final DoubleSolenoid gripperRightPiston = new DoubleSolenoid(3, 4); //Right griper piston setting the port
+            public static SpeedControllerGroup Motors = new SpeedControllerGroup(motorL,motorR);
 
         /**
          * The method is required to be called before the gripper subsystem is created.
          * The method inverts the right motor, then creates the speedControllerGroup for the gripper.
          */
-        public static void createMotorGroup() {
-            motorR.setInverted(InvertType.InvertMotorOutput);
-            Motors = new SpeedControllerGroup(motorL,motorR);
-
-        }
         
         //public static final DoubleSolenoid leftPiston = new DoubleSolenoid (
            // RobotMap.gripperMovementLeftPistonF, RobotMap.gripperMovementLeftPistonR); //Commented since RobotB does not have solenoids/

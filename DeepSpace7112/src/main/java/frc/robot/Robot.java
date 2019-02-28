@@ -51,9 +51,6 @@ public class Robot extends TimedRobot {
   /**The function ran when the robot is activated.*/
   public void robotInit() {
     //----------Sensor Configs----------
-      //SubsystemComponents.Gripper.createMotorGroup(); //Configures the gripper - inverts the right motors and intialized the MotorGroup
-      SubsystemComponents.Gripper.motorR.setInverted(true);
-      SubsystemComponents.Gripper.Motors = new SpeedControllerGroup(SubsystemComponents.Gripper.motorL, SubsystemComponents.Gripper.motorR);
       SubsystemComponents.Elevator.setupSensors(); //Configures the elevator - inverts the motors and sets the distance per pulse.
       cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
         SubsystemConstants.cameras.kCameraWidth.get(), 
@@ -83,8 +80,8 @@ public class Robot extends TimedRobot {
     
     //----------DefaultCommands----------
       drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-      //elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick));
-      climbingMovement.setDefaultCommand(new MoveBasicSubsystem(climbingMovement, oi::getBTJoystick));
+      //elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick)); //commented so we can use button joystick in testing.
+      climbingMovement.setDefaultCommand(new MoveBasicSubsystem(climbingMovement, oi::getBTJoystick)); //testing
     
     }
 
