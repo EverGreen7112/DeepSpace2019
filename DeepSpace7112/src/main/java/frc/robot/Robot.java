@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MinLimit;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.MaxLimit;
 import com.spikes2212.genericsubsystems.basicSubsystem.utils.limitationFunctions.Limitless;
@@ -17,14 +18,19 @@ import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
-/**
+/** This is the code ran (together with the OI) when activating the robot - 
+ * it includes the decleration, intialization and confguration of the Subsystems.
+ * <p> 
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.gradle file in the
+ * documentation.
+ * <p>
+ * changing the name of this class or the package after
+ * creating this project, requires updating the build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
@@ -42,37 +48,44 @@ public class Robot extends TimedRobot {
   private DashBoardController dbc;
 
   @Override
+  /**The function ran when the robot is activated.*/
   public void robotInit() {
-    //---------Sensor Configs----------
-    SubsystemComponents.Gripper.createMotorGroup();
-    SubsystemComponents.Elevator.setupSensors();
-    cameraHandler = new CamerasHandler (
-      SubsystemConstants.cameras.kCameraWidth.get(), 
-      SubsystemConstants.cameras.kCameraHeight.get(), 
-      RobotMap.cameraA,
-      RobotMap.cameraB);
-    cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get());
-    
-    
-    compressor = new Compressor();
-    compressor.start();
-    compressor.setClosedLoopControl(true);
-    //----------BasicSubsystems----------
-    drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
-    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit (
-      SubsystemComponents.Gripper::isCargoCaught));
-    elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
-      () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kElevatorEncoderMaxHeight.get())));
-    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new MinLimit(
-      SubsystemComponents.ClimbingShaft.bottomLimiter::get));
-    climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new Limitless());
+    //----------Sensor Configs----------
+      //SubsystemComponents.Gripper.createMotorGroup(); //Configures the gripper - inverts the right motors and intialized the MotorGroup
+      SubsystemComponents.Gripper.motorR.setInverted(true);
+      SubsystemComponents.Gripper.Motors = new SpeedControllerGroup(SubsystemComponents.Gripper.motorL, SubsystemComponents.Gripper.motorR);
+      SubsystemComponents.Elevator.setupSensors(); //Configures the elevator - inverts the motors and sets the distance per pulse.
+      cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
+        SubsystemConstants.cameras.kCameraWidth.get(), 
+        SubsystemConstants.cameras.kCameraHeight.get(), 
+        RobotMap.cameraA,
+        RobotMap.cameraB);
+      cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
+      
+      compressor = new Compressor(); //
+      compressor.start();
+      compressor.setClosedLoopControl(true);
 
-        //----------Class Constructors----------
-        oi = new OI();
-        dbc = new DashBoardController(); 
-    //----------DefaultCommands----------
+    //----------BasicSubsystems----------
+      drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
+      // gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit (
+      //SubsystemComponents.Gripper::isCargoCaught));
+      gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new Limitless());
+      elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
+        () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kElevatorEncoderMaxHeight.get())));
+      shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new MinLimit(
+        SubsystemComponents.ClimbingShaft.bottomLimiter::get));
+      climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new Limitless());
+      
+    //----------Class Constructors----------
+      oi = new OI();
+      dbc = new DashBoardController(); 
     
-    drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
+    //----------DefaultCommands----------
+      drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
+      //elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick));
+      climbingMovement.setDefaultCommand(new MoveBasicSubsystem(climbingMovement, oi::getBTJoystick));
+    
     }
 
   @Override
@@ -114,5 +127,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+    Scheduler.getInstance().run();
+    dbc.update();
+
   }
 }

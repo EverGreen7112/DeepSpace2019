@@ -13,9 +13,6 @@ import com.spikes2212.dashboard.ConstantHandler;
 
 public class SubsystemConstants { //ALL TEMP
 
-    public static interface chassis {
-        public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Speed Modifier", 0.5);
-    }
 
 	public static interface PID  { 
 		/**The point the system will try to drive to - the center of the reflectives seen by the camera. */
@@ -36,8 +33,11 @@ public class SubsystemConstants { //ALL TEMP
 		public static final Supplier<Double> kMovement = ConstantHandler.addConstantDouble("Arcade PID movement speed.", 5); //All temp	
 	}
 
-    public static interface cameras{
+	public static interface chassis {
+		public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.5);
+	}
 
+    public static interface cameras {
 		public static final Supplier<Integer> kCameraWidth = ConstantHandler.addConstantInt("Camera Width", 320);
 		public static final Supplier<Integer> kCameraHeight = ConstantHandler.addConstantInt("Camera Height", 240);
 		public static final Supplier<Integer> kCameraExposure = ConstantHandler.addConstantInt("Camera Exposure", 50);
@@ -46,21 +46,28 @@ public class SubsystemConstants { //ALL TEMP
     public static interface Elevator{
 		/**The distance the elevator passes between the encoder's ticks. */
 		public static Supplier<Double> kDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 0.8157894); //19 ticks per motor turn, 15.5 cm per crank turn
-		public static Supplier<Double> kElevatorMotorSpeedModifier = ConstantHandler.addConstantDouble("Elevator speed modifier", 0.8); //temp
-		public static Supplier<Double> kElevatorStallSpeedModifier = ConstantHandler.addConstantDouble("Elevator Stall speed modfier", 0.17); //temp
 
-		public static Supplier<Double> kRocketBottomHatchHeight = ConstantHandler.addConstantDouble("Rocket bottom hatch height", 48.26); 
-		public static Supplier<Double> kRocketMiddleHatchHeight = ConstantHandler.addConstantDouble("Rocket middle hatch height", 119.38); 
-		public static Supplier<Double> kRocketTopHatchHeight = ConstantHandler.addConstantDouble("Rocket top hatch height", 190.5); 
+		//----------Speed Modifiers----------
+ 		 public static Supplier<Double> kElevatorMotorSpeedModifier = ConstantHandler.addConstantDouble("Elevator speed modifier", 0.8); //temp
+	  	 public static Supplier<Double> kElevatorStallSpeedModifier = ConstantHandler.addConstantDouble("Elevator Stall speed modfier", 0.17); //temp
+	 	 public static Supplier<Double> kTargetSpeedModifier = ConstantHandler.addConstantDouble("Elevator Move to target speed modfier", 0.15); //temp
+
+		//----------Hatch Heights----------
+		 public static Supplier<Double> kRocketBottomHatchHeight = ConstantHandler.addConstantDouble("Rocket bottom hatch height", 48.26); 
+		 public static Supplier<Double> kRocketMiddleHatchHeight = ConstantHandler.addConstantDouble("Rocket middle hatch height", 119.38); 
+		 public static Supplier<Double> kRocketTopHatchHeight = ConstantHandler.addConstantDouble("Rocket top hatch height", 190.5); 
 		
-		public static Supplier<Double> kRocketBottomCargoHeight = ConstantHandler.addConstantDouble("Rocket bottom cargo height", 69.85); 
-		public static Supplier<Double> kRocketMiddleCargoHeight = ConstantHandler.addConstantDouble("Rocket middle cargo height", 140.97); 
-		public static Supplier<Double> kRocketTopCargoHeight = ConstantHandler.addConstantDouble("Rocket top cargo height", 212.09); 
+		//----------Cargo Heights----------
+		 public static Supplier<Double> kRocketBottomCargoHeight = ConstantHandler.addConstantDouble("Rocket bottom cargo height", 69.85); 
+		 public static Supplier<Double> kRocketMiddleCargoHeight = ConstantHandler.addConstantDouble("Rocket middle cargo height", 140.97); 
+	 	 public static Supplier<Double> kRocketTopCargoHeight = ConstantHandler.addConstantDouble("Rocket top cargo height", 212.09); 
 		
-		public static Supplier<Double> kElevatorMaxHeight = ConstantHandler.addConstantDouble("Elevator Max height", 225);
-		public static Supplier<Double> kElevatorEncoderMaxHeight = ConstantHandler.addConstantDouble("Elevator Encoder max height", 250); //temp
-		public static Supplier<Double> kElevatorEncoderMinHeight = ConstantHandler.addConstantDouble("Elevator Encoder max height", 0); //temp
-		public static Supplier<Double> kElevatorEncoderBonusHeight = ConstantHandler.addConstantDouble("Elevator bonus height", 40); //temp
+		//----------Elevator Limit Heights----------
+		 public static Supplier<Double> kElevatorMaxHeight = ConstantHandler.addConstantDouble("Elevator Max height", 225);
+	 	 /**The highest point the elevator can reach. Used to check the validity of the Lazer sensor and the encoder */
+		 public static Supplier<Double> kElevatorEncoderMaxHeight = ConstantHandler.addConstantDouble("Elevator Encoder max height", 250); //temp
+		 public static Supplier<Double> kElevatorEncoderMinHeight = ConstantHandler.addConstantDouble("Elevator Encoder max height", 0); //temp
+		 public static Supplier<Double> kElevatorEncoderBonusHeight = ConstantHandler.addConstantDouble("Elevator bonus height", 40); //temp
 	}
 	
     public static interface gripper {
@@ -70,7 +77,6 @@ public class SubsystemConstants { //ALL TEMP
 		public static final Supplier<Double> kGripperOutSpeed = ConstantHandler.addConstantDouble("Gripper Out Speed", -0.3);
 		/**The voltage of the optic sensor, which when reached, means the gripper catched the cargo.  */
 		public static final Supplier<Double> kVoltageLimit = ConstantHandler.addConstantDouble("Optic Sensor voltage limit", 1.5);
-		
 	}
 	
 	public static interface ClimbingShaft {
