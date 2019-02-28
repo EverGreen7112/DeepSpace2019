@@ -55,8 +55,7 @@ public class Robot extends TimedRobot {
       cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
         SubsystemConstants.cameras.kCameraWidth.get(), 
         SubsystemConstants.cameras.kCameraHeight.get(), 
-        RobotMap.cameraA,
-        RobotMap.cameraB);
+        RobotMap.cameraA);
       cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
       
       compressor = new Compressor(); //
