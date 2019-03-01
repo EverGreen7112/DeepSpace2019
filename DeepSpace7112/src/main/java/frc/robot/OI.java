@@ -12,6 +12,7 @@ import frc.robot.commands.Cameras.SwitchToCameraA;
 import frc.robot.commands.Cameras.SwitchToCameraB;
 import frc.robot.commands.Elevator.ElevatorMoveToTarget;
 import frc.robot.commands.Gripper.GripperRelease;
+import frc.robot.commands.GripperMovement.GripperMovementPistons;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -55,22 +56,23 @@ public class OI {
   private Button bottomCargo;
   private Button middleCargo;
   private Button topCargo;
+  private Button flipGripper;
 
 
   private double adjustInput(double input){
     return input * Math.abs(input);
   }
   
-  public double getBTJoystick(){
-    return buttonJS.getRawAxis(1) * 0.5;
-  }
+  //public double getBTJoystick(){
+   // return buttonJS.getRawAxis(1) * 0.5;
+  //}
 
   public double getLeftJoystick() {
-    return adjustInput(drivingJSLeft.getY());
+    return -adjustInput(drivingJSLeft.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
   }
     
   public double getRightJoystick() {
-    return adjustInput(drivingJSRight.getY());
+    return adjustInput(drivingJSRight.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
   }
 
   //--------------------Initializations--------------------
@@ -78,7 +80,7 @@ public class OI {
     //----------Joysticks----------
     drivingJSLeft = new Joystick(0);
     drivingJSRight = new Joystick(1);
-    buttonJS = new Joystick(2);
+    // buttonJS = new Joystick(2);
 
     //----------Elevator Buttons----------
     bottomHatch = new JoystickButton(drivingJSLeft, 12);
@@ -89,9 +91,11 @@ public class OI {
     topCargo = new JoystickButton(drivingJSLeft, 7);
 
     //----------Gripper Buttons----------
-    catchButton = new JoystickButton(buttonJS, 1);
-    releaseButton = new JoystickButton(buttonJS, 3);	
-    
+    // catchButton = new JoystickButton(buttonJS, 1);
+    // releaseButton = new JoystickButton(buttonJS, 3);	
+
+    //----------Gripper Movement Buttons----------
+    // flipGripper = new JoystickButton(buttonJS, 4);
     //----------Camera Buttons---------
     switchToA = new JoystickButton(drivingJSRight, 5);
     switchToB = new JoystickButton(drivingJSRight, 6);
@@ -104,7 +108,8 @@ public class OI {
 
   private void bindButtons(){
     bottomHatch.whenPressed(new ElevatorMoveToTarget(() -> 0.15, SubsystemConstants.Elevator.kRocketBottomHatchHeight));
-    catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
-    releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
+    // catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
+    // releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
+    // flipGripper.whenPressed(new GripperMovementPistons());
   }
 }

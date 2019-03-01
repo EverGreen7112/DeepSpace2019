@@ -45,6 +45,7 @@ public class SubsystemConstants { //ALL TEMP
 
     public static interface Elevator{
 		/**The distance the elevator passes between the encoder's ticks. */
+		public static Supplier<Double> kStallMaxMultiplier = ConstantHandler.addConstantDouble("Stall elevator supplier", 0.59);
 		public static Supplier<Double> kDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 0.8157894); //19 ticks per motor turn, 15.5 cm per crank turn
 		public static Supplier<Double> kElevatorMotorSpeedModifier = ConstantHandler.addConstantDouble("Elevator speed modifier", 0.8); //temp
 		public static Supplier<Double> kElevatorStallSpeedModifier = ConstantHandler.addConstantDouble("Elevator Stall speed modfier", 0.17); //temp

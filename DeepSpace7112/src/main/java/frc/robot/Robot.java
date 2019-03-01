@@ -19,6 +19,7 @@ import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
@@ -47,17 +48,20 @@ public class Robot extends TimedRobot {
     //---------Sensor Configs----------
     SubsystemComponents.Gripper.createMotorGroup();
     SubsystemComponents.Elevator.setupSensors();
+    SubsystemComponents.Gripper.LockPiston.set(Value.kReverse);
+    SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
+    SubsystemComponents.GripperMovement.piston.set(Value.kForward);
+
     cameraHandler = new CamerasHandler (
       SubsystemConstants.cameras.kCameraWidth.get(), 
       SubsystemConstants.cameras.kCameraHeight.get(), 
-      RobotMap.cameraA,
-      RobotMap.cameraB);
+      RobotMap.cameraA);
     cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get());
-    
     
     compressor = new Compressor();
     compressor.start();
     compressor.setClosedLoopControl(true);
+
     //----------BasicSubsystems----------
     drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
     gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit (
@@ -72,9 +76,9 @@ public class Robot extends TimedRobot {
         oi = new OI();
         dbc = new DashBoardController(); 
     //----------DefaultCommands----------
-    elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick));
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-    }
+    //elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick));
+  }
 
   @Override
   public void robotPeriodic() {

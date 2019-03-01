@@ -82,8 +82,8 @@ public class SubsystemComponents {
     public static class Gripper {
             private static final SpeedController motorL = new WPI_VictorSPX(RobotMap.gripperMotorLeft);
             private static final SpeedController motorR = new WPI_VictorSPX(RobotMap.gripperMotorRight);
-            // public static final DoubleSolenoid gripperLeftPiston = new DoubleSolenoid(1, 2); //Left gripper piston setting the port
-            // public static final DoubleSolenoid gripperRightPiston = new DoubleSolenoid(3, 4); //Right griper piston setting the port
+            public static final DoubleSolenoid PushPiston = new DoubleSolenoid(6, 2); //Left gripper piston setting the port
+            public static final DoubleSolenoid LockPiston = new DoubleSolenoid(5, 4); //Right griper piston setting the port
             public static SpeedControllerGroup Motors;
 
         /**
@@ -94,12 +94,7 @@ public class SubsystemComponents {
             motorR.setInverted(true);
             Motors = new SpeedControllerGroup(motorL,motorR);
         }
-        
-        // public static final DoubleSolenoid leftPiston = new DoubleSolenoid (
-        //     RobotMap.gripperMovementLeftPistonF, RobotMap.gripperMovementLeftPistonR); 
-        // public static final DoubleSolenoid rightPiston = new DoubleSolenoid (
-        //     RobotMap.gripperMovementRightPistonF, RobotMap.gripperMovementRightPistonR); 
-            
+                    
         public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
             
         /**
@@ -111,10 +106,8 @@ public class SubsystemComponents {
     }
     
     public static class GripperMovement {
-        // DoubleSolenoid leftPiston = new DoubleSolenoid (
-        //     RobotMap.gripperMovementLeftPistonF, RobotMap.gripperMovementLeftPistonR);
-        // DoubleSolenoid rightPiston = new DoubleSolenoid (
-        //     RobotMap.gripperMovementRightPistonF, RobotMap.gripperMovementRightPistonR);
+        public static final DoubleSolenoid piston = new DoubleSolenoid (
+            RobotMap.gripperMovementPistonF, RobotMap.gripperMovementPistonR);
     }
                 
     /**
