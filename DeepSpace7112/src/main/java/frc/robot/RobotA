@@ -1,0 +1,31 @@
+ - Tests:
+    - Check all motors
+    {
+        - Check left movement motors
+        - Check right movement motors
+        - Check gripper motors
+        - Check elevator motor
+        - Check climb shaft motor
+        - Check climb movement motor
+    }
+
+    - Check climbing
+    - Check PID
+    - Check elevator stall
+
+    - Check all sensors
+    {
+        - Check laser sensors
+        {
+            - Check gripper sensor 
+            - Check elevator laser sensor
+            - Check wall sensor
+        }
+
+        - Check all switches
+        {
+            - Check climbing movement top switch
+            - Check climbing movement bottom switch
+            - Check elevator switch
+        }
+    }
