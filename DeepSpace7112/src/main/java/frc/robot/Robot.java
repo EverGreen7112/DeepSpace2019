@@ -52,7 +52,6 @@ public class Robot extends TimedRobot {
   /**The function ran when the robot is activated.*/
   public void robotInit() {
     //---------Sensor Configs----------
-    SubsystemComponents.Gripper.createMotorGroup();
     SubsystemComponents.Elevator.setupSensors();
     SubsystemComponents.Gripper.LockPiston.set(Value.kReverse);
     SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
