@@ -50,6 +50,7 @@ public class SubsystemComponents {
     
     */
     public static class Elevator {
+        private static boolean encoderFlag;
         public static final  SpeedControllerGroup motors = new SpeedControllerGroup(new WPI_VictorSPX(RobotMap.elevatorMotorF), new WPI_VictorSPX(RobotMap.elevatorMotorB));
         public static final Encoder encoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB);
         public static final DigitalInput opticSwitch = new DigitalInput(RobotMap.elevatorOpticSwitch);
@@ -77,7 +78,7 @@ public class SubsystemComponents {
         }
 
         public static double getElevatorHeightByLazer(){
-                return (SubsystemConstants.Elevator.kElevatorMaxHeight.get() / 20) * lazerSensor.getValue();
+                return (7 / 0.02) * (lazerSensor.getValue() / 600) * 100;
         }
         
         /**Checks the height of the encoder by the lazer sensor and the encoder, and returns it by the sesnor(s) that make most sense. */
