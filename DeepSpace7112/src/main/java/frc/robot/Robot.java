@@ -65,14 +65,15 @@ public class Robot extends TimedRobot {
 
     //----------BasicSubsystems----------
       drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
-      // gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit (
-      //SubsystemComponents.Gripper::isCargoCaught));
-      gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new Limitless());
+      // gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new MinLimit (
+      // SubsystemComponents.Gripper::isCargoCaught)); //Commented due to the sensors not beinng commented yet, making the gripper is limitless system.
+      gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new Limitless()); //testing
       elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
-        () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kElevatorEncoderMaxHeight.get())));
-      shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new MinLimit(
-        SubsystemComponents.ClimbingShaft.bottomLimiter::get));
-      climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new Limitless());
+        () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kEncoderMaxHeight.get()))); 
+        //^^^Maximum Limit by the encoder - if it transmits that the elevator has surpussed our determained maximum height, it'll stop the movement
+      shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.motor::set, new MinLimit(
+        SubsystemComponents.ClimbingShaft.bottomLimiter::get)); //Minimum Limit - if the shaft presses the switch , stop the shaft. The robot is built such that the switch will be pressed when the shaft reaces the determained minimum height. 
+      climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.motor::set, new Limitless());
       
     //----------Class Constructors----------
       oi = new OI();
@@ -108,6 +109,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
+    dbc.update();
   }
 
   @Override
