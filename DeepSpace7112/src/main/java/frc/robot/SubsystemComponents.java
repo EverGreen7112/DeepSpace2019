@@ -116,20 +116,19 @@ public class SubsystemComponents {
     public static class Gripper {
             private static final WPI_VictorSPX motorL = new WPI_VictorSPX(RobotMap.gripperMotorLeft);
             private static final SpeedController motorR = new WPI_VictorSPX(RobotMap.gripperMotorRight);
-            // public static final DoubleSolenoid gripperLeftPiston = new DoubleSolenoid(1, 2); //Left gripper piston setting the port
-            // public static final DoubleSolenoid gripperRightPiston = new DoubleSolenoid(3, 4); //Right griper piston setting the port
+            // public static final DoubleSolenoid PushPiston = new DoubleSolenoid(6, 2); //Left gripper piston setting the port
+            // public static final DoubleSolenoid LockPiston = new DoubleSolenoid(5, 4); //Right griper piston setting the port
             public static final SpeedControllerGroup motors = new SpeedControllerGroup(motorL,motorR);
 
         /**
          * The method is required to be called before the gripper subsystem is created.
          * The method inverts the right motor, then creates the speedControllerGroup for the gripper.
          */
-        
-        //public static final DoubleSolenoid leftPiston = new DoubleSolenoid (
-           // RobotMap.gripperMovementLeftPistonF, RobotMap.gripperMovementLeftPistonR); //Commented since RobotB does not have solenoids/
-        //public static final DoubleSolenoid rightPiston = new DoubleSolenoid (
-            //RobotMap.gripperMovementRightPistonF, RobotMap.gripperMovementRightPistonR); //Commented since RobotB does not have solenoids/
-            
+        public static void createMotorGroup() {
+            motorR.setInverted(true);
+            Motors = new SpeedControllerGroup(motorL,motorR);
+        }
+                    
         public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
             
         /**
@@ -141,10 +140,8 @@ public class SubsystemComponents {
     }
     
     public static class GripperMovement {
-       //DoubleSolenoid leftPiston = new DoubleSolenoid (
-            //RobotMap.gripperMovementLeftPistonF, RobotMap.gripperMovementLeftPistonR); //Commented since RobotB does not have solenoids/
-      //DoubleSolenoid rightPiston = new DoubleSolenoid (
-           // RobotMap.gripperMovementRightPistonF, RobotMap.gripperMovementRightPistonR); //Commented since RobotB does not have solenoids/
+        public static final DoubleSolenoid piston = new DoubleSolenoid (
+            RobotMap.gripperMovementPistonF, RobotMap.gripperMovementPistonR);
     }
                 
     /**

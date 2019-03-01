@@ -48,11 +48,14 @@ public class SubsystemConstants {
 	 * The heights of the hatches and cargo on the rocket and the speed modifiers during its different movements
 	 * (Motor, Target and Stall), as well as the distance passd each tick of the encoder. */
     public static interface Elevator{
+
 		//----------Speed Modifiers----------
 	 	 /**The elevator's speed as it moves to a hatch or a cargo on the rocket.  */
 		 public static Supplier<Double> kTargetSpeedModifier = ConstantHandler.addConstantDouble("Elevator Move to target speed modfier", 0.15); //temp
 	 	 /**The modifier needed to give to the motors in order get the elevator to stay up while not moving.*/
 	  	 public static Supplier<Double> kElevatorStallSpeedModifier = ConstantHandler.addConstantDouble("Elevator Stall speed modfier", 0.17); //temp
+	 	 /**The modifier needed to give to the motors in order get the elevator to stay up while not moving, given maximum weight on it.*/		 
+		 public static Supplier<Double> kStallMaxMultiplier = ConstantHandler.addConstantDouble("Stall elevator supplier", 0.59); //temp
 
 		//----------Hatch Heights----------
 		 public static Supplier<Double> kRocketBottomHatchHeight = ConstantHandler.addConstantDouble("Rocket bottom hatch height", 48.26); 

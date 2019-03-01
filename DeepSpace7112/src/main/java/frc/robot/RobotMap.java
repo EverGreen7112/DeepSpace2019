@@ -56,19 +56,22 @@ public class RobotMap {
   public static final int 
             gripperMotorLeft = 9  , //CAN
             gripperMotorRight = 4, //CAN
-            gripperLeftPistonF= 0, //Left Forward
-            gripperLeftPistonR= 1, //Left Reverse
+            gripperPushPistonF= 0, //Left Forward
+            gripperPushPistonR= 1, //Left Reverse
             gripperRightPistonF = 2, //Right Forward
             gripperRightPistonR = 3, //Right Reverse
             gripperAnalogLazerSensor = 5; //analog
             
 //----------Gripper Movement----------
  public static final int
-            gripperMovementLeftPistonF = 0, //Left Forward 
-            gripperMovementLeftPistonR = 1, //Left Reverse
-            gripperMovementRightPistonF = 2, //Left Forward
-            gripperMovementRightPistonR = 3, //Left Reverse
-            gripperMovementTopMicroswitch = 4,
-            gripperMovementBottomMicroSwitch = 5;
+            gripperMovementPistonF = 7, //Left Forward 
+            gripperMovementPistonR = 3; //Left Reverse
 }
-
+/**
+ * 6 - push forward
+ * 4 - lock reverse
+ * 3 - movement reverse
+ * 5 - lock forward
+ * 2 - push reverse
+ * 7 - movement forward
+ */
