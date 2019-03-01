@@ -14,8 +14,7 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
-  
-  //----------Chassis----------
+//----------Chassis----------
   public static final int 
               chassisVictorFL = 8, //CAN
               chassisVictorBL = 5, //CAN
@@ -23,12 +22,12 @@ public class RobotMap {
               chassisVictorBR = 7; //CAN
               //all temp
   
-  //----------cameras----------
-  public static final int
-              cameraA = 0,
-              cameraB = 1;  //All temp
+//----------cameras----------
+    public static final int
+                cameraA = 0,
+                cameraB = 1;  //All temp
   
-  //----------Elevator----------
+//----------Elevator----------
   public static final int  
               elevatorMotorF = 3, //CAN
               elevatorMotorB = 6, //CAN
@@ -39,17 +38,17 @@ public class RobotMap {
               //All tem
 
 //----------ClimbingShaft----------
-public static final int 
-            shaftTalon = 1, //CAN
-            shaftBottomLimiter = 2; //DIO
+  public static final int 
+              shaftTalon = 1, //CAN
+              shaftBottomLimiter = 2; //DIO
 
 
 
 //----------Climbing Movement----------
-public static final int 
-              climbingMovementMotor = 0, //CAN
-              climbingMovementEncoderA = 1, //DIO
-              climbingMovementEncoderB = 2; //DIO
+  public static final int 
+                climbingMovementMotor = 0, //CAN
+                climbingMovementEncoderA = 1, //DIO
+                climbingMovementEncoderB = 2; //DIO
 
 //----------Gripper----------
   public static final int 

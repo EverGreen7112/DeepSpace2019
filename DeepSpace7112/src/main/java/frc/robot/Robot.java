@@ -18,15 +18,20 @@ import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import com.spikes2212.utils.CamerasHandler;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
-/**
+/** This is the code ran (together with the OI) when activating the robot - 
+ * it includes the decleration, intialization and confguration of the Subsystems.
+ * <p> 
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.gradle file in the
+ * documentation.
+ * <p>
+ * changing the name of this class or the package after
+ * creating this project, requires updating the build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
@@ -44,6 +49,7 @@ public class Robot extends TimedRobot {
   private DashBoardController dbc;
 
   @Override
+  /**The function ran when the robot is activated.*/
   public void robotInit() {
     //---------Sensor Configs----------
     SubsystemComponents.Gripper.createMotorGroup();
@@ -63,18 +69,20 @@ public class Robot extends TimedRobot {
     compressor.setClosedLoopControl(true);
 
     //----------BasicSubsystems----------
-    drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
-    gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit (
-      SubsystemComponents.Gripper::isCargoCaught));
-    elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
-      () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kElevatorEncoderMaxHeight.get())));
-    shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new MinLimit(
-      SubsystemComponents.ClimbingShaft.bottomLimiter::get));
-    climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new Limitless());
-
-        //----------Class Constructors----------
-        oi = new OI();
-        dbc = new DashBoardController(); 
+      drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
+      // gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit (
+      //SubsystemComponents.Gripper::isCargoCaught));
+      gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new Limitless());
+      elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
+        () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kElevatorEncoderMaxHeight.get())));
+      shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new MinLimit(
+        SubsystemComponents.ClimbingShaft.bottomLimiter::get));
+      climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new Limitless());
+      
+    //----------Class Constructors----------
+      oi = new OI();
+      dbc = new DashBoardController(); 
+    
     //----------DefaultCommands----------
     drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
     //elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick));
@@ -119,5 +127,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+    Scheduler.getInstance().run();
+    dbc.update();
+
   }
 }
