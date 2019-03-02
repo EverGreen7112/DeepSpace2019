@@ -77,7 +77,7 @@ public class OI {
   
   /**return the Y axis of the {@link #buttonJS Button Joytick}, used to move the elevator, adjusted to move more slowly to increase safety.    */
   public double getBTJoystick() {
-    return buttonJS.getRawAxis(1) * 0.45;
+    return buttonJS.getRawAxis(1) * 0.4;
   }
 
   /**@return the {@link #adjustInput(double) adjusted} current Y axis of the {@link #drivingJSLeft left driving Joystic}*/
