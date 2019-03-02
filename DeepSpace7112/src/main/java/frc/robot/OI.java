@@ -130,10 +130,10 @@ public class OI {
         ClimbingMovementB = new JoystickButton(buttonJS, 7);
         ClimbingMovementF = new JoystickButton(buttonJS, 8);
       //----------Climbing Frame Testing----------
-      ClimbingFrameD = new JoystickButton(buttonJS, 2);
-      ClimbingFrameU = new JoystickButton(buttonJS, 4);
+        ClimbingFrameD = new JoystickButton(buttonJS, 2);
+        ClimbingFrameU = new JoystickButton(buttonJS, 4);
       //----------Buttons' Binding----------
-      bindButtons();
+        bindButtons();
     }
 
 

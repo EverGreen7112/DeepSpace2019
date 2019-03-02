@@ -16,56 +16,57 @@ package frc.robot;
 public class RobotMap {
 //----------Chassis----------
   public static final int 
-              chassisVictorFL = 8, //CAN
-              chassisVictorBL = 5, //CAN
-              chassisVictorFR = 2, //CAN
-              chassisVictorBR = 7; //CAN
-              //all temp
+    chassisVictorFL = 8, //CAN
+    chassisVictorBL = 5, //CAN
+    chassisVictorFR = 2, //CAN
+    chassisVictorBR = 7; //CAN
+    //all temp
   
 //----------cameras----------
-    public static final int
-                cameraA = 0,
-                cameraB = 1;  //All temp
+  public static final int
+    cameraA = 0,
+    cameraB = 1;  //All temp
   
 //----------Elevator----------
   public static final int  
-              elevatorMotorF = 3, //CAN
-              elevatorMotorB = 6, //CAN
-              elevatorEncoderA = 0, //DIO
-              elevatorEncoderB = 1, //DIO
-              elevatorOpticSwitch = 6, //DIO
-              elevatorLazerDistanceSensor = 0; //Analog
-              //All temp
+    elevatorMotorF = 3, //CAN -TEMP-
+    elevatorMotorB = 6, //CAN -TEMP-
+    elevatorEncoderA = 0, //DIO -TEMP-
+    elevatorEncoderB = 1, //DIO -TEMP-
+    elevatorOpticSwitch = 6, //DIO -TEMP-
+    elevatorLazerDistanceSensor = 0; //Analog
 
 //----------Climbing Frame----------
   public static final int 
-              frameTalon = 1, //CAN
-              frameBottomLimiter = 3; //DIO
+    frameTalon = 1, //CAN
+    frameBottomLimiter = 3; //DIO
 
 //----------Climbing Movement----------
   public static final int 
-                climbingMovementMotor = 0, //CAN
-                climbingMovementEncoderA = 1, //DIO
-                climbingMovementEncoderB = 2; //DIO
+    climbingMovementMotor = 0, //CAN
+    climbingMovementEncoderA = 1, //DIO
+    climbingMovementEncoderB = 2; //DIO
 
 //----------Gripper----------
   public static final int 
-            gripperMotorLeft = 9  , //CAN
-            gripperMotorRight = 4, //CAN
-            gripperLeftPistonF= 0, //Left Forward -TEMP-
-            gripperLeftPistonR= 1, //Left Reverse -TEMP-
-            gripperRightPistonF = 2, //Right Forward -TEMP-
-            gripperRightPistonR = 3, //Right Reverse -TEMP-
-            gripperAnalogLazerSensor = 5; //analog
+    gripperMotorLeft = 9  , //CAN
+    gripperMotorRight = 4, //CAN
+    gripperLeftPistonF= 0, //Left Forward -TEMP-
+    gripperLeftPistonR= 1, //Left Reverse -TEMP-
+    gripperRightPistonF = 2, //Right Forward -TEMP-
+    gripperRightPistonR = 3, //Right Reverse -TEMP-
+    gripperAnalogLazerSensor = 5; //analog
             
 //----------Gripper Movement----------
- public static final int
-            gripperMovementLeftPistonF = 0, //Left Forward 
-            gripperMovementLeftPistonR = 1, //Left Reverse
-            gripperMovementRightPistonF = 2, //Left Forward
-            gripperMovementRightPistonR = 3, //Left Reverse
-            gripperMovementTopMicroswitch = 4, 
-            gripperMovementBottomMicroSwitch = 5; 
+  public static final int
+    gripperMovementPushPistonF = 6, 
+    gripperMovementPushPistonR = 2, 
+    gripperMovementLockPistonF = 5, 
+    gripperMovementLockPistonR = 4, 
+    gripperMovementPistonF = 7,
+    gripperMovementPistonR = 3,
+    gripperMovementTopMicroswitch = 4, 
+    gripperMovementBottomMicroSwitch = 5; 
 }
 /**
  * 6 - push forward
