@@ -12,6 +12,7 @@ import frc.robot.commands.Cameras.SwitchToCameraA;
 import frc.robot.commands.Cameras.SwitchToCameraB;
 import frc.robot.commands.Elevator.ElevatorMoveToTarget;
 import frc.robot.commands.Gripper.GripperRelease;
+import frc.robot.commands.GripperMovement.GripperMovementPistons;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -29,7 +30,6 @@ public class OI {
   //--------------------Declerations--------------------
 
   //----------Joysticks----------
-
   /**The joystick that controlls the left motors. */
   private Joystick drivingJSLeft;
   /**The Joystick that conntrols the right motors. */
@@ -38,7 +38,6 @@ public class OI {
   private Joystick buttonJS;
 
   //----------Buttons----------
-  
   /**The button that is used to catch objects with the gripper. The */
   private Button catchButton;
   /**The button that is used to release objects cought with the gripper. When it's released, the gripper catches back an object not fully released.*/
@@ -69,11 +68,15 @@ public class OI {
    * -FOR TESTING-
    */
   private Button ClimbingMovementB;
+  /**The button to make the robot climb the level 3 hab. It must only be pressed after the gripper is laid on the level. */
+  private Button climb;
+  private Button flipGripper;
+
 
   /**The method to adjust the Driving Joysticks' value, turning the speed by value into a curve instead of a line - 
    * instead of each movement of the joystick increasing the speed equally, the furthest you move it the more
    * each movement increases the speed.
-   * @param input - the joystick input to be adjusted
+   * @param input - the joystick's axis value input to be adjusted
    * @return The adjusted input
     */
   private double adjustInput(double input){
@@ -82,63 +85,73 @@ public class OI {
   
   /**return the Y axis of the {@link #buttonJS Button Joytick}, used to move the elevator, adjusted to move more slowly to increase safety.    */
   public double getBTJoystick() {
-    return buttonJS.getRawAxis(1) * 0.45;
+    return buttonJS.getRawAxis(1) * 0.4;
   }
 
   /**@return the {@link #adjustInput(double) adjusted} current Y axis of the {@link #drivingJSLeft left driving Joystic}*/
   public double getLeftJoystick() {
-    return adjustInput(-drivingJSLeft.getY());
+    return -adjustInput(drivingJSLeft.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
   }
 
     
   /**@return the {@link #adjustInput(double) adjusted} current Y axis of the {@link #drivingJSRight driving Joystic}*/
   public double getRightJoystick() {
-    return adjustInput(drivingJSRight.getY());
+    return adjustInput(drivingJSRight.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
   }
 
   //--------------------Initializations--------------------
-  public OI() {
-    //----------Joysticks----------
-    drivingJSLeft = new Joystick(0);
-    drivingJSRight = new Joystick(1);
-    buttonJS = new Joystick(2);
-
-    //----------Elevator Buttons----------
-    bottomHatch = new JoystickButton(drivingJSLeft, 12);
-    middleHatch= new JoystickButton(drivingJSLeft, 10);
-    topHatch = new JoystickButton(drivingJSLeft, 8);
-    bottomCargo = new JoystickButton(drivingJSLeft, 11);
-    middleCargo = new JoystickButton(drivingJSLeft, 9);
-    topCargo = new JoystickButton(drivingJSLeft, 7);
-
-    //----------Gripper Buttons----------
-    catchButton = new JoystickButton(buttonJS, 1);
-    releaseButton = new JoystickButton(buttonJS, 3);	
-    
-    //----------Camera Buttons---------
-    switchToA = new JoystickButton(drivingJSRight, 5);
-    switchToB = new JoystickButton(drivingJSRight, 6);
-    straighten = new JoystickButton(buttonJS, 9);
-
-    //----------Climbing Movement Testing---------
-    ClimbingMovementB = new JoystickButton(buttonJS, 2);
-    ClimbingMovementF = new JoystickButton(buttonJS, 4);
-
-    bindButtons();
-  }
+    public OI() {
+      //----------Joysticks----------
+        drivingJSLeft = new Joystick(0);
+        drivingJSRight = new Joystick(1);
+        buttonJS = new Joystick(2);
+      //----------Elevator Buttons----------
+        bottomHatch = new JoystickButton(drivingJSLeft, 12);
+        middleHatch= new JoystickButton(drivingJSLeft, 10);
+        topHatch = new JoystickButton(drivingJSLeft, 8);
+        bottomCargo = new JoystickButton(drivingJSLeft, 11);
+        middleCargo = new JoystickButton(drivingJSLeft, 9);
+        topCargo = new JoystickButton(drivingJSLeft, 7);
+      //----------Gripper Buttons----------
+        catchButton = new JoystickButton(buttonJS, 1);
+        releaseButton = new JoystickButton(buttonJS, 3);	
+      //----------Gripper Movement----------
+        flipGripper = new JoystickButton(buttonJS, 4);
+      //----------Camera Buttons---------
+        switchToA = new JoystickButton(drivingJSRight, 5);
+        switchToB = new JoystickButton(drivingJSRight, 6);
+        straighten = new JoystickButton(buttonJS, 9);
+      //----------Climbing Movement Testing---------
+        ClimbingMovementB = new JoystickButton(buttonJS, 2);
+        ClimbingMovementF = new JoystickButton(buttonJS, 4);
+      //----------Buttons' Binding----------
+      bindButtons();
+    }
 
 
-  /**This is the method that makes the buttons cause an action when pressed, and must be ran in the consturctor.
-   * It consists of button.whenPressed/whileheld(Command), where button is the button to be pressed, when 
-   * pressed or while held determine the fashion in which it activates and ends the action and command is the action to be executed.*/
-  private void bindButtons(){
-    bottomHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketBottomHatchHeight));
-    catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
-    releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
-    //switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
-    //switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras
-    //straighten.whenPressed(new driveArcadeWithPID()); //Commented since RobotB does not have cameras.
-    ClimbingMovementB.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
-    ClimbingMovementF.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeedForward));
+  /**This is the method that makes the buttons cause an action when pressed, and must be ran in the consturctor. <p>
+   * It consists of lines of button.whenPressed/whileheld(Command), where button is the button to be pressed, 
+   * when pressed or while held is the method to determine the fashion in which it activates 
+   * and ends the action and command is the action to be executed when the button is pressed or held.*/
+  private void bindButtons() 
+  {
+    //----------Elevator to Hatch----------
+      topHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopHatchHeight));
+      middleHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketMiddleHatchHeight));
+      bottomHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketBottomHatchHeight));
+    //----------Elevator to Cargo----------
+      topCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopCargoHeight));
+      middleCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kRocketMiddleCargoHeight, SubsystemConstants.Elevator.kRocketMiddleCargoHeight));
+      bottomCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kRocketBottomHatchHeight, SubsystemConstants.Elevator.kRocketBottomCargoHeight));
+    //----------Gripper----------
+      catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
+      releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
+    //----------Gripper Movement----------
+      flipGripper.whenPressed(new GripperMovementPistons());
+    // //----------Cameras----------
+    //   switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
+    //   switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras
+    // //----------PID----------
+    //   straighten.whenPressed(new driveArcadeWithPID()); //Commented since RobotB does not have cameras.
   }
 }
