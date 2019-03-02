@@ -16,11 +16,10 @@ package frc.robot;
 public class RobotMap {
 //----------Chassis----------
   public static final int 
-    chassisVictorFL = 8, //CAN
-    chassisVictorBL = 5, //CAN
-    chassisVictorFR = 2, //CAN
-    chassisVictorBR = 7; //CAN
-    //all temp
+              chassisVictorFL = 8, //CAN
+              chassisVictorBL = 5, //CAN
+              chassisVictorFR = 2, //CAN
+              chassisVictorBR = 7; //CAN
   
 //----------cameras----------
   public static final int
@@ -28,13 +27,14 @@ public class RobotMap {
     cameraB = 1;  //All temp
   
 //----------Elevator----------
-  public static final int  
-    elevatorMotorF = 3, //CAN -TEMP-
-    elevatorMotorB = 6, //CAN -TEMP-
-    elevatorEncoderA = 0, //DIO -TEMP-
-    elevatorEncoderB = 1, //DIO -TEMP-
-    elevatorOpticSwitch = 6, //DIO -TEMP-
-    elevatorLazerDistanceSensor = 0; //Analog
+  public static final int
+              elevatorMotorF = 3, //CAN
+              elevatorMotorB = 6, //CAN
+              elevatorEncoderA = 0, //DIO
+              elevatorEncoderB = 1, //DIO
+              elevatorOpticSwitch = 6, //DIO
+              elevatorLazerDistanceSensor = 0; //Analog
+              //All temp
 
 //----------Climbing Frame----------
   public static final int 
