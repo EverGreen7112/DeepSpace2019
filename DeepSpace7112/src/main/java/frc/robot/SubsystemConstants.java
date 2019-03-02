@@ -94,10 +94,10 @@ public class SubsystemConstants {
 		public static final Supplier<Double> kVoltageLimit = ConstantHandler.addConstantDouble("Optic Sensor voltage limit", 1.5);
 	}
 	
-	public static interface ClimbingShaft {
-		public static final Supplier<Double> kShaftMotorSpeedModifier = ConstantHandler.addConstantDouble("Shaft Motor Speed Modifier", 0.6);
-		public static final Supplier<Double> kShaftMotorSpeedModifierUp = ConstantHandler.addConstantDouble("Shaft Motor Speed Modifier Upwards", -0.6);
-		public static final Supplier<Double> kShaftMotorStallSpeed = ConstantHandler.addConstantDouble("Shaft Stall speed", 0.3);
+	public static interface ClimbingFrame {
+		public static final Supplier<Double> kFrameMotorSpeedModifier = ConstantHandler.addConstantDouble("Frame Motor Speed Modifier", 0.6);
+		public static final Supplier<Double> kFrameMotorSpeedModifierUp = ConstantHandler.addConstantDouble("Frame Motor Speed Modifier Upwards", -0.6);
+		public static final Supplier<Double> kFrameMotorStallSpeed = ConstantHandler.addConstantDouble("Frame Stall speed", 0.3);
 	}
 
 	public static interface ClimbingMovement {

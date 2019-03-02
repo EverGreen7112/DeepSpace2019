@@ -20,7 +20,6 @@ public class RobotMap {
               chassisVictorBL = 5, //CAN
               chassisVictorFR = 2, //CAN
               chassisVictorBR = 7; //CAN
-              //all temp
   
 //----------cameras----------
     public static final int
@@ -28,7 +27,7 @@ public class RobotMap {
                 cameraB = 1;  //All temp
   
 //----------Elevator----------
-  public static final int  
+  public static final int
               elevatorMotorF = 3, //CAN
               elevatorMotorB = 6, //CAN
               elevatorEncoderA = 0, //DIO
