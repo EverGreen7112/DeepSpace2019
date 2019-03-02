@@ -121,7 +121,7 @@ public class OI {
         catchButton = new JoystickButton(buttonJS, 1);
         releaseButton = new JoystickButton(buttonJS, 3);	
       //----------Gripper Movement----------
-        flipGripper = new JoystickButton(buttonJS, 4);
+        flipGripper = new JoystickButton(buttonJS, 5);
       //----------Camera Buttons---------
         switchToA = new JoystickButton(drivingJSRight, 5);
         switchToB = new JoystickButton(drivingJSRight, 6);
@@ -163,7 +163,7 @@ public class OI {
     //   straighten.whenPressed(new driveArcadeWithPID()); //Commented since RobotB does not have cameras.
     //----------Climbing Movement Testing----------
       ClimbingMovementB.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
-      ClimbingMovementF.whileHeld(new MoveBasicSubsystem(Robot.shaft, SubsystemConstants.ClimbingMovement.kClimbingSpeedForward));
+      ClimbingMovementF.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeedForward));
     //----------Climbing Frame Testing----------
       ClimbingFrameD.whileHeld(new MoveBasicSubsystem(Robot.shaft, SubsystemConstants.ClimbingShaft.kShaftMotorSpeedModifier));
       ClimbingFrameU.whileHeld(new MoveBasicSubsystem(Robot.shaft, SubsystemConstants.ClimbingShaft.kShaftMotorSpeedModifierUp));

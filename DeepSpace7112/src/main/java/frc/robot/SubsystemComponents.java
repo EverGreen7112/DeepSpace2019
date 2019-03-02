@@ -43,7 +43,7 @@ public class SubsystemComponents {
 
     /**
     * The elevator subsystem consists of 2 speed controllers inside a speed controller group
-    * one encoder on the shaft of the motors
+    * one encoder on the frame of the motors
     * one microswitch which determines the maximum length the elevator can go mechanicly
     * one optic switch to reset the encoder (refrence point)
     
@@ -111,8 +111,8 @@ public class SubsystemComponents {
      * The Gripper subsystem consists of 2 speed controllers inside a speed controller group, the right motor is inverted
      * The subsystem contains one analog proximity lazer based sensor.*/
     public static class Gripper {
-            public static final DoubleSolenoid PushPiston = new DoubleSolenoid(6, 2); //Left gripper piston setting the port
-            public static final DoubleSolenoid LockPiston = new DoubleSolenoid(5, 4); //Right griper piston setting the port
+            // public static final DoubleSolenoid PushPiston = new DoubleSolenoid(6, 2); //Left gripper piston setting the port
+            // public static final DoubleSolenoid LockPiston = new DoubleSolenoid(5, 4); //Right griper piston setting the port
             public static final SpeedControllerGroup motors = new SpeedControllerGroup(new WPI_VictorSPX(RobotMap.gripperMotorLeft),new WPI_VictorSPX(RobotMap.gripperMotorRight));
                     
         public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
@@ -126,17 +126,17 @@ public class SubsystemComponents {
     }
     
     public static class GripperMovement {
-        public static final DoubleSolenoid piston = new DoubleSolenoid (
-            RobotMap.gripperMovementPistonF, RobotMap.gripperMovementPistonR);
+        // public static final DoubleSolenoid piston = new DoubleSolenoid (
+        //     RobotMap.gripperMovementRightPistonF, RobotMap.gripperMovementRightPistonR);
     }
                 
     /**
-     * The subsystem that controlls the shaft that is used to raise the back of the robot during the climbing process.
-     * The subsystem contains one speed controller and 2 limit switches that indicate the topmost and bottommost points that the shaft goes.
+     * The subsystem that controlls the frame that is used to raise the back of the robot during the climbing process.
+     * The subsystem contains one speed controller and 2 limit switches that indicate the topmost and bottommost points that the frame goes.
      */
-    public static class ClimbingShaft{
-                public static final WPI_VictorSPX motor = new WPI_VictorSPX(RobotMap.shaftTalon);
-                public static final DigitalInput bottomLimiter = new DigitalInput(RobotMap.shaftBottomLimiter);
+    public static class Climbingframe{
+                public static final WPI_VictorSPX motor = new WPI_VictorSPX(RobotMap.frameTalon);
+                public static final DigitalInput bottomLimiter = new DigitalInput(RobotMap.frameBottomLimiter);
     }
        
     /**

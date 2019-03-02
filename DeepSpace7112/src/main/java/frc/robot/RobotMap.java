@@ -9,9 +9,7 @@ package frc.robot;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
- * to a variable name - whenever we'll need to initilize a component with its port, 
- * we'll use the variable from this class.
- * This provides flexibility changing wiring, makes checking
+ * to a variable name. This provides flexibility changing wiring, makes checking
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
@@ -39,10 +37,10 @@ public class RobotMap {
               elevatorLazerDistanceSensor = 0; //Analog
               //All temp
 
-//----------ClimbingShaft----------
+//----------Climbing Frame----------
   public static final int 
-              shaftTalon = 1, //CAN
-              shaftBottomLimiter = 2; //DIO
+              frameTalon = 1, //CAN
+              frameBottomLimiter = 3; //DIO
 
 //----------Climbing Movement----------
   public static final int 
@@ -54,16 +52,20 @@ public class RobotMap {
   public static final int 
             gripperMotorLeft = 9  , //CAN
             gripperMotorRight = 4, //CAN
-            gripperPushPistonF= 0, //Left Forward
-            gripperPushPistonR= 1, //Left Reverse
-            gripperRightPistonF = 2, //Right Forward
-            gripperRightPistonR = 3, //Right Reverse
-            gripperAnalogLazerSensor = 1; //analog
+            gripperLeftPistonF= 0, //Left Forward -TEMP-
+            gripperLeftPistonR= 1, //Left Reverse -TEMP-
+            gripperRightPistonF = 2, //Right Forward -TEMP-
+            gripperRightPistonR = 3, //Right Reverse -TEMP-
+            gripperAnalogLazerSensor = 5; //analog
             
 //----------Gripper Movement----------
  public static final int
-            gripperMovementPistonF = 7, //Left Forward 
-            gripperMovementPistonR = 3; //Left Reverse
+            gripperMovementLeftPistonF = 0, //Left Forward 
+            gripperMovementLeftPistonR = 1, //Left Reverse
+            gripperMovementRightPistonF = 2, //Left Forward
+            gripperMovementRightPistonR = 3, //Left Reverse
+            gripperMovementTopMicroswitch = 4, 
+            gripperMovementBottomMicroSwitch = 5; 
 }
 /**
  * 6 - push forward

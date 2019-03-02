@@ -23,8 +23,8 @@ public class Climb extends CommandGroup {
 
     //-----Sequence-----
     addParallel(new MoveBasicSubsystem(Robot.elevator, () -> -0.6)); //Move the elevator
-    addSequential(new MoveBasicSubsystem(Robot.shaft, () -> 0.8));
+    addSequential(new MoveBasicSubsystem(Robot.frame, () -> 0.8));
     //addSequential(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
-    //addSequential(new MoveBasicSubsystem(Robot.shaft, -SubsystemConstants.ClimbingShaft.kShaftMotorStallSpeed.get()));
+    //addSequential(new MoveBasicSubsystem(Robot.frame, -SubsystemConstants.Climbingframe.kframeMotorStallSpeed.get()));
   }
 }

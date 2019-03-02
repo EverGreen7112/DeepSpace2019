@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
   public static BasicSubsystem elevator;
   public static BasicSubsystem elevatorEncoder;
   public static BasicSubsystem gripper;
-  public static BasicSubsystem shaft;
+  public static BasicSubsystem frame;
   public static BasicSubsystem climbingMovement;
   
   public static Compressor compressor;
@@ -53,9 +53,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     //----------Sensor Configs----------
       SubsystemComponents.Elevator.setupSensors(); //Configures the elevator - inverts the motors and sets the distance per pulse.
-      SubsystemComponents.Gripper.LockPiston.set(Value.kReverse);
-      SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
-      SubsystemComponents.GripperMovement.piston.set(Value.kForward);
+      // SubsystemComponents.Gripper.LockPiston.set(Value.kReverse);
+      // SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
+      // SubsystemComponents.GripperMovement.piston.set(Value.kForward);
       cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
         SubsystemConstants.cameras.kCameraWidth.get(), 
         SubsystemConstants.cameras.kCameraHeight.get(), 
@@ -74,9 +74,9 @@ public class Robot extends TimedRobot {
       elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
         () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kEncoderMaxHeight.get()))); 
         //^^^Maximum Limit by the encoder - if it transmits that the elevator has surpussed our determained maximum height, it'll stop the movement
-      // shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.motor::set, new MinLimit(
-      //   SubsystemComponents.ClimbingShaft.bottomLimiter::get)); //Minimum Limit - if the shaft presses the switch , stop the shaft. The robot is built such that the switch will be pressed when the shaft reaces the determained minimum height. 
-      shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.motor::set, new Limitless());
+      // frame = new BasicSubsystem(SubsystemComponents.Climbingframe.motor::set, new MinLimit(
+      //   SubsystemComponents.Climbingframe.bottomLimiter::get)); //Minimum Limit - if the frame presses the switch , stop the frame. The robot is built such that the switch will be pressed when the frame reaces the determained minimum height. 
+      frame = new BasicSubsystem(SubsystemComponents.Climbingframe.motor::set, new Limitless());
       climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.motor::set, new Limitless());
       
     //----------Class Constructors----------
@@ -86,12 +86,12 @@ public class Robot extends TimedRobot {
     //----------DefaultCommands----------
       drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
       //elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick)); //commented so we can use button joystick in testing.
-      //climbingMovement.setDefaultCommand(new MoveBasicSubsystem(climbingMovement, oi::getBTJoystick)); //testing
+      climbingMovement.setDefaultCommand(new MoveBasicSubsystem(climbingMovement, oi::getBTJoystick)); //testing
       // gripper.setDefaultCommand(new MoveBasicSubsystem(gripper, oi::getBTJoystick)); //testing
-      // shaft.setDefaultCommand(new MoveBasicSubsystem(shaft, oi::getBTJoystick)); //testing
+      // frame.setDefaultCommand(new MoveBasicSubsystem(frame, oi::getBTJoystick)); //testing
 
     //----------Shuffleboard data----------
-      dbc.addNumber("Lazer elevator eight", SubsystemComponents.Elevator::getElevatorHeightByLazer);
+      dbc.addNumber("Lazer elevator height", SubsystemComponents.Elevator::getElevatorHeightByLazer);
       dbc.addNumber("Encoder elevator height", SubsystemComponents.Elevator::getElevatorHeightByEncoder);
       dbc.addNumber("Total elevator height", SubsystemComponents.Elevator::getElevatorHeight);
 
