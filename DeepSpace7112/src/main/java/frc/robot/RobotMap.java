@@ -14,48 +14,49 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
-//----------Chassis----------
+  
+  //----------Chassis----------
   public static final int 
-              chassisVictorFL = 8, //CAN
-              chassisVictorBL = 5, //CAN
+              chassisVictorFL = 7, //CAN
+              chassisVictorBL = 8, //CAN
               chassisVictorFR = 2, //CAN
-              chassisVictorBR = 7; //CAN
-              //all temp
+              chassisVictorBR = 5; //CAN
+//all temp
   
-//----------cameras----------
-    public static final int
-                cameraA = 0,
-                cameraB = 1;  //All temp
+  //----------cameras----------
+  public static final int
+              cameraA = 0,
+              cameraB = 1;
   
-//----------Elevator----------
+  //----------Elevator----------
   public static final int  
-              elevatorMotorF = 3, //CAN
-              elevatorMotorB = 6, //CAN
+              elevatorMotorL = 3, //CAN
+              elevatorMotorR = 4, //CAN
               elevatorEncoderA = 0, //DIO
               elevatorEncoderB = 1, //DIO
               elevatorOpticSwitch = 6, //DIO
               elevatorLazerDistanceSensor = 1; //Analog
-              //All tem
+              //All temp
 
-//----------Climbing Frame----------
-  public static final int 
-              frameTalon = 1, //CAN
-              frameBottomLimiter = 3; //DIO
+//----------ClimbingShaft----------
+public static final int 
+            shaftTalon = 6, //CAN
+            shaftBottomLimiter = 2; //DIO
 
 //----------Climbing Movement----------
-  public static final int 
-                climbingMovementMotor = 0, //CAN
-                climbingMovementEncoderA = 1, //DIO
-                climbingMovementEncoderB = 2; //DIO
+public static final int 
+              climbingMovementMotor = 1, //CAN
+              climbingMovementEncoderA = 1, //DIO
+              climbingMovementEncoderB = 2; //DIO
 
 //----------Gripper----------
   public static final int 
-            gripperMotorLeft = 9  , //CAN
-            gripperMotorRight = 4, //CAN
-            gripperLeftPistonF= 0, //Left Forward -TEMP-
-            gripperLeftPistonR= 1, //Left Reverse -TEMP-
-            gripperRightPistonF = 2, //Right Forward -TEMP-
-            gripperRightPistonR = 3, //Right Reverse -TEMP-
+            gripperMotorLeft = 6, //CAN
+            gripperMotorRight = 7, //CAN
+            gripperLeftPistonF= 0, //Left Forward
+            gripperLeftPistonR= 1, //Left Reverse
+            gripperRightPistonF = 2, //Right Forward
+            gripperRightPistonR = 3, //Right Reverse
             gripperAnalogLazerSensor = 5; //analog
             
 //----------Gripper Movement----------
@@ -64,7 +65,7 @@ public class RobotMap {
             gripperMovementLeftPistonR = 1, //Left Reverse
             gripperMovementRightPistonF = 2, //Left Forward
             gripperMovementRightPistonR = 3, //Left Reverse
-            gripperMovementTopMicroswitch = 4, 
-            gripperMovementBottomMicroSwitch = 5; 
+            gripperMovementTopMicroswitch = 4,
+            gripperMovementBottomMicroSwitch = 5;
 }
 
