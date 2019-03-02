@@ -37,7 +37,7 @@ public class RobotMap {
               elevatorEncoderB = 1, //DIO
               elevatorOpticSwitch = 6, //DIO
               elevatorLazerDistanceSensor = 0; //Analog
-              //All tem
+              //All temp
 
 //----------ClimbingShaft----------
   public static final int 
