@@ -16,7 +16,7 @@ public class SubsystemConstants {
 	/**The constants for the chassis' <a href="https://bit.ly/2H6fnUT">PID loop</a>*/
 	public static interface PID  { //All temp.
 		/**The point the system will try to drive to - the center of the reflectives seen by the camera. */
-		public static final Supplier<Double> kSetPoint = ConstantHandler.addConstantDouble("Arcade PID - Set point", 0);
+		public static final Supplier<Double> kSetPoint = () -> ImageProccessingSuppliers.center.pidGet();
 		/**The range of speed multipliers the system can output for the fix - here, from -0.5 to 0.5. (|-0.5 - 0.5| = 1)*/
 		public static final Supplier<Double> kOutputRange = ConstantHandler.addConstantDouble("PID Output Range", 1);
 		/** The proportional constant for the PID */
@@ -96,12 +96,12 @@ public class SubsystemConstants {
 	public static interface ClimbingFrame {
 		public static final Supplier<Double> kFrameMotorSpeedModifier = ConstantHandler.addConstantDouble("Frame Motor Speed Modifier", 0.6);
 		public static final Supplier<Double> kFrameMotorSpeedModifierUp = ConstantHandler.addConstantDouble("Frame Motor Speed Modifier Upwards", -0.6);
-		//public static final Supplier<Double> kFrameMotorStallSpeed = ConstantHandler.addConstantDouble("Frame Stall speed", 0.3); //Commented for there's a mechanical solution to stall
 	}
 
 	public static interface ClimbingMovement {
 		public static Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("Climbing movement speed modifier", 0.5); //temp
-		public static Supplier<Double> kClimbingSpeedForward = ConstantHandler.addConstantDouble("Climbing movemnt speed forward modifier -FOR TESTING-", -0.5); //temp
-		public static Supplier<Double> kTargetHeight = ConstantHandler.addConstantDouble("Climbing movement target height", 1); //temp
+		// public static Supplier<Double> kTargetHeight = ConstantHandler.addConstantDouble("Climbing movement target height", 1); //temp //Commented due to no use.
+		//------------Testing----------
+			// public static Supplier<Double> kClimbingSpeedForward = ConstantHandler.addConstantDouble("Climbing movemnt speed forward modifier -FOR TESTING-", -0.5); //temp
 	}
 }
