@@ -1,8 +1,8 @@
  - Tests:
     - Check all motors
     {
-        - Check left movement motors
-        - Check right movement motors
+        - Check left chassis motors
+        - Check right chassis motors
         - Check gripper motors
         - Check elevator motor
         - Check climb shaft motor
@@ -12,6 +12,7 @@
     - Check climbing
     - Check PID
     - Check elevator stall
+    - Check solenoids
 
     - Check all sensors
     {
@@ -19,13 +20,13 @@
         {
             - Check gripper sensor 
             - Check elevator laser sensor
-            - Check wall sensor
+            - (Check wall sensor) ?Do we even have one set up?
         }
 
         - Check all switches
         {
-            - Check climbing movement top switch
-            - Check climbing movement bottom switch
+            - Check climbing frame top switch
+            - Check climbing frame bottom switch
             - Check elevator switch
         }
     }
