@@ -1,0 +1,15 @@
+- The first word of variable names must start with a lower case letter,
+ and every additional word there must start with a capital letter.
+
+- Variable names of variables with constant values must start with a lower case k 
+ (therfore the word after that will start with a capital letter).
+
+- Variables that are Constants should be suppliers and should be initialized using ConstantHandler.
+
+- All words in a class name must start with a capital letter.
+
+- RobotMap should have no nested classes or interfaces, but should be divided to blocks for each subsystem,
+ each titled with a comment of the subsystem name sorrunded by ten hyphens ("//----------Elevator----------", for example).
+ The blocks should be indented such that they can be collapsed to their titles.
+
+- SubsystemComponents must be divided into static interfaces for each subsystem.

@@ -28,7 +28,7 @@ public class RobotMap {
   
 //----------Elevator----------
   public static final int
-              elevatorMotorF = 3, //CAN
+              elevatorMotorA = 3, //CAN
               elevatorMotorB = 6, //CAN
               elevatorEncoderA = 0, //DIO
               elevatorEncoderB = 1, //DIO
@@ -69,10 +69,18 @@ public class RobotMap {
     gripperMovementBottomMicroSwitch = 5; 
 }
 /**
- * 6 - push forward
- * 4 - lock reverse
- * 3 - movement reverse
- * 5 - lock forward
- * 2 - push reverse
- * 7 - movement forward
+ * By Number:
+  * Motors:
+    * 0 - Climbing Movement
+    * 1 - Frame
+    * 3 - ElevatorA
+    * 4 - Gripper right
+    * 6 - ElevatorB
+    * 9 - Gripper left
+  * Pistons:
+    * 2 - push reverse
+    * 4 - lock reverse
+    * 5 - lock forward
+    * 6 - push forward
+    * 7 - movement forward
  */

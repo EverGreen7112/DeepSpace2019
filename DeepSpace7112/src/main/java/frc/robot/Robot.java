@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
   public static Compressor compressor;
 
   public static CamerasHandler cameraHandler;
-  private DashBoardController dbc;
+  public  static DashBoardController dbc;
 
   @Override
   /**The function ran when the robot is activated.*/
@@ -85,9 +85,9 @@ public class Robot extends TimedRobot {
     
     //----------DefaultCommands----------
       drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-      //elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick)); //commented so we can use button joystick in testing.
-      elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, SubsystemConstants.Elevator.kElevatorStallSpeedModifier));
-      climbingMovement.setDefaultCommand(new MoveBasicSubsystem(climbingMovement, oi::getBTJoystick)); //testing
+      elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick)); //commented so we can use button joystick in testing.
+      // elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, SubsystemConstants.Elevator.kElevatorStallSpeedModifier));
+      // climbingMovement.setDefaultCommand(new MoveBasicSubsystem(climbingMovement, oi::getBTJoystick)); //testing
       // gripper.setDefaultCommand(new MoveBasicSubsystem(gripper, oi::getBTJoystick)); //testing
       // frame.setDefaultCommand(new MoveBasicSubsystem(frame, oi::getBTJoystick)); //testing
 
@@ -95,6 +95,7 @@ public class Robot extends TimedRobot {
       dbc.addNumber("Lazer elevator height", SubsystemComponents.Elevator::getElevatorHeightByLazer);
       dbc.addNumber("Encoder elevator height", SubsystemComponents.Elevator::getElevatorHeightByEncoder);
       dbc.addNumber("Total elevator height", SubsystemComponents.Elevator::getElevatorHeight);
+      dbc.addBoolean("Sensors are Functioning", SubsystemComponents.Elevator.sensorsFunctionSupplier);
 
   }
 

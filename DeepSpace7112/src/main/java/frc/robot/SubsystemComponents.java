@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -49,12 +51,17 @@ public class SubsystemComponents {
     
     */
     public static class Elevator {
-        public static final  SpeedControllerGroup motors = new SpeedControllerGroup(new WPI_VictorSPX(RobotMap.elevatorMotorF), new WPI_VictorSPX(RobotMap.elevatorMotorB));
+        public static final  SpeedControllerGroup motors = new SpeedControllerGroup(new WPI_VictorSPX(RobotMap.elevatorMotorA), new WPI_VictorSPX(RobotMap.elevatorMotorB));
         public static final Encoder encoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB);
         public static final DigitalInput opticSwitch = new DigitalInput(RobotMap.elevatorOpticSwitch);
         public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.elevatorLazerDistanceSensor);
         /**The boolean for whether or not the encoder was reset yet, because before the first time, it gives incorrect value. */
         public static boolean encoderWasReset;
+        /**Whether or not the sensors are working properly. 
+         * If not, a message will be sent to the drivers , who will have to use the elevator manually.*/
+        public static boolean sensorsFunction = true;
+        /**The supplier for {@link #sensorsFunction whether or not the sensors work prperly.} */
+        public static Supplier<Boolean> sensorsFunctionSupplier = () -> sensorsFunction;
         public static class ElevatorOutOfRangeException extends Exception {
             public ElevatorOutOfRangeException(String message)
             {
@@ -101,7 +108,8 @@ public class SubsystemComponents {
 
             catch(ElevatorOutOfRangeException e)
             {
-                //Add message
+                sensorsFunction = false;
+                Robot.dbc.update();
                 return -1;
             }
         }
