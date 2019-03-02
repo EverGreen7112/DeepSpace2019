@@ -44,8 +44,6 @@ public class RobotMap {
               shaftTalon = 1, //CAN
               shaftBottomLimiter = 2; //DIO
 
-
-
 //----------Climbing Movement----------
   public static final int 
                 climbingMovementMotor = 0, //CAN

@@ -70,7 +70,12 @@ public class OI {
   private Button ClimbingMovementB;
   /**The button to make the robot climb the level 3 hab. It must only be pressed after the gripper is laid on the level. */
   private Button climb;
+  /**The button to flip the gripper from "ball mode" to "hatch mode"*/
   private Button flipGripper;
+  /**The button to move the climbing frame up */
+  private Button ClimbingFrameU;
+  /**The button to move the climbing frame down */
+  private Button ClimbingFrameD;
 
 
   /**The method to adjust the Driving Joysticks' value, turning the speed by value into a curve instead of a line - 
@@ -122,8 +127,11 @@ public class OI {
         switchToB = new JoystickButton(drivingJSRight, 6);
         straighten = new JoystickButton(buttonJS, 9);
       //----------Climbing Movement Testing---------
-        ClimbingMovementB = new JoystickButton(buttonJS, 2);
-        ClimbingMovementF = new JoystickButton(buttonJS, 4);
+        ClimbingMovementB = new JoystickButton(buttonJS, 7);
+        ClimbingMovementF = new JoystickButton(buttonJS, 8);
+      //----------Climbing Frame Testing----------
+      ClimbingFrameD = new JoystickButton(buttonJS, 2);
+      ClimbingFrameU = new JoystickButton(buttonJS, 4);
       //----------Buttons' Binding----------
       bindButtons();
     }
@@ -153,5 +161,11 @@ public class OI {
     //   switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras
     // //----------PID----------
     //   straighten.whenPressed(new driveArcadeWithPID()); //Commented since RobotB does not have cameras.
+    //----------Climbing Movement Testing----------
+      ClimbingMovementB.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
+      ClimbingMovementF.whileHeld(new MoveBasicSubsystem(Robot.shaft, SubsystemConstants.ClimbingMovement.kClimbingSpeedForward));
+    //----------Climbing Frame Testing----------
+      ClimbingFrameD.whileHeld(new MoveBasicSubsystem(Robot.shaft, SubsystemConstants.ClimbingShaft.kShaftMotorSpeedModifier));
+      ClimbingFrameU.whileHeld(new MoveBasicSubsystem(Robot.shaft, SubsystemConstants.ClimbingShaft.kShaftMotorSpeedModifierUp));
   }
 }

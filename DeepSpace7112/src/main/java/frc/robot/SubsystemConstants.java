@@ -95,7 +95,8 @@ public class SubsystemConstants {
 	}
 	
 	public static interface ClimbingShaft {
-    	public static final Supplier<Double> shaftMotorSpeedModifier = ConstantHandler.addConstantDouble("Shaft Motor Speed Modifier", 0.6);
+		public static final Supplier<Double> kShaftMotorSpeedModifier = ConstantHandler.addConstantDouble("Shaft Motor Speed Modifier", 0.6);
+		public static final Supplier<Double> kShaftMotorSpeedModifierUp = ConstantHandler.addConstantDouble("Shaft Motor Speed Modifier Upwards", -0.6);
 		public static final Supplier<Double> kShaftMotorStallSpeed = ConstantHandler.addConstantDouble("Shaft Stall speed", 0.3);
 	}
 
