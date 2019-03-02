@@ -165,7 +165,7 @@ public class OI {
       ClimbingMovementB.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
       ClimbingMovementF.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeedForward));
     //----------Climbing Frame Testing----------
-      ClimbingFrameD.whileHeld(new MoveBasicSubsystem(Robot.shaft, SubsystemConstants.ClimbingShaft.kShaftMotorSpeedModifier));
-      ClimbingFrameU.whileHeld(new MoveBasicSubsystem(Robot.shaft, SubsystemConstants.ClimbingShaft.kShaftMotorSpeedModifierUp));
+      ClimbingFrameD.whileHeld(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifier));
+      ClimbingFrameU.whileHeld(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifierUp));
   }
 }
