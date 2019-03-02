@@ -7,12 +7,13 @@
     - Movement - 
     - Wait Time - How much time should the system tolerate deviation before trying to fix it?
 - Elevator
-    - Distance per Pulse - how much distance does the elevator go each tick of the encoder?
+    - Distance per Pulse - how much distance does the elevator go each tick of the encoder: 15/17 =  XXX
     - Speed Modifier - How fast should the elevator move?
-    - Max Height ?
+    - Max Height - How high up can the elevator go?
+    - Min height - How far down can the elevator go?
 - Gripper
-    - In speed - how fast should the gripper move when catching things?
-    - Out speed - how fast should the gripper move when releasing things?
+    - In speed - how fast should the gripper's wheels move when catching things?
+    - Out speed - how fast should the gripper's wheels move when releasing things?
     - Voltage limit - how much voltage does the optic sensor output when cargo is held?
 - Climbing Shaft
     - Speed Modifier - how fast should the shaft move?

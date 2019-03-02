@@ -17,13 +17,16 @@ import frc.robot.SubsystemConstants;
 
 public class driveArcadeWithPID extends CommandGroup {
   /**
-   * This is simply the our robot's command to drive the .
+   * This is the robot's command to straighten itself - 
+   * it often needs to stay on a single, straight line,
+   * and this command uses a <a href="https://bit.ly/2H6fnUT">PID loop</a>
+   * to automatically drive the robot back to the line every time it deviates from it.
    */
   public driveArcadeWithPID() {
     addSequential(new DriveArcadeWithPID (
-      Robot.drivetrain, //The DriveTrain Subsystem
+      Robot.drivetrain, //The subsystem the PID will strighten - the DriveTrain
       ImageProccessingSuppliers.center, //The PID source - the center of the objects seen on the camera.
-      SubsystemConstants.PID.kSetPoint.get(), //The set point - the thing the robot will try to move towards.
+      SubsystemConstants.PID.kSetPoint.get(), //The set point - the thing the robot will try to move towards, here, the center of the 
       SubsystemConstants.PID.kMovement.get(), //The amount of forward movement. 
       new PIDSettings ( //The settings for the PID system (its constants):
         SubsystemConstants.PID.kP.get(), //The proportional constant of the PID system

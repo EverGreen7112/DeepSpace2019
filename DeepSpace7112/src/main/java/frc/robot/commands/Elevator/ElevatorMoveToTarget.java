@@ -23,18 +23,27 @@ import frc.robot.SubsystemConstants;
  */
 public class ElevatorMoveToTarget extends Command {
 
-  private Supplier<Double> speed; //the speed of the elevator
-  private Supplier<Double> target; //the target
-  private BasicSubsystem subsystem; //the elevator subsystem
-  private boolean flag; //if above the target
+  /**The speed modifier of the elevator as it moves to target.*/
+  private Supplier<Double> speedModifier;
+  /**The height of the target relative  to the ground.*/ 
+  private Supplier<Double> target;
+  /**The subsystem which will move to the target - the elevator subsystem */
+  private BasicSubsystem subsystem;
+  /**Whether or not the elevator is above the target?*/
+  private boolean flag;
 
-  public ElevatorMoveToTarget(Supplier<Double> speed, Supplier<Double> target) {
+  /**The constructor for this class, which sets its speed and target.
+   * @param speedModifier - the speed modifier for the elevator's movement to the target.
+   * @param target - the height of the target that the elevator need to move to, relative to the ground.
+  */
+  public ElevatorMoveToTarget(Supplier<Double> speedModifier, Supplier<Double> target) {
     requires(Robot.elevator);
-    this.speed = speed;
+    this.speedModifier = speedModifier;
     this.target = target;
   }
 
-  // Called just before this Command runs the first time
+  /**Called just before this Command runs the first time -
+   * initlizes the subsystem as elevatora ans sets the current state of {@link #flag}.*/
   @Override
   protected void initialize() {
     subsystem = Robot.elevator;
@@ -51,11 +60,12 @@ public class ElevatorMoveToTarget extends Command {
     }
    
     if(target.get() - SubsystemComponents.Elevator.encoder.getDistance() > 0){
-      subsystem.move(speed.get());
+      subsystem.move(speedModifier.get());
     }
+    
     else
     {
-      subsystem.move(-speed.get());
+      subsystem.move(-speedModifier.get());
     }
   }
 
