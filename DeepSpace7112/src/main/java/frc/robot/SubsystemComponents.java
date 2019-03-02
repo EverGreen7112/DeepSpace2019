@@ -7,7 +7,7 @@
 
 package frc.robot;
 
-import static org.junit.Assume.assumeNoException;
+//import static org.junit.Assume.assumeNoException;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -54,7 +54,7 @@ public class SubsystemComponents {
         public static final Encoder encoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB);
         public static final DigitalInput opticSwitch = new DigitalInput(RobotMap.elevatorOpticSwitch);
         public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.elevatorLazerDistanceSensor);
-        /**The boolean for whether or not the encoder was rset yet, because before the first time, it gives incorrect value. */
+        /**The boolean for whether or not the encoder was reset yet, because before the first time, it gives incorrect value. */
         public static boolean encoderWasReset;
         public static class ElevatorOutOfRangeException extends Exception {
             public ElevatorOutOfRangeException(String message)
@@ -63,7 +63,7 @@ public class SubsystemComponents {
             }
         }
         
-        /**The configuratio of the elevator's sensors, which must be ran before its Subsystem is created.
+        /**The configuration of the elevator's sensors, which must be ran before its Subsystem is created.
          * It inverts the motor, sets the encoder's Distance per pulse by SubsystemConstants, ans sets thhat the encoder was not reset yet.
          */
         public static void setupSensors() {
@@ -163,5 +163,4 @@ public class SubsystemComponents {
     public static class ClimbingMovement {
             public static final SpeedController Motor = new WPI_VictorSPX(RobotMap.climbingMovementMotor);
     }
-
 }

@@ -61,7 +61,14 @@ public class OI {
   private Button middleCargo;
   /**The button to move the gripper to the top hatch of the rocket. */
   private Button topCargo;
-
+  /**The button to move forward the back wheels for the climbing movement<p>
+   * -FOR TESTING-
+   */
+  private Button ClimbingMovementF;
+  /**The button to move backwards the back wheels for the climbing movement<p>
+   * -FOR TESTING-
+   */
+  private Button ClimbingMovementB;
 
   /**The method to adjust the Driving Joysticks' value, turning the speed by value into a curve instead of a line - 
    * instead of each movement of the joystick increasing the speed equally, the furthest you move it the more
@@ -112,11 +119,16 @@ public class OI {
     switchToA = new JoystickButton(drivingJSRight, 5);
     switchToB = new JoystickButton(drivingJSRight, 6);
     straighten = new JoystickButton(buttonJS, 9);
+
+    //----------Climbing Movement Testing---------
+    ClimbingMovementB = new JoystickButton(buttonJS, 2);
+    ClimbingMovementF = new JoystickButton(buttonJS, 4);
+
     bindButtons();
   }
 
 
-  /**This is the method that makes the buttons cause an action when pressed, and must be raan in the consturctor.
+  /**This is the method that makes the buttons cause an action when pressed, and must be ran in the consturctor.
    * It consists of button.whenPressed/whileheld(Command), where button is the button to be pressed, when 
    * pressed or while held determine the fashion in which it activates and ends the action and command is the action to be executed.*/
   private void bindButtons(){
@@ -126,5 +138,7 @@ public class OI {
     //switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
     //switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras
     //straighten.whenPressed(new driveArcadeWithPID()); //Commented since RobotB does not have cameras.
+    ClimbingMovementB.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
+    ClimbingMovementF.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeedForward));
   }
 }

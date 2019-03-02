@@ -58,9 +58,9 @@ public class Robot extends TimedRobot {
         RobotMap.cameraA);
       cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
       
-      compressor = new Compressor(); //
-      compressor.start();
-      compressor.setClosedLoopControl(true);
+      // compressor = new Compressor(); //
+      // compressor.start();
+      // compressor.setClosedLoopControl(true);
 
     //----------BasicSubsystems----------
       drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
@@ -80,8 +80,8 @@ public class Robot extends TimedRobot {
     //----------DefaultCommands----------
       drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
       //elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick)); //commented so we can use button joystick in testing.
-      climbingMovement.setDefaultCommand(new MoveBasicSubsystem(climbingMovement, oi::getBTJoystick)); //testing
-    
+      //climbingMovement.setDefaultCommand(new MoveBasicSubsystem(climbingMovement, oi::getBTJoystick)); //testing
+      gripper.setDefaultCommand(new MoveBasicSubsystem(gripper, oi::getBTJoystick));
     }
 
   @Override
