@@ -1,0 +1,57 @@
+ Tests:
+    1. Check RobotMap is correct;
+    2. Check all motors
+     {
+        1. Check left chassis motors;
+        2. Check right chassis motors;
+        3. Check gripper motors;
+        4. Check elevator motor;
+        5. Check climb frame motor;
+        6. Check climb movement motor;
+     };
+
+    3. Check climbing;
+    4. Check elevator stall;
+    5. Check solenoids;
+    6. Check all sensors
+     {
+        1. Check laser sensors
+         {
+            1. Check gripper sensor; 
+            2. Check elevator laser sensor;
+            3. (Check wall sensor); //Do we even have one set up?
+         };
+
+        2. Check all switches
+         {
+            1. Check Gripper Movement top switch;
+            2. Check Gripper Movement bottom switch;
+            3. Check frame's bottom switch.
+            3. Check elevator switch;
+         };
+     };
+
+    7. DETERMINE CONSTANTS
+     { 
+        1. Driving speed modifier
+        2. Elevator's stall speed modifier;
+        3. Elevator's target speed modifier;
+        4. Elevator's maximum height limit;
+        5. Elevator's minimum height limit;
+        6. Gripper's in speed (catching);
+        7. Gripper's out speed (releasing);
+        8. CargoCaught Voltage value (Gripper.VoltageLimit);
+        9. Frame speed modifier;
+        10. Climbing Movement speed modifier;
+        11. PID
+         {
+            1. Proportional constant; //dependant on 2 and 3: checked firrst, but must be checked when the other two are determined
+            2. Integral constant; //dependant on 3 and by 1: must be checked when 3 is determined, and 1 must be checked when this is determained.
+            3. Derivative constant; //dependant by 1 and 2: they must be checked when this is determained.
+            4. Tolerance constant;
+            5. Wait Time constant;
+            6. Speed modifier;
+         };
+     };
+
+    8. Check PID system works;
