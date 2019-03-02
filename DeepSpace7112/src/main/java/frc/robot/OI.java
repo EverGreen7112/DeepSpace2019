@@ -116,14 +116,14 @@ public class OI {
         catchButton = new JoystickButton(buttonJS, 1);
         releaseButton = new JoystickButton(buttonJS, 3);	
       //----------Gripper Movement----------
-        flipGripper = new JoystickButton(buttonJS, 4);
+        flipGripper = new JoystickButton(buttonJS, 5);
       //----------Camera Buttons---------
         switchToA = new JoystickButton(drivingJSRight, 5);
         switchToB = new JoystickButton(drivingJSRight, 6);
         straighten = new JoystickButton(buttonJS, 9);
       //----------Climbing Movement Testing---------
-        ClimbingMovementB = new JoystickButton(buttonJS, 2);
-        ClimbingMovementF = new JoystickButton(buttonJS, 4);
+        ClimbingMovementB = new JoystickButton(buttonJS, 7);
+        ClimbingMovementF = new JoystickButton(buttonJS, 8);
       //----------Buttons' Binding----------
       bindButtons();
     }
@@ -153,5 +153,9 @@ public class OI {
     //   switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras
     // //----------PID----------
     //   straighten.whenPressed(new driveArcadeWithPID()); //Commented since RobotB does not have cameras.
+    //----------Climbing Movement----------
+      ClimbingMovementB.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
+      ClimbingMovementF.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeedForward));
+  
   }
 }
