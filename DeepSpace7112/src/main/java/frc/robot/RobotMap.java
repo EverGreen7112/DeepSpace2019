@@ -33,7 +33,7 @@ public class RobotMap {
               elevatorEncoderA = 0, //DIO
               elevatorEncoderB = 1, //DIO
               elevatorOpticSwitch = 6, //DIO
-              elevatorLazerDistanceSensor = 0; //Analog
+              elevatorLazerDistanceSensor = 2; //Analog
               //All temp
 
 //----------Climbing Frame----------
