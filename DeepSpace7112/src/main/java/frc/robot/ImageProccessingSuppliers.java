@@ -50,17 +50,15 @@ public class ImageProccessingSuppliers {
          centerXSupplier = () -> camNetworkTable.getEntry("x1").getDouble(0);
 
         /**Supplier for whether or not the Reflective is seen - 
-         *  True if information about the small reflective is recieved, and false if not.*/
+         *  True if information about the reflective is recieved, and false if not.*/
         public static final Supplier<Boolean>
          isUpdated = () -> camNetworkTable.getEntry("isUpdated1").getBoolean(false);
-
-
     }
 
 
-    /**Supplier for the x value of the center point of a big and a small reflective together.  */
+    /**Supplier for the x value of the center point of a both reflectives together.  */
     public static final Supplier<Double> twoReflectivesCenter = () -> (Reflective0.centerXSupplier.get()
-        + Reflective1.centerXSupplier.get()) / 2; //Calculate the center point by getting the mean of the x values of the big and small reflectives' center.
+        + Reflective1.centerXSupplier.get()) / 2; //Calculate the center point by getting the mean of the x values of both of the reflectives center.
 
 
     /**The PIDSource of the PID Drive Arcade  - contains the Type of the PID system (Displacement or Rate, here Displacement),
@@ -74,7 +72,7 @@ public class ImageProccessingSuppliers {
         /**@return the center value of the seen reflectives: <p>
          *<ul>
          *<li>If both are seen, the midpoint between the centers. </li>
-         *<li>If information about one or more of the reflectives is missing, the latest valid value. */
+         *<li>If one or more of the reflectives is missing, the latest valid value. */
         @Override
         public double pidGet() {
             if (Reflective0.isUpdated.get() && Reflective1.isUpdated.get()) {

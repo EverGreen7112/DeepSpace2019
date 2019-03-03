@@ -20,6 +20,7 @@ import com.spikes2212.utils.CamerasHandler;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 /** This is the code ran (together with the OI) when activating the robot - 
@@ -39,7 +40,7 @@ public class Robot extends TimedRobot {
   public static BasicSubsystem elevator;
   public static BasicSubsystem elevatorEncoder;
   public static BasicSubsystem gripper;
-  public static BasicSubsystem shaft;
+  public static BasicSubsystem frame;
   public static BasicSubsystem climbingMovement;
   
   public static Compressor compressor;
@@ -52,26 +53,31 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     //----------Sensor Configs----------
       SubsystemComponents.Elevator.setupSensors(); //Configures the elevator - inverts the motors and sets the distance per pulse.
+      // SubsystemComponents.Gripper.LockPiston.set(Value.kReverse);
+      // SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
+      // SubsystemComponents.GripperMovement.piston.set(Value.kForward);
       cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
         SubsystemConstants.cameras.kCameraWidth.get(), 
         SubsystemConstants.cameras.kCameraHeight.get(), 
         RobotMap.cameraA);
       cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
       
-      compressor = new Compressor(); //
-      compressor.start();
-      compressor.setClosedLoopControl(true);
+      // compressor = new Compressor(); //Commented because RobotB does not have working pneomatics.
+      // compressor.start(); //Commented because RbotB does not have working pneomatics.
+      // compressor.setClosedLoopControl(true); //Commented because RobotB does not have pneomtics.
 
     //----------BasicSubsystems----------
       drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
-      // gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new MinLimit (
-      //SubsystemComponents.Gripper::isCargoCaught));
-      gripper = new BasicSubsystem(SubsystemComponents.Gripper.Motors::set, new Limitless());
+      gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new MinLimit (
+      SubsystemComponents.Gripper::isCargoCaught)); //Commented due to the sensors not beinng commented yet, making the gripper is limitless system.
+      // gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new Limitless()); //testing
       elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
-        () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kElevatorEncoderMaxHeight.get())));
-      shaft = new BasicSubsystem(SubsystemComponents.ClimbingShaft.Motor::set, new MinLimit(
-        SubsystemComponents.ClimbingShaft.bottomLimiter::get));
-      climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.Motor::set, new Limitless());
+        () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kEncoderMaxHeight.get()))); 
+        //^^^Maximum Limit by the encoder - if it transmits that the elevator has surpussed our determained maximum height, it'll stop the movement
+      // frame = new BasicSubsystem(SubsystemComponents.Climbingframe.motor::set, new MinLimit(
+      //   SubsystemComponents.Climbingframe.bottomLimiter::get)); //Minimum Limit - if the frame presses the switch , stop the frame. The robot is built such that the switch will be pressed when the frame reaces the determained minimum height. 
+      frame = new BasicSubsystem(SubsystemComponents.Climbingframe.motor::set, new Limitless());
+      climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.motor::set, new Limitless());
       
     //----------Class Constructors----------
       oi = new OI();
@@ -80,9 +86,17 @@ public class Robot extends TimedRobot {
     //----------DefaultCommands----------
       drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
       //elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick)); //commented so we can use button joystick in testing.
+      elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, SubsystemConstants.Elevator.kElevatorStallSpeedModifier));
       climbingMovement.setDefaultCommand(new MoveBasicSubsystem(climbingMovement, oi::getBTJoystick)); //testing
-    
-    }
+      // gripper.setDefaultCommand(new MoveBasicSubsystem(gripper, oi::getBTJoystick)); //testing
+      // frame.setDefaultCommand(new MoveBasicSubsystem(frame, oi::getBTJoystick)); //testing
+
+    //----------Shuffleboard data----------
+      dbc.addNumber("Lazer elevator height", SubsystemComponents.Elevator::getElevatorHeightByLazer);
+      dbc.addNumber("Encoder elevator height", SubsystemComponents.Elevator::getElevatorHeightByEncoder);
+      dbc.addNumber("Total elevator height", SubsystemComponents.Elevator::getElevatorHeight);
+
+  }
 
   @Override
   public void robotPeriodic() {
@@ -107,6 +121,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
+    dbc.update();
   }
 
   @Override
