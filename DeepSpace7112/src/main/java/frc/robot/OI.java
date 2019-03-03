@@ -16,6 +16,8 @@ import frc.robot.commands.GripperMovement.GripperMovementPistons;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import java.util.function.Supplier;
 
@@ -95,11 +97,11 @@ public class OI {
 
   /**@return the {@link #adjustInput(double) adjusted} current Y axis of the {@link #drivingJSLeft left driving Joystic}*/
   public double getLeftJoystick() {
-    return -adjustInput(drivingJSLeft.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
+    return -adjustInput(drivingJSLeft.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get() * 1.07;
   }
 
     
-  /**@return the {@link #adjustInput(double) adjusted} current Y axis of the {@link #drivingJSRight driving Joystic}*/
+  /**@return the {@link #adjustInput(double) adjusted} current Y axis of the {@link #drivingJSRight d riving Joystic}*/
   public double getRightJoystick() {
     return adjustInput(drivingJSRight.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
   }
@@ -122,6 +124,8 @@ public class OI {
         releaseButton = new JoystickButton(buttonJS, 3);	
       //----------Gripper Movement----------
         flipGripper = new JoystickButton(buttonJS, 5);
+      //----------Climb----------
+        climb = new JoystickButton(buttonJS, 6);
       //----------Camera Buttons---------
         switchToA = new JoystickButton(drivingJSRight, 5);
         switchToB = new JoystickButton(drivingJSRight, 6);
@@ -144,14 +148,14 @@ public class OI {
   private void bindButtons() 
   {
     //----------Elevator to Hatch----------
-      topHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopHatchHeight));
-      middleHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketMiddleHatchHeight));
-      bottomHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketBottomHatchHeight));
+      topHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kRocketTopHatchHeight, SubsystemConstants.Elevator.kTargetSpeedModifier));
+      middleHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kRocketMiddleHatchHeight, SubsystemConstants.Elevator.kTargetSpeedModifier));
+      bottomHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kRocketBottomHatchHeight, SubsystemConstants.Elevator.kTargetSpeedModifier));
     //----------Elevator to Cargo----------
-      topCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopCargoHeight));
+      topCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kRocketTopCargoHeight, SubsystemConstants.Elevator.kTargetSpeedModifier));
       middleCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kRocketMiddleCargoHeight, SubsystemConstants.Elevator.kRocketMiddleCargoHeight));
       bottomCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kRocketBottomHatchHeight, SubsystemConstants.Elevator.kRocketBottomCargoHeight));
-    //----------Gripper----------
+    // //----------Gripper----------
       catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
       releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
     //----------Gripper Movement----------
@@ -168,5 +172,6 @@ public class OI {
       //----------Climbing Frame----------
         // ClimbingFrameD.whileHeld(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifier));
         // ClimbingFrameU.whileHeld(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifierUp));
+      //---------Elevator----------
   }
 }

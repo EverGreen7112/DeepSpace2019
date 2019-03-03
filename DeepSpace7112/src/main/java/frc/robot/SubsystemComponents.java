@@ -40,7 +40,7 @@ public class SubsystemComponents {
         public static final SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup (
             new WPI_VictorSPX(RobotMap.chassisVictorBL), new WPI_VictorSPX(RobotMap.chassisVictorFL));
         public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup (
-            new WPI_VictorSPX(RobotMap.chassisVictorBR), new WPI_VictorSPX(RobotMap.chassisVictorFR));
+            new WPI_TalonSRX(RobotMap.chassisVictorBR), new WPI_TalonSRX(RobotMap.chassisVictorFR));
     }
 
     /**
@@ -134,15 +134,19 @@ public class SubsystemComponents {
     }
     
     public static class GripperMovement {
-        // public static final DoubleSolenoid piston = new DoubleSolenoid (
-        //     RobotMap.gripperMovementRightPistonF, RobotMap.gripperMovementRightPistonR);
+        public static final DoubleSolenoid LockPiston = new DoubleSolenoid (
+            RobotMap.gripperMovementLockPistonF, RobotMap.gripperMovementLockPistonR);
+        public static final DoubleSolenoid PushPiston = new DoubleSolenoid (
+            RobotMap.gripperMovementPushPistonF, RobotMap.gripperMovementPushPistonR);
+        public static final DoubleSolenoid MovementPiston = new DoubleSolenoid(
+            RobotMap.gripperMovementPistonF, RobotMap.gripperMovementPistonR);
     }
                 
     /**
      * The subsystem that controlls the frame that is used to raise the back of the robot during the climbing process.
      * The subsystem contains one speed controller and 2 limit switches that indicate the topmost and bottommost points that the frame goes.
      */
-    public static class Climbingframe{
+    public static class ClimbingFrame{
                 public static final WPI_VictorSPX motor = new WPI_VictorSPX(RobotMap.frameTalon);
                 public static final DigitalInput bottomLimiter = new DigitalInput(RobotMap.frameBottomLimiter);
     }

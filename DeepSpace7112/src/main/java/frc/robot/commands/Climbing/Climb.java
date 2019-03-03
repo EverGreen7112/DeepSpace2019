@@ -8,10 +8,13 @@
 package frc.robot.commands.Climbing;
 
 import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystemToTarget;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import frc.robot.Robot;
+import frc.robot.SubsystemComponents;
 import frc.robot.SubsystemConstants;
 import frc.robot.commands.Elevator.*;
 
@@ -22,9 +25,11 @@ public class Climb extends CommandGroup {
   public Climb() {
 
     //-----Sequence-----
-    addSequential(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifierUp), 2);
-    addParallel(new MoveBasicSubsystem(Robot.elevator, () -> -0.6)); //Move the elevator
-    addSequential(new MoveBasicSubsystem(Robot.frame, () -> 0.8));
+    SubsystemComponents.GripperMovement.LockPiston.set(Value.kReverse);
+    SubsystemComponents.GripperMovement.LockPiston.set(Value.kForward);
+    addSequential(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifierUp), 1);
+    addParallel(new MoveBasicSubsystem(Robot.elevatorClimb, SubsystemConstants.Elevator.kElevatorClimbingSpeedModifier)); //Move the elevator
+    addSequential(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifier));
     //addSequential(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
     //addSequential(new MoveBasicSubsystem(Robot.frame, -SubsystemConstants.Climbingframe.kframeMotorStallSpeed.get()));
   }

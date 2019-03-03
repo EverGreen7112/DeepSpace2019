@@ -53,9 +53,10 @@ public class SubsystemConstants {
 	 	 /**The elevator's speed as it moves to a hatch or a cargo on the rocket.  */
 		 public static Supplier<Double> kTargetSpeedModifier = ConstantHandler.addConstantDouble("Elevator Move to target speed modfier", 0.15); //temp
 	 	 /**The modifier needed to give to the motors in order get the elevator to stay up while not moving.*/
-	  	 public static Supplier<Double> kElevatorStallSpeedModifier = ConstantHandler.addConstantDouble("Elevator Stall speed modfier", 0.17); //temp
+	  	 public static Supplier<Double> kElevatorStallSpeedModifier = ConstantHandler.addConstantDouble("Elevator Stall speed modfier", 0); //temp
 	 	 /**The modifier needed to give to the motors in order get the elevator to stay up while not moving, given maximum weight on it.*/		 
 		 public static Supplier<Double> kStallMaxMultiplier = ConstantHandler.addConstantDouble("Stall elevator supplier", 0.59); //temp
+		 public static Supplier<Double> kElevatorClimbingSpeedModifier = ConstantHandler.addConstantDouble("Elevator climbing speed modifier", 0.2); //temp
 
 		//----------Hatch Heights----------
 		 public static Supplier<Double> kRocketBottomHatchHeight = ConstantHandler.addConstantDouble("Rocket bottom hatch height", 48.26); 
@@ -94,8 +95,8 @@ public class SubsystemConstants {
 	}
 	
 	public static interface ClimbingFrame {
-		public static final Supplier<Double> kFrameMotorSpeedModifier = ConstantHandler.addConstantDouble("Frame Motor Speed Modifier", 0.6);
-		public static final Supplier<Double> kFrameMotorSpeedModifierUp = ConstantHandler.addConstantDouble("Frame Motor Speed Modifier Upwards", -0.6);
+		public static final Supplier<Double> kFrameMotorSpeedModifier = ConstantHandler.addConstantDouble("Frame Motor Speed Modifier", 0.35);
+		public static final Supplier<Double> kFrameMotorSpeedModifierUp = ConstantHandler.addConstantDouble("Frame Motor Speed Modifier Upwards", -0.1);
 	}
 
 	public static interface ClimbingMovement {

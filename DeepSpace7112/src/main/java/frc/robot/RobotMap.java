@@ -18,8 +18,8 @@ public class RobotMap {
   public static final int 
               chassisVictorFL = 8, //CAN
               chassisVictorBL = 5, //CAN
-              chassisVictorFR = 2, //CAN
-              chassisVictorBR = 7; //CAN
+              chassisVictorFR = 7, //CAN
+              chassisVictorBR = 2; //CAN
   
 //----------cameras----------
   public static final int
@@ -68,19 +68,40 @@ public class RobotMap {
     gripperMovementTopMicroswitch = 4, 
     gripperMovementBottomMicroSwitch = 5; 
 }
-/**
+
+/*
  * By Number:
-  * Motors:
-    * 0 - Climbing Movement
-    * 1 - Frame
-    * 3 - ElevatorA
-    * 4 - Gripper right
-    * 6 - ElevatorB
-    * 9 - Gripper left
+  * Motors (Victors):
+    * 0 - Climbing Movement;
+    * 1 - Frame;
+    * 2 - Chassis Front-Right;
+    * 3 - ElevatorA;
+    * 4 - Gripper right;
+    * 5 - Chassis back-left;
+    * 6 - ElevatorB;
+    * 7 - Chassis back-right;
+    * 8 - Chassis front-left;
+    * 9 - Gripper left;
   * Pistons:
-    * 2 - push reverse
-    * 4 - lock reverse
-    * 5 - lock forward
-    * 6 - push forward
-    * 7 - movement forward
+    * 2 - push reverse;
+    * 4 - lock reverse;
+    * 5 - lock forward;
+    * 6 - push forward;
+    * 7 - movement forward;
+  * Cameras (interchangable):
+    * 0 - A;
+    * 1 - B;
+  * Encoders:
+    * 0 - Elevator A;
+    * 1 - Elevator B;
+    * 1 - Clmbing Movement A;
+    * 2 - Climbing Movement B;
+  * Switches:
+    * 3 - Frame bottom;
+    * 4 - Gripper Movement top;
+    * 5 - Gripper movement bottom;
+    * 6 - Elevator optic;
+  * Laser:
+    * 2 - Elevator distance;
+    * 5 - Gripper CargoCaught;
  */
