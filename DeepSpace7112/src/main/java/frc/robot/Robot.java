@@ -74,9 +74,9 @@ public class Robot extends TimedRobot {
       elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
         () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kEncoderMaxHeight.get()))); 
         //^^^Maximum Limit by the encoder - if it transmits that the elevator has surpussed our determained maximum height, it'll stop the movement
-      // frame = new BasicSubsystem(SubsystemComponents.Climbingframe.motor::set, new MinLimit(
-      //   SubsystemComponents.Climbingframe.bottomLimiter::get)); //Minimum Limit - if the frame presses the switch , stop the frame. The robot is built such that the switch will be pressed when the frame reaces the determained minimum height. 
-      frame = new BasicSubsystem(SubsystemComponents.Climbingframe.motor::set, new Limitless());
+      frame = new BasicSubsystem(SubsystemComponents.Climbingframe.motor::set, new MinLimit(
+         SubsystemComponents.Climbingframe.bottomLimiter::get)); //Minimum Limit - if the frame presses the switch , stop the frame. The robot is built such that the switch will be pressed when the frame reaces the determained minimum height. 
+      //frame = new BasicSubsystem(SubsystemComponents.Climbingframe.motor::set, new Limitless());
       climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.motor::set, new Limitless());
       
     //----------Class Constructors----------
