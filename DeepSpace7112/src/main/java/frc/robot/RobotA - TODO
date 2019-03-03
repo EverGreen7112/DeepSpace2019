@@ -1,6 +1,6 @@
  Tests:
-    1. Check RobotMap is correct;
-    2. Check all motors
+    1. Check RobotMap is correct; XXX
+    2. Check all motors 
      {
         2.1. Check left chassis motors;
         2.2. Check right chassis motors;
@@ -10,8 +10,8 @@
         2.6. Check climb movement motor;
      };
 
-    3. Check climbing;
-    4. Check elevator stall;
+    3. Check climbing; MMM
+    4. Check elevator stall; 
     5. Check solenoids;
     6. Check all sensors
      {
@@ -33,7 +33,7 @@
  
     7. DETERMINE CONSTANTS
      { 
-         7.1. Driving speed modifier
+         7.1. Driving speed modifier XVX //good enough
          7.2. Elevator's stall speed modifier;
          7.3. Elevator's target speed modifier;
          7.4. Elevator's maximum height limit;
@@ -54,3 +54,7 @@
          };
      };
    8. Check the PID system works;
+
+
+ Changes:
+   1. Change throwHatchj button to port 6 (OI); XXX

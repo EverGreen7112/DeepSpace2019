@@ -29,7 +29,7 @@ public class ElevatorMoveToTarget extends Command {
   private Supplier<Double> target;
   /**The subsystem which will move to the target - the elevator subsystem */
   private BasicSubsystem subsystem;
-  /**Whether or not the elevator is above the target?*/
+  /**Whether or not the elevator is above the target.*/
   private boolean flag;
 
   /**The constructor for this class, which sets its speed and target.
@@ -81,7 +81,7 @@ public class ElevatorMoveToTarget extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    subsystem.move(SubsystemConstants.Elevator.kElevatorStallSpeedModifier.get());
+    subsystem.move(SubsystemConstants.Elevator.kStallMaxMultiplier.get());
   }
 
   // Called when another command which requires one or more of the same

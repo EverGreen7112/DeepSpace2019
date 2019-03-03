@@ -53,7 +53,7 @@ public class SubsystemConstants {
 	 	 /**The elevator's speed as it moves to a hatch or a cargo on the rocket.  */
 		 public static Supplier<Double> kTargetSpeedModifier = ConstantHandler.addConstantDouble("Elevator Move to target speed modfier", 0.15); //temp
 	 	 /**The modifier needed to give to the motors in order get the elevator to stay up while not moving.*/
-	  	 public static Supplier<Double> kElevatorStallSpeedModifier = ConstantHandler.addConstantDouble("Elevator Stall speed modfier", 0); //temp
+	  	//  public static Supplier<Double> kElevatorStallSpeedModifier = ConstantHandler.addConstantDouble("Elevator Stall speed modfier", 0); //temp
 	 	 /**The modifier needed to give to the motors in order get the elevator to stay up while not moving, given maximum weight on it.*/		 
 		 public static Supplier<Double> kStallMaxMultiplier = ConstantHandler.addConstantDouble("Stall elevator supplier", 0.59); //temp
 		 public static Supplier<Double> kElevatorClimbingSpeedModifier = ConstantHandler.addConstantDouble("Elevator climbing speed modifier", 0.2); //temp
@@ -87,9 +87,9 @@ public class SubsystemConstants {
 	
     public static interface gripper {
 		/**The speed of the gripper when it catches things.*/
-		public static final Supplier<Double> kGripperInSpeed = ConstantHandler.addConstantDouble("Gripper In Speed", 4.5);
+		public static final Supplier<Double> kGripperInSpeed = ConstantHandler.addConstantDouble("Gripper In Speed", 0.1);
 		/**The speed of the gripper when it releases things. */
-		public static final Supplier<Double> kGripperOutSpeed = ConstantHandler.addConstantDouble("Gripper Out Speed", -4.5);
+		public static final Supplier<Double> kGripperOutSpeed = ConstantHandler.addConstantDouble("Gripper Out Speed", -0.1);
 		/**The voltage of the optic sensor, which when reached, means the gripper catched the cargo.  */
 		public static final Supplier<Double> kVoltageLimit = ConstantHandler.addConstantDouble("Optic Sensor voltage limit", 1.5);
 	}
