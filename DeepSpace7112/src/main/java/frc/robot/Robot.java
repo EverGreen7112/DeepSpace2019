@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
 import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
@@ -53,9 +54,11 @@ public class Robot extends TimedRobot {
   /**The function ran when the robot is activated.*/
   public void robotInit() {
     //----------Sensor Configs----------
+      SubsystemComponents.Gripper.motorR.setInverted(true);
+      SubsystemComponents.Gripper.motors = new SpeedControllerGroup(SubsystemComponents.Gripper.motorR, new WPI_VictorSPX(RobotMap.gripperMotorLeft));
       SubsystemComponents.Elevator.setupSensors(); //Configures the elevator - inverts the motors and sets the distance per pulse.
       SubsystemComponents.GripperMovement.LockPiston.set(Value.kReverse);
-      SubsystemComponents.GripperMovement.PushPiston.set(Value.kForward);
+      SubsystemComponents.GripperMovement.PushPiston.set(Value.kReverse);
       SubsystemComponents.GripperMovement.MovementPiston.set(Value.kForward);
       cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
         SubsystemConstants.cameras.kCameraWidth.get(), 
@@ -63,9 +66,9 @@ public class Robot extends TimedRobot {
         RobotMap.cameraA);
       cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
       
-      compressor = new Compressor(); 
-      compressor.start(); 
-      compressor.setClosedLoopControl(true); 
+      compressor = new Compressor(); //Commented because RobotB does not have working pneomatics.
+      compressor.start(); //Commented because RbotB does not have working pneomatics.
+      compressor.setClosedLoopControl(true); //Commented because RobotB does not have pneomtics.
 
     //----------BasicSubsystems----------
       drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
@@ -87,7 +90,7 @@ public class Robot extends TimedRobot {
     
     //----------DefaultCommands----------
       drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-      // elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick)); //commented so we can use button joystick in testing.
+      elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick)); //commented so we can use button joystick in testing.
       // elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick));
       // climbingMovement.setDefaultCommand(new MoveBasicSubsystem(climbingMovement, oi::getBTJoystick)); //testing
       // gripper.setDefaultCommand(new MoveBasicSubsystem(gripper, oi::getBTJoystick)); //testing

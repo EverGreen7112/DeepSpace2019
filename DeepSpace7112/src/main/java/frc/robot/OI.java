@@ -10,10 +10,13 @@ package frc.robot;
 import frc.robot.commands.PID.driveArcadeWithPID;
 import frc.robot.commands.Cameras.SwitchToCameraA;
 import frc.robot.commands.Cameras.SwitchToCameraB;
+import frc.robot.commands.Climbing.Climb;
 import frc.robot.commands.Elevator.ElevatorMoveToTarget;
 import frc.robot.commands.Gripper.GripperRelease;
 import frc.robot.commands.GripperMovement.GripperMovementPistons;
+import frc.robot.commands.GripperMovement.throwHatch;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
@@ -78,6 +81,7 @@ public class OI {
   private Button ClimbingFrameU;
   /**The button to move the climbing frame down */
   private Button ClimbingFrameD;
+  private Button throwHatch;
 
 
   /**The method to adjust the Driving Joysticks' value, turning the speed by value into a curve instead of a line - 
@@ -122,6 +126,7 @@ public class OI {
       //----------Gripper Buttons----------
         catchButton = new JoystickButton(buttonJS, 1);
         releaseButton = new JoystickButton(buttonJS, 3);	
+        throwHatch = new JoystickButton(buttonJS, 9);
       //----------Gripper Movement----------
         flipGripper = new JoystickButton(buttonJS, 5);
       //----------Climb----------
@@ -158,7 +163,8 @@ public class OI {
     // //----------Gripper----------
       catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
       releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
-    //----------Gripper Movement----------
+      throwHatch.whenPressed(new throwHatch());
+      //----------Gripper Movement----------
       flipGripper.whenPressed(new GripperMovementPistons());
     // //----------Cameras----------
     //   switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
@@ -167,6 +173,7 @@ public class OI {
     //   straighten.whenPressed(new driveArcadeWithPID()); //Commented since RobotB does not have cameras.
     //--------------------Testing--------------------
       //----------Climbing Movement----------
+      climb.whenPressed(new Climb());
         // ClimbingMovementB.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
         // ClimbingMovementF.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeedForward));
       //----------Climbing Frame----------

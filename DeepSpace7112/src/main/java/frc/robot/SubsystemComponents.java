@@ -121,8 +121,10 @@ public class SubsystemComponents {
     public static class Gripper {
             // public static final DoubleSolenoid PushPiston = new DoubleSolenoid(6, 2); //Left gripper piston setting the port
             // public static final DoubleSolenoid LockPiston = new DoubleSolenoid(5, 4); //Right griper piston setting the port
-            public static final SpeedControllerGroup motors = new SpeedControllerGroup(new WPI_VictorSPX(RobotMap.gripperMotorLeft),new WPI_VictorSPX(RobotMap.gripperMotorRight));
-                    
+            
+            //public static final SpeedControllerGroup motors = new SpeedControllerGroup(new WPI_VictorSPX(RobotMap.gripperMotorLeft),new WPI_VictorSPX(RobotMap.gripperMotorRight));
+            public static final WPI_VictorSPX motorR = new WPI_VictorSPX(RobotMap.gripperMotorRight);
+            public static SpeedControllerGroup motors;        
         public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
             
         /**
