@@ -163,5 +163,4 @@ public class SubsystemComponents {
     public static class ClimbingMovement {
             public static final SpeedController Motor = new WPI_VictorSPX(RobotMap.climbingMovementMotor);
     }
-
 }
