@@ -87,7 +87,7 @@ public class Robot extends TimedRobot {
     
     //----------DefaultCommands----------
       drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-       elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick)); //commented so we can use button joystick in testing.
+      // elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick)); //commented so we can use button joystick in testing.
       // elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick));
       // climbingMovement.setDefaultCommand(new MoveBasicSubsystem(climbingMovement, oi::getBTJoystick)); //testing
       // gripper.setDefaultCommand(new MoveBasicSubsystem(gripper, oi::getBTJoystick)); //testing
