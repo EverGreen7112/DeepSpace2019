@@ -53,18 +53,18 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     //----------Sensor Configs----------
       SubsystemComponents.Elevator.setupSensors(); //Configures the elevator - inverts the motors and sets the distance per pulse.
-      // SubsystemComponents.Gripper.LockPiston.set(Value.kReverse);
-      // SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
-      // SubsystemComponents.GripperMovement.piston.set(Value.kForward);
+      SubsystemComponents.GripperMovement.LockPiston.set(Value.kReverse);
+      SubsystemComponents.GripperMovement.PushPiston.set(Value.kForward);
+      SubsystemComponents.GripperMovement.MovementPiston.set(Value.kForward);
       cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
         SubsystemConstants.cameras.kCameraWidth.get(), 
         SubsystemConstants.cameras.kCameraHeight.get(), 
         RobotMap.cameraA);
       cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
       
-      // compressor = new Compressor(); //Commented because RobotB does not have working pneomatics.
-      // compressor.start(); //Commented because RbotB does not have working pneomatics.
-      // compressor.setClosedLoopControl(true); //Commented because RobotB does not have pneomtics.
+      compressor = new Compressor(); 
+      compressor.start(); 
+      compressor.setClosedLoopControl(true); 
 
     //----------BasicSubsystems----------
       drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);

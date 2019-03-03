@@ -134,8 +134,12 @@ public class SubsystemComponents {
     }
     
     public static class GripperMovement {
-        // public static final DoubleSolenoid piston = new DoubleSolenoid (
-        //     RobotMap.gripperMovementRightPistonF, RobotMap.gripperMovementRightPistonR);
+        public static final DoubleSolenoid MovementPiston = new DoubleSolenoid (
+        RobotMap.gripperMovementPistonF, RobotMap.gripperMovementPistonR);
+        public static final DoubleSolenoid LockPiston = new DoubleSolenoid (
+        RobotMap.gripperMovementLockPistonF, RobotMap.gripperMovementLockPistonR);
+        public static final DoubleSolenoid PushPiston = new DoubleSolenoid (
+        RobotMap.gripperMovementPushPistonF, RobotMap.gripperMovementPushPistonR);
     }
                 
     /**
