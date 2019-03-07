@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import frc.robot.PortMaps.RobotMap;
 
 
 /**
@@ -57,7 +58,7 @@ public class SubsystemComponents {
                 SubsystemConstants.Elevator.kStallMaxMultiplier.get() *
                 (SubsystemComponents.Elevator.getElevatorHeight()/SubsystemConstants.Elevator.kEncoderMaxHeight.get()); 
         }
-  //^^^ Gets the speed needed at the elevator's maximum height, and multiplies it by the percentage rose so far.
+        //^^^ Gets the speed needed at the elevator's maximum height, and multiplies it by the percentage rose so far.
         public static final  SpeedControllerGroup motors = new SpeedControllerGroup (
             new WPI_VictorSPX(RobotMap.elevatorMotorA), new WPI_VictorSPX(RobotMap.elevatorMotorB));
         public static final Encoder encoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB);
@@ -143,8 +144,11 @@ public class SubsystemComponents {
     public static class Gripper {
             public static final WPI_VictorSPX motorR = new WPI_VictorSPX(RobotMap.gripperMotorRight);
             public static SpeedControllerGroup motors;        
-        public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
-            
+            public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
+            public static final DoubleSolenoid LockPiston = new DoubleSolenoid (
+                RobotMap.gripperMovementLockPistonF, RobotMap.gripperMovementLockPistonR);
+            public static final DoubleSolenoid PushPiston = new DoubleSolenoid (
+                RobotMap.gripperMovementPushPistonF, RobotMap.gripperMovementPushPistonR);
         /**
          * @return true if a cargo is inside the gripper, false otherwise.
          */
@@ -154,10 +158,6 @@ public class SubsystemComponents {
     }
     
     public static class GripperMovement {
-        public static final DoubleSolenoid LockPiston = new DoubleSolenoid (
-            RobotMap.gripperMovementLockPistonF, RobotMap.gripperMovementLockPistonR);
-        public static final DoubleSolenoid PushPiston = new DoubleSolenoid (
-            RobotMap.gripperMovementPushPistonF, RobotMap.gripperMovementPushPistonR);
         public static final DoubleSolenoid MovementPiston = new DoubleSolenoid(
             RobotMap.gripperMovementPistonF, RobotMap.gripperMovementPistonR);
     }

@@ -23,6 +23,8 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.PortMaps.RobotMap;
 import frc.robot.SubsystemComponents.GripperMovement;
 import frc.robot.commands.Elevator.ElevatorDefault;
 import frc.robot.commands.GripperMovement.GripperMovementPistons;
@@ -61,7 +63,7 @@ public class Robot extends TimedRobot {
       SubsystemComponents.Gripper.motors = new SpeedControllerGroup(SubsystemComponents.Gripper.motorR, new WPI_VictorSPX(RobotMap.gripperMotorLeft));
       SubsystemComponents.Elevator.setupSensors(); //Configures the elevator - inverts the motors and sets the distance per pulse.
       // SubsystemComponents.GripperMovement.LockPiston.set(Value.kReverse);
-      SubsystemComponents.GripperMovement.PushPiston.set(Value.kReverse);
+      SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
       SubsystemComponents.GripperMovement.MovementPiston.set(Value.kReverse);
       cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
         SubsystemConstants.cameras.kCameraWidth.get(), 
@@ -96,15 +98,17 @@ public class Robot extends TimedRobot {
       elevator.setDefaultCommand(new ElevatorDefault());
 
     //----------Shuffleboard data----------
-
       dbc.addNumber("Lazer elevator height", SubsystemComponents.Elevator::getElevatorHeightByLazer);
       dbc.addNumber("Encoder elevator height", SubsystemComponents.Elevator::getElevatorHeightByEncoder);
       dbc.addNumber("Total elevator height", SubsystemComponents.Elevator::getElevatorHeight);
       // dbc.addBoolean("Sensors are Functioning", SubsystemComponents.Elevator.sensorsFunctionSupplier); //Currently MoveToTarget is not used, and therefore the height is not used.
-      dbc.addNumber("Elevator Speed", oi::getBTJoystick);
+      dbc.addNumber("Elevator Speed", oi::getBTJoystickLeft);
       dbc.addNumber("lazer value", SubsystemComponents.Elevator.lazerSensor::getValue);
       dbc.addBoolean("elevator switched", () -> SubsystemComponents.Elevator.encoderWasReset);
       dbc.addNumber("gripper speed", gripper::getSpeed);
+      dbc.addNumber("Chassis Speed", this::getChassisSpeed);
+
+
 
   }
 
@@ -149,6 +153,11 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     dbc.update();
 
+  }
+
+  public double getChassisSpeed()
+  {
+    return (oi.getLeftJoystick() + oi.getRightJoystick())/2;
   }
 
 }

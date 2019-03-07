@@ -14,16 +14,16 @@ import frc.robot.SubsystemComponents;
 import frc.robot.SubsystemConstants;
 
 public class ElevatorDefault extends Command {
-  OI oi = new OI();
   public ElevatorDefault() {
     requires(Robot.elevator);
   }
-  boolean stalling = false;
+  public static boolean stallMode = false;
+  public static double stallSpeed = 0;
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.dbc.addBoolean("stalling", () -> stalling);
+    Robot.dbc.addBoolean("stalling", () -> stallMode);
     Robot.dbc.addNumber("Stall Speed", SubsystemComponents.Elevator::getStallSpeed);
     Robot.dbc.addNumber("Stall Speed", SubsystemComponents.Elevator::getElevatorHeight);
   }
@@ -31,10 +31,19 @@ public class ElevatorDefault extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if(stallMode) 
+    {
+      System.out.println("Stalling elevator");
+      Robot.elevator.move(stallSpeed);
+    }
 
-
+    else
+    {
+      System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
+      Robot.elevator.move(Robot.oi.getBTJoystickLeft());
+    }
     
-    if(SubsystemComponents.Elevator.opticSwitch.get()) 
+    /*if(SubsystemComponents.Elevator.opticSwitch.get()) 
     {
       SubsystemComponents.Elevator.encoderWasReset = true;
       SubsystemComponents.Elevator.encoder.reset();
@@ -48,8 +57,8 @@ public class ElevatorDefault extends Command {
 
     else {
       stalling = false;
-      Robot.elevator.move(oi.getBTJoystick());
-    }
+      Robot.elevator.move(oi.getBTJoystick()); 
+    }*/ //commented for testing
   }
 
   // Make this return true when this Command no longer needs to run execute()

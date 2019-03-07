@@ -9,7 +9,7 @@ package frc.robot.commands.Cameras;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
+import frc.robot.PortMaps.RobotMap;
 
 public class SwitchToCameraA extends CommandGroup {
   /**

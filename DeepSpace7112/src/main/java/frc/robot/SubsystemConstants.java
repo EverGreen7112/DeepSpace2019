@@ -34,8 +34,8 @@ public class SubsystemConstants {
 	}
 	/**The constants for the chassis subsystem, which controls the robot's wheels. */
 	public static interface chassis {
-		// public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.7); //temp
-		public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.85); //temp
+		public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.7);
+		// public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.85); //temp
 
 	}
 
