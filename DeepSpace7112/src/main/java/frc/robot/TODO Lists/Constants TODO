@@ -1,0 +1,32 @@
+XXX = Done;
+XVX = Good enough;
+MMM = Impossible to do right now;
+WWW = Can and should be done right now;
+
+1. Chassis
+{
+    1.1 Speed modifier; XVX; //How fast should the robot move? 
+}
+
+2. Elevator
+{
+    2.1 Distance per Pulse; XXX; //15/17 = 0.8157894   //how much distance does the elevator go each tick of the encoder: 15/17 =  XXX
+    2.2 Speed Modifier; XVX; //0.7 //How fast should the elevator move? 
+    2.3 Max Height; XXX; //125 //How high up can the elevator go? (cm)
+    2.4 BonusHeight; XVX; //How high is the encoder?
+    2.5 MinHeigt; XVX; //0 //How low should the elevator be alowed to move?
+}
+
+3. Gripper
+{
+    3.1 In speed; XXX; //0.8 //how fast should the gripper's wheels move when catching things?
+    3.2 Out speed; XXX; //-0.8 //how fast should the gripper's wheels move when releasing things?
+    3.3 Voltage limit; WWW; //how much voltage does the optic sensor output when cargo is held?
+}
+
+
+/*4. Climbing Frame
+    4.1 Speed Modifier; WWW; //how fast should the shaft move?
+
+5. Climbing Movement
+    5.1 Speed Modifier; WWW; //How fast should the robot move during climbing*/ //Climbing Frame abondaned due to to overweight.

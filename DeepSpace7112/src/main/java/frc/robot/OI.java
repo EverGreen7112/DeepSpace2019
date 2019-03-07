@@ -8,15 +8,21 @@
 package frc.robot;
 
 import frc.robot.commands.PID.driveArcadeWithPID;
+import frc.robot.commands.Gripper.GripperIn;
 import frc.robot.commands.Cameras.SwitchToCameraA;
 import frc.robot.commands.Cameras.SwitchToCameraB;
 import frc.robot.commands.Climbing.Climb;
 import frc.robot.commands.Elevator.ElevatorMoveToTarget;
+import frc.robot.commands.Gripper.GripperOut;
+import frc.robot.commands.Gripper.StopGripper;
 import frc.robot.commands.GripperMovement.GripperMovementPistons;
+import frc.robot.commands.GripperMovement.pushPistonF;
+import frc.robot.commands.GripperMovement.pushPistonR;
 import frc.robot.commands.GripperMovement.throwHatch;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 
 import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
 
@@ -26,7 +32,7 @@ import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsyst
  */
 public class OI {
 
-  //--------------------Declerations--------------------
+  //--------------------Decleratins--------------------
 
   //----------Joysticks----------
   /**The joystick that controlls the left motors. */
@@ -39,6 +45,7 @@ public class OI {
   //----------Buttons----------
   /**The button that is used to catch objects with the gripper. The */
   private Button catchButton;
+  private Button cycle;
   /**The button that is used to release objects cought with the gripper. When it's released, the gripper catches back an object not fully released.*/
   private Button releaseButton;
   /**The button to switch the StreamViewer on the shuffleboard to view the Camera from port 0.  */
@@ -76,7 +83,8 @@ public class OI {
   /**The button to move the climbing frame down */
   private Button ClimbingFrameD;
   private Button throwHatch;
-
+  private Button setPistonF;
+  private Button setPistonR;
 
   /**The method to adjust the Driving Joysticks' value, turning the speed by value into a curve instead of a line - 
    * instead of each movement of the joystick increasing the speed equally, the furthest you move it the more
@@ -106,20 +114,21 @@ public class OI {
 
   //--------------------Initializations--------------------
     public OI() {
+      
       //----------Joysticks----------
         drivingJSLeft = new Joystick(0);
         drivingJSRight = new Joystick(1);
         buttonJS = new Joystick(2);
       //----------Elevator Buttons----------
-        bottomHatch = new JoystickButton(drivingJSLeft, 12);
+      catchButton = new JoystickButton(buttonJS, 1);
+      releaseButton = new JoystickButton(buttonJS, 3);
+      bottomHatch = new JoystickButton(drivingJSLeft, 12);
         middleHatch= new JoystickButton(drivingJSLeft, 10);
         topHatch = new JoystickButton(drivingJSLeft, 8);
         bottomCargo = new JoystickButton(drivingJSLeft, 11);
         middleCargo = new JoystickButton(drivingJSLeft, 9);
         topCargo = new JoystickButton(drivingJSLeft, 7);
       //----------Gripper Buttons----------
-        catchButton = new JoystickButton(buttonJS, 1);
-        releaseButton = new JoystickButton(buttonJS, 3);	
         throwHatch = new JoystickButton(buttonJS, 6);
       //----------Gripper Movement----------
         flipGripper = new JoystickButton(buttonJS, 5);
@@ -135,6 +144,8 @@ public class OI {
       //----------Climbing Frame Testing----------
         ClimbingFrameD = new JoystickButton(buttonJS, 2);
         ClimbingFrameU = new JoystickButton(buttonJS, 4);
+        setPistonF = new JoystickButton(buttonJS, 10);
+        setPistonR = new JoystickButton(buttonJS, 9);
       //----------Buttons' Binding----------
         bindButtons();
     }
@@ -151,14 +162,16 @@ public class OI {
       middleHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketMiddleHatchHeight));
       bottomHatch.whenPressed(new ElevatorMoveToTarget( SubsystemConstants.Elevator.kTargetSpeedModifier,  SubsystemConstants.Elevator.kRocketBottomHatchHeight));
     //----------Elevator to Cargo----------
-      topCargo.whenPressed(new ElevatorMoveToTarget( SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopCargoHeight));
+      topCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopCargoHeight));
       middleCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketMiddleCargoHeight));
       bottomCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketBottomCargoHeight));
-    // //----------Gripper----------
-      catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed));
-      releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed));
+    //----------Gripper----------
+      catchButton.whileHeld(new GripperIn());
+      catchButton.whenReleased(new StopGripper()); //testing - GripperIn's end() did not work 
+      releaseButton.whileHeld(new GripperOut());
+      releaseButton.whenReleased(new StopGripper()); //testing - GripperOut's end() did not work
       throwHatch.whenPressed(new throwHatch());
-      //----------Gripper Movement----------
+    //----------Gripper Movement----------
       flipGripper.whenPressed(new GripperMovementPistons());
     //----------Cameras----------
       switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
@@ -166,13 +179,15 @@ public class OI {
     //----------PID----------
       // straighten.whenPressed(new driveArcadeWithPID()); //Commented since RobotB does not have cameras.
     //--------------------Testing--------------------
+      //----------Climbing---------
       //----------Climbing Movement----------
-      // climb.whenPressed(new Climb());
         // ClimbingMovementB.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
         // ClimbingMovementF.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeedForward));
       //----------Climbing Frame----------
         // ClimbingFrameD.whileHeld(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifier));
         // ClimbingFrameU.whileHeld(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifierUp));
-      //---------Elevator----------
+      //---------Gripper Movement---------  
+        setPistonF.whenPressed(new pushPistonF());
+        setPistonR.whenPressed(new pushPistonR());
   }
 }

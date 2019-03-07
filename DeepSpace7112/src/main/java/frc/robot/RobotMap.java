@@ -24,7 +24,7 @@ public class RobotMap {
 //----------cameras----------
   public static final int
     cameraA = 0,
-    cameraB = 1;  //All temp
+    cameraB = 1;
   
 //----------Elevator----------
   public static final int
@@ -34,7 +34,6 @@ public class RobotMap {
               elevatorEncoderB = 1, //DIO
               elevatorOpticSwitch = 6, //DIO
               elevatorLazerDistanceSensor = 2; //Analog
-              //All temp
 
 //----------Climbing Frame----------
   public static final int 
@@ -51,18 +50,16 @@ public class RobotMap {
   public static final int 
     gripperMotorLeft = 9  , //CAN
     gripperMotorRight = 4, //CAN
-    gripperLeftPistonF= 0, //Left Forward -TEMP-
-    gripperLeftPistonR= 1, //Left Reverse -TEMP-
-    gripperRightPistonF = 2, //Right Forward -TEMP-
-    gripperRightPistonR = 3, //Right Reverse -TEMP-
+    gripperRightPistonF = 2, //Right Forward
+    gripperRightPistonR = 3, //Right Reverse
     gripperAnalogLazerSensor = 5; //analog
             
 //----------Gripper Movement----------
   public static final int
-    gripperMovementPushPistonF = 6, 
-    gripperMovementPushPistonR = 2, 
-    gripperMovementLockPistonF = 5, 
-    gripperMovementLockPistonR = 4, 
+    gripperMovementPushPistonF = 5, 
+    gripperMovementPushPistonR = 4, 
+    gripperMovementLockPistonF = 1, 
+    gripperMovementLockPistonR = 2, 
     gripperMovementPistonF = 7,
     gripperMovementPistonR = 3,
     gripperMovementTopMicroswitch = 4, 
@@ -83,14 +80,14 @@ public class RobotMap {
     * 8 - Chassis front-left;
     * 9 - Gripper left;
   * Pistons:
+    * 1 - push forward;
     * 2 - push reverse;
     * 4 - lock reverse;
     * 5 - lock forward;
-    * 6 - push forward;
     * 7 - movement forward;
-  * Cameras (interchangable):
-    * 0 - A;
-    * 1 - B;
+  * Cameras:
+    * 0 - Front;
+    * 1 - Back;
   * Encoders:
     * 0 - Elevator A;
     * 1 - Elevator B;

@@ -34,7 +34,9 @@ public class SubsystemConstants {
 	}
 	/**The constants for the chassis subsystem, which controls the robot's wheels. */
 	public static interface chassis {
-		public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.5); //temp
+		// public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.7); //temp
+		public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.85); //temp
+
 	}
 
 	/**the constants for the CameraHandler, which shows camera video on the shuffleboard.  */
@@ -53,9 +55,9 @@ public class SubsystemConstants {
 	 	 /**The elevator's speed as it moves to a hatch or a cargo on the rocket.  */
 		 public static Supplier<Double> kTargetSpeedModifier = ConstantHandler.addConstantDouble("Elevator Move to target speed modfier", 0.15); //temp
 	 	 /**The modifier needed to give to the motors in order get the elevator to stay up while not moving.*/
-	  	//  public static Supplier<Double> kElevatorStallSpeedModifier = ConstantHandler.addConstantDouble("Elevator Stall speed modfier", 0); //temp
+	  	// public static Supplier<Double> kElevatorStallSpeedModifier = ConstantHandler.addConstantDouble("Elevator Stall speed modfier", 0); //temp
 	 	 /**The modifier needed to give to the motors in order get the elevator to stay up while not moving, given maximum weight on it.*/		 
-		 public static Supplier<Double> kStallMaxMultiplier = ConstantHandler.addConstantDouble("Stall elevator supplier", 0.59); //temp
+		 public static Supplier<Double> kStallMaxMultiplier = ConstantHandler.addConstantDouble("Stall elevator supplier", 0.17); //temp
 		 public static Supplier<Double> kElevatorClimbingSpeedModifier = ConstantHandler.addConstantDouble("Elevator climbing speed modifier", 0.2); //temp
 
 		//----------Hatch Heights----------
@@ -78,8 +80,10 @@ public class SubsystemConstants {
 		 /**The highest point the elevator can reach, relative to the reset switch, used to check the validity of the height sensors.  */ 
 		 public static Supplier<Double> kEncoderMaxHeight = ConstantHandler.addConstantDouble("Elevator Encoder max height", kMaxHeight.get() - kEncoderBonusHeight.get());
 		 /**The lowest point the elevator can reach, relative to the reset switch, used to check the validity of the height sensors. */
-		 public static Supplier<Double> kEncoderMinHeight = ConstantHandler.addConstantDouble("Elevator Encoder max height", 0); //temp
-		 
+		 public static Supplier<Double> kEncoderMinHeight = ConstantHandler.addConstantDouble("Elevator Encoder min height", 0);
+		
+		//laser sensor
+		// public static final Supplier<Double> = ))
 		//----------Miscellaneous----------
 		 /**The distance the elevator passes between the encoder's ticks. */
 	 	 public static Supplier<Double> kDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 0.8157894); //19 ticks per motor turn, 15.5 cm per crank turn
@@ -87,11 +91,11 @@ public class SubsystemConstants {
 	
     public static interface gripper {
 		/**The speed of the gripper when it catches things.*/
-		public static final Supplier<Double> kGripperInSpeed = ConstantHandler.addConstantDouble("Gripper In Speed", 0.1);
+		public static final Supplier<Double> kGripperInSpeed = ConstantHandler.addConstantDouble("Gripper In Speed", 0.8);
 		/**The speed of the gripper when it releases things. */
-		public static final Supplier<Double> kGripperOutSpeed = ConstantHandler.addConstantDouble("Gripper Out Speed", -0.1);
+		public static final Supplier<Double> kGripperOutSpeed = ConstantHandler.addConstantDouble("Gripper Out Speed", -0.8);
 		/**The voltage of the optic sensor, which when reached, means the gripper catched the cargo.  */
-		public static final Supplier<Double> kVoltageLimit = ConstantHandler.addConstantDouble("Optic Sensor voltage limit", 1.5);
+		public static final Supplier<Double> kVoltageLimit = ConstantHandler.addConstantDouble("Optic Sensor voltage limit", 4); //supposed to be 1.5
 	}
 	
 	public static interface ClimbingFrame {

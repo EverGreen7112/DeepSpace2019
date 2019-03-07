@@ -23,6 +23,9 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.SubsystemComponents.GripperMovement;
+import frc.robot.commands.Elevator.ElevatorDefault;
+import frc.robot.commands.GripperMovement.GripperMovementPistons;
 
 /** This is the code ran (together with the OI) when activating the robot - 
  * it includes the decleration, intialization and confguration of the Subsystems.
@@ -48,7 +51,7 @@ public class Robot extends TimedRobot {
   public static Compressor compressor;
 
   public static CamerasHandler cameraHandler;
-  public  static DashBoardController dbc;
+  public static DashBoardController dbc;
 
   @Override
   /**The function ran when the robot is activated.*/
@@ -57,13 +60,13 @@ public class Robot extends TimedRobot {
       SubsystemComponents.Gripper.motorR.setInverted(true);
       SubsystemComponents.Gripper.motors = new SpeedControllerGroup(SubsystemComponents.Gripper.motorR, new WPI_VictorSPX(RobotMap.gripperMotorLeft));
       SubsystemComponents.Elevator.setupSensors(); //Configures the elevator - inverts the motors and sets the distance per pulse.
-      SubsystemComponents.GripperMovement.LockPiston.set(Value.kReverse);
-      SubsystemComponents.GripperMovement.PushPiston.set(Value.kForward);
+      // SubsystemComponents.GripperMovement.LockPiston.set(Value.kReverse);
+      SubsystemComponents.GripperMovement.PushPiston.set(Value.kReverse);
       SubsystemComponents.GripperMovement.MovementPiston.set(Value.kReverse);
       cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
         SubsystemConstants.cameras.kCameraWidth.get(), 
         SubsystemConstants.cameras.kCameraHeight.get(), 
-        RobotMap.cameraA);
+        RobotMap.cameraA, RobotMap.cameraB);
       cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
       
       compressor = new Compressor(); //Commented because RobotB does not have working pneomatics.
@@ -72,9 +75,9 @@ public class Robot extends TimedRobot {
 
     //----------BasicSubsystems----------
       drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
-      gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new MinLimit (
-      SubsystemComponents.Gripper::isCargoCaught)); //Commented due to the sensors not beinng commented yet, making the gripper is limitless system.
-      // gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new Limitless()); //testing
+      // gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new MinLimit (
+      //  SubsystemComponents.Gripper::isCargoCaught)); //Commented due to the sensors not beinng commented yet, making the gripper is limitless system. 
+      gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new Limitless()); //testing
       elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
         () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kEncoderMaxHeight.get()))); 
         //^^^Maximum Limit by the encoder - if it transmits that the elevator has surpussed our determained maximum height, it'll stop the movement
@@ -90,18 +93,18 @@ public class Robot extends TimedRobot {
     
     //----------DefaultCommands----------
       drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
-      elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick)); //commented so we can use button joystick in testing.
-      // elevator.setDefaultCommand(new MoveBasicSubsystem(elevator, oi::getBTJoystick));
-      // climbingMovement.setDefaultCommand(new MoveBasicSubsystem(climbingMovement, oi::getBTJoystick)); //testing
-      // gripper.setDefaultCommand(new MoveBasicSubsystem(gripper, oi::getBTJoystick)); //testing
-      // frame.setDefaultCommand(new MoveBasicSubsystem(frame, oi::getBTJoystick)); //testing
+      elevator.setDefaultCommand(new ElevatorDefault());
 
     //----------Shuffleboard data----------
+
       dbc.addNumber("Lazer elevator height", SubsystemComponents.Elevator::getElevatorHeightByLazer);
       dbc.addNumber("Encoder elevator height", SubsystemComponents.Elevator::getElevatorHeightByEncoder);
       dbc.addNumber("Total elevator height", SubsystemComponents.Elevator::getElevatorHeight);
-      dbc.addBoolean("Sensors are Functioning", SubsystemComponents.Elevator.sensorsFunctionSupplier);
+      // dbc.addBoolean("Sensors are Functioning", SubsystemComponents.Elevator.sensorsFunctionSupplier); //Currently MoveToTarget is not used, and therefore the height is not used.
       dbc.addNumber("Elevator Speed", oi::getBTJoystick);
+      dbc.addNumber("lazer value", SubsystemComponents.Elevator.lazerSensor::getValue);
+      dbc.addBoolean("elevator switched", () -> SubsystemComponents.Elevator.encoderWasReset);
+      dbc.addNumber("gripper speed", gripper::getSpeed);
 
   }
 
@@ -147,4 +150,5 @@ public class Robot extends TimedRobot {
     dbc.update();
 
   }
+
 }
