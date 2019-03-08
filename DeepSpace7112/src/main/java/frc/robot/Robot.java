@@ -96,7 +96,6 @@ public class Robot extends TimedRobot {
     //----------DefaultCommands----------
       drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
       elevator.setDefaultCommand(new ElevatorDefault());
-
     //----------Shuffleboard data----------
       dbc.addNumber("Lazer elevator height", SubsystemComponents.Elevator::getElevatorHeightByLazer);
       dbc.addNumber("Encoder elevator height", SubsystemComponents.Elevator::getElevatorHeightByEncoder);

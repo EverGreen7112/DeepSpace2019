@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.SubsystemComponents;
 
 public class TogglePushPistons extends Command {
-  public static boolean finished;
   public static boolean reversed = true;
   public TogglePushPistons() {
   }
@@ -20,7 +19,6 @@ public class TogglePushPistons extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    finished = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -36,13 +34,14 @@ public class TogglePushPistons extends Command {
     {
       System.out.println("Set Push Piston Forward");
       SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
+      reversed = true;
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return finished;
+    return true;
   }
 
   // Called once after isFinished returns true

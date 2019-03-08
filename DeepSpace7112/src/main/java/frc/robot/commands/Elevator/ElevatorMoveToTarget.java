@@ -32,6 +32,8 @@ public class ElevatorMoveToTarget extends Command {
   /**Whether or not the elevator is above the target.*/
   private boolean flag;
 
+  private boolean resetFlag;
+
   /**The constructor for this class, which sets its speed and target.
    * @param speedModifier - the speed modifier for the elevator's movement to the target.
    * @param target - the height of the target that the elevator need to move to, relative to the ground.
@@ -50,14 +52,13 @@ public class ElevatorMoveToTarget extends Command {
     if(target.get() - SubsystemComponents.Elevator.encoder.getDistance() > 0)
       flag = false;
     else flag = true;
+    resetFlag = true;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(SubsystemComponents.Elevator.opticSwitch.get()){
-      SubsystemComponents.Elevator.encoder.reset();
-    }
+   
    
     if(target.get() - SubsystemComponents.Elevator.encoder.getDistance() > 0){
       subsystem.move(speedModifier.get());
@@ -66,6 +67,11 @@ public class ElevatorMoveToTarget extends Command {
     else
     {
       subsystem.move(-speedModifier.get());
+
+      if(SubsystemComponents.Elevator.opticSwitch.get() && resetFlag){
+        SubsystemComponents.Elevator.encoder.reset();
+        resetFlag = false;
+      }
     }
   }
 
