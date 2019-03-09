@@ -39,7 +39,7 @@ public class ElevatorDefault extends Command {
 
     else
     {
-      System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
+      // System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
       Robot.elevator.move(Robot.oi.getBTJoystickLeft());
     }
     

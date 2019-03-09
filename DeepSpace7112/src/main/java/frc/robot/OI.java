@@ -86,7 +86,7 @@ public class OI {
   public Button ClimbingFrameU;
   /**The button to move the climbing frame down */
   public Button ClimbingFrameD;
-  public Button throwHatch;
+  public Button togglePushPistons;
   public Button setPistonF;
   public Button setPistonR;
 
@@ -140,7 +140,7 @@ public class OI {
       //----------Gripper Buttons----------
         catchButton = new JoystickButton(buttonJS, ButtonMap.gripper.catchPort.get());
         releaseButton = new JoystickButton(buttonJS, ButtonMap.gripper.releasePort.get());
-        throwHatch = new JoystickButton(buttonJS, ButtonMap.gripper.throwHatch.get());
+        togglePushPistons = new JoystickButton(buttonJS, ButtonMap.gripper.togglePushPistons.get());
         setPistonF = new JoystickButton(buttonJS, ButtonMap.gripper.setPistonForward.get());
         setPistonR = new JoystickButton(buttonJS, ButtonMap.gripper.setPistonReverse.get());
       //----------Gripper Movement----------
@@ -187,11 +187,11 @@ public class OI {
       catchButton.whenReleased(new StopGripper()); //testing - GripperIn's end() did not work 
       releaseButton.whileHeld(new GripperOut());
       releaseButton.whenReleased(new StopGripper()); //testing - GripperOut's end() did not work
-      throwHatch.whenPressed(new TogglePushPistons());
+      togglePushPistons.whenPressed(new TogglePushPistons());
     //----------Gripper Movement----------
       flipGripper.whenPressed(new GripperMovementPistons());
-      // setPistonF.whenPressed(new pushPistonF());
-      // setPistonR.whenPressed(new pushPistonR());
+      setPistonF.whenPressed(new pushPistonF());
+      setPistonR.whenPressed(new pushPistonR());
     //----------Cameras----------
       switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
       switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras

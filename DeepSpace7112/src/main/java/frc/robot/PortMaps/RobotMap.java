@@ -56,18 +56,18 @@ public class RobotMap {
             
 //----------Gripper Movement----------
   public static final int
-    gripperMovementPushPistonF = 5, 
-    gripperMovementPushPistonR = 4, 
-    gripperMovementLockPistonF = 1, 
-    gripperMovementLockPistonR = 2, 
-    gripperMovementPistonF = 7,
+    gripperMovementPushPistonF = 4, 
+    gripperMovementPushPistonR = 5, 
+    gripperMovementLockPistonF = 7, 
+    gripperMovementLockPistonR = 1, 
+    gripperMovementPistonF = 2,
     gripperMovementPistonR = 3,
     gripperMovementTopMicroswitch = 4, 
     gripperMovementBottomMicroSwitch = 5; 
 }
 
 /*
- * By Number:
+ * By Number:   
   * Motors (Victors):
     * 0 - Climbing Movement;
     * 1 - Frame;

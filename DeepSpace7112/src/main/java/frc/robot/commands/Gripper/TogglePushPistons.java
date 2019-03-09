@@ -28,6 +28,7 @@ public class TogglePushPistons extends Command {
     {
       System.out.println("Set Push Piston Reverse");
       SubsystemComponents.Gripper.PushPiston.set(Value.kForward);
+      reversed = false;
     }
 
     else
