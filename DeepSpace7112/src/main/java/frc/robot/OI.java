@@ -17,6 +17,7 @@ import frc.robot.commands.Elevator.ElevatorMoveToTarget;
 import frc.robot.commands.Elevator.SetStallMode;
 import frc.robot.commands.Gripper.GripperOut;
 import frc.robot.commands.Gripper.StopGripper;
+import frc.robot.commands.Gripper.TogglePushPistons;
 import frc.robot.commands.GripperMovement.GripperMovementPistons;
 import frc.robot.commands.GripperMovement.pushPistonF;
 import frc.robot.commands.GripperMovement.pushPistonR;
@@ -192,8 +193,8 @@ public class OI {
       // throwHatch.whenPressed(new throwHatch());
     //----------Gripper Movement----------
       flipGripper.whenPressed(new GripperMovementPistons());
-      setPistonF.whenPressed(new pushPistonF());
-      setPistonR.whenPressed(new pushPistonR());
+      // setPistonF.whenPressed(new pushPistonF());
+      // setPistonR.whenPressed(new pushPistonR());
     //----------Cameras----------
       switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
       switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras
