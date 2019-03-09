@@ -20,30 +20,31 @@ import frc.robot.OI;
 public class ButtonMap {
     public static interface gripper
     {
-        /**{@link OI#catchButton}*/
+        /**X*/
         public static Supplier<Integer> catchPort = 
             ConstantHandler.addConstantInt("Gripper catch button port (X)", JoystickMap.X);
-        /**{@link OI#releaseButton}*/
+        /**B*/
         public static  Supplier<Integer> releasePort = 
             ConstantHandler.addConstantInt("Gripper release button port (B)", JoystickMap.B);
-        /**{@link OI#throwHatch}*/
+        /**RB*/
         public static Supplier<Integer> throwHatch = 
             ConstantHandler.addConstantInt("Gripper throw hatch button port (RB)", JoystickMap.RB);
+        /**Y*/
         public static Supplier<Integer> togglePushPistons =
             ConstantHandler.addConstantInt("Toggle push pistons button port (Y)", JoystickMap.Y);
         
         //--------------------Testing--------------------
-            /**{@link OI#setPistonF}*/
+            /**{@link OI#buttonJS} - START*/
             public static Supplier<Integer> setPistonForward = 
                 ConstantHandler.addConstantInt("Set gripper pistons forward port (START)", JoystickMap.start);
-            /**{@link OI#setPistonR} */
+            /**{@link OI#buttonJS} - BACK */
             public static Supplier<Integer> setPistonReverse = 
                 ConstantHandler.addConstantInt("Set gripper pistons reverse port (BACK)", JoystickMap.back);
     }
 
     public static interface GripperMovement
     {
-        /**{@link OI#flipGripper}*/
+        /**{@link OI#buttonJS} - LB*/
         public static Supplier<Integer> flipGripper = 
             ConstantHandler.addConstantInt("Flip Gripper button port (LB)", JoystickMap.LB);
     }

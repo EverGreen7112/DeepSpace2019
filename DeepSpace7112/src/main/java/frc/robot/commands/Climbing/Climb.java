@@ -25,8 +25,8 @@ public class Climb extends CommandGroup {
   public Climb() {
 
     //-----Sequence-----
-    SubsystemComponents.GripperMovement.LockPiston.set(Value.kReverse);
-    SubsystemComponents.GripperMovement.LockPiston.set(Value.kForward);
+    SubsystemComponents.Gripper.LockPiston.set(Value.kReverse);
+    SubsystemComponents.Gripper.LockPiston.set(Value.kForward);
     addSequential(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifierUp), 1);
     addParallel(new MoveBasicSubsystem(Robot.elevatorClimb, SubsystemConstants.Elevator.kElevatorClimbingSpeedModifier)); //Move the elevator
     addSequential(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifier));

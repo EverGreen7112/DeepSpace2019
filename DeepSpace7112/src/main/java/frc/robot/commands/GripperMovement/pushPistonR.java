@@ -22,7 +22,7 @@ public class pushPistonR extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    SubsystemComponents.GripperMovement.PushPiston.set(Value.kReverse);
+    SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
     System.out.println("Piston Reverse");
   }
 
