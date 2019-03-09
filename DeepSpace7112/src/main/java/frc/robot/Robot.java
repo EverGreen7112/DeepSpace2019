@@ -70,15 +70,21 @@ public class Robot extends TimedRobot {
 
     //----------BasicSubsystems----------
       drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
+      
       // gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new MinLimit (
-      //  SubsystemComponents.Gripper::isCargoCaught)); //Commented due to the sensors not beinng commented yet, making the gripper is limitless system. 
+      //  SubsystemComponents.Gripper::isCargoCaught)); //Commented due to the MaxVoltage elevator constant not bring determined yet, making testing the gripper with this limit impossible. 
+      
       gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new Limitless()); //testing
+      
       elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
         () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kEncoderMaxHeight.get()))); 
         //^^^Maximum Limit by the encoder - if it transmits that the elevator has surpussed our determained maximum height, it'll stop the movement
+      
       elevatorClimb = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MinLimit(SubsystemComponents.ClimbingFrame.bottomLimiter::get));
+    
       frame = new BasicSubsystem(SubsystemComponents.ClimbingFrame.motor::set, new MinLimit(
-         SubsystemComponents.ClimbingFrame.bottomLimiter::get)); //Minimum Limit - if the frame presses the switch , stop the frame. The robot is built such that the switch will be pressed when the frame reaces the determained minimum height. 
+        SubsystemComponents.ClimbingFrame.bottomLimiter::get)); //Minimum Limit - if the frame presses the switch , stop the frame. The robot is built such that the switch will be pressed when the frame reaces the determained minimum height. 
+      
       //frame = new BasicSubsystem(SubsystemComponents.Climbingframe.motor::set, new Limitless());
       climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.motor::set, new Limitless());
       
@@ -99,9 +105,6 @@ public class Robot extends TimedRobot {
       dbc.addBoolean("elevator switched", () -> SubsystemComponents.Elevator.encoderWasReset);
       dbc.addNumber("gripper speed", gripper::getSpeed);
       dbc.addNumber("Chassis Speed", this::getChassisSpeed);
-
-
-
   }
 
   @Override

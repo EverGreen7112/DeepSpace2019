@@ -35,7 +35,7 @@ public class SubsystemConstants {
 	/**The constants for the chassis subsystem, which controls the robot's wheels. */
 	public static interface chassis {
 		public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.7);
-		// public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.85); //temp
+		// public static final Supplier<Double> kDrivin gSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.85); //temp
 
 	}
 
@@ -52,10 +52,8 @@ public class SubsystemConstants {
     public static interface Elevator{
 
 		//----------Speed Modifiers----------
-	 	 /**The elevator's speed as it moves to a hatch or a cargo on the rocket.  */
+	 	 /**The elevator's speed as it moves to a hatch or a cargo on the rocket.*/
 		 public static Supplier<Double> kTargetSpeedModifier = ConstantHandler.addConstantDouble("Elevator Move to target speed modfier", 0.15); //temp
-	 	 /**The modifier needed to give to the motors in order get the elevator to stay up while not moving.*/
-	  	// public static Supplier<Double> kElevatorStallSpeedModifier = ConstantHandler.addConstantDouble("Elevator Stall speed modfier", 0); //temp
 	 	 /**The modifier needed to give to the motors in order get the elevator to stay up while not moving, given maximum weight on it.*/		 
 		 public static Supplier<Double> kStallMaxMultiplier = ConstantHandler.addConstantDouble("Stall elevator supplier", 0.17); //temp
 		 public static Supplier<Double> kElevatorClimbingSpeedModifier = ConstantHandler.addConstantDouble("Elevator climbing speed modifier", 0.2); //temp
@@ -71,19 +69,31 @@ public class SubsystemConstants {
 	 	 public static Supplier<Double> kRocketTopCargoHeight = ConstantHandler.addConstantDouble("Rocket top cargo height", 212.09); 
 		
 		//----------Elevator Limit Heights----------
-		
 	 	 /**The highest point the elevator can reach relative to the ground.*/		 
 		 public static Supplier<Double> kMaxHeight = ConstantHandler.addConstantDouble("Elevator Max height", 225);
 		 /**The height of the encoder reset switch - the point where it is set zero (its refrence point).
 		  * The distance given from its information will be relative to this point. */
-		 public static Supplier<Double> kEncoderBonusHeight = ConstantHandler.addConstantDouble("Elevator bonus height", 40); //temp
+		 public static Supplier<Double> kEncoderBonusHeight = ConstantHandler.addConstantDouble("Elevator bonus height", 57);
 		 /**The highest point the elevator can reach, relative to the reset switch, used to check the validity of the height sensors.  */ 
 		 public static Supplier<Double> kEncoderMaxHeight = ConstantHandler.addConstantDouble("Elevator Encoder max height", kMaxHeight.get() - kEncoderBonusHeight.get());
 		 /**The lowest point the elevator can reach, relative to the reset switch, used to check the validity of the height sensors. */
 		 public static Supplier<Double> kEncoderMinHeight = ConstantHandler.addConstantDouble("Elevator Encoder min height", 0);
 		
-		//laser sensor
-		// public static final Supplier<Double> = ))
+		//----------Laser Constants----------
+			/**The voltage that lazerSensor.getValue() returns when the elevator is at maximum height. */
+			public static Supplier<Double> trueMaxHeightVoltage = 
+				ConstantHandler.addConstantDouble("Elevator maximum height voltage", 4); //temp
+			/**The voltage that lazerSensor.getValue() returns when the elevator is at maximum height */
+			public static Supplier<Double> minHeightVoltage = 
+				ConstantHandler.addConstantDouble("Elevator minimum height voltage", 0); //temp
+			/**The voltage that {@link SubsystemComponents.Elevator#lazerSensor lazerSensor}.getValue() returns when the elevator is at maximum height 
+			 * relative to the value it returns at minimum height,<p>
+			 * Used so we can derive the percentage of height the elevator rose from the laser sensor. */
+			public static Supplier<Double> relativeMaxHeightVoltage = 
+				ConstantHandler.addConstantDouble ( 
+					"Elevator relative maximum height voltage", 
+					trueMaxHeightVoltage.get()-minHeightVoltage.get());
+			
 		//----------Miscellaneous----------
 		 /**The distance the elevator passes between the encoder's ticks. */
 	 	 public static Supplier<Double> kDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 0.8157894); //19 ticks per motor turn, 15.5 cm per crank turn
@@ -95,7 +105,7 @@ public class SubsystemConstants {
 		/**The speed of the gripper when it releases things. */
 		public static final Supplier<Double> kGripperOutSpeed = ConstantHandler.addConstantDouble("Gripper Out Speed", -0.8);
 		/**The voltage of the optic sensor, which when reached, means the gripper catched the cargo.  */
-		public static final Supplier<Double> kVoltageLimit = ConstantHandler.addConstantDouble("Optic Sensor voltage limit", 4); //supposed to be 1.5
+		public static final Supplier<Double> kVoltageLimit = ConstantHandler.addConstantDouble("Optic Sensor voltage limit", 4); //temp
 	}
 	
 	public static interface ClimbingFrame {

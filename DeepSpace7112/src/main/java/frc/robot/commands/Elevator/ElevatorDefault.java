@@ -7,6 +7,8 @@
 
 package frc.robot.commands.Elevator;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
@@ -17,13 +19,12 @@ public class ElevatorDefault extends Command {
   public ElevatorDefault() {
     requires(Robot.elevator);
   }
-  public static boolean stallMode = false;
-  public static double stallSpeed = 0;
+  public static Supplier<Boolean> stallMode = () -> Robot.oi.getBTJoystickLeft() < 0.05 && Robot.oi.getBTJoystickLeft() > -0.05;
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.dbc.addBoolean("stalling", () -> stallMode);
+    Robot.dbc.addBoolean("stalling", stallMode);
     Robot.dbc.addNumber("Stall Speed", SubsystemComponents.Elevator::getStallSpeed);
     Robot.dbc.addNumber("Stall Speed", SubsystemComponents.Elevator::getElevatorHeight);
   }
@@ -31,17 +32,17 @@ public class ElevatorDefault extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(stallMode) 
-    {
-      System.out.println("Stalling elevator");
-      Robot.elevator.move(stallSpeed);
-    }
+    // if(stallMode.get()) 
+    // {
+    //   System.out.println("Stalling Elevator");
+    //   Robot.elevator.move(SubsystemComponents.Elevator.getStallSpeed());
+    // }
 
-    else
-    {
+    // else
+    // {
       // System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
       Robot.elevator.move(Robot.oi.getBTJoystickLeft());
-    }
+    // }
     
     /*if(SubsystemComponents.Elevator.opticSwitch.get()) 
     {

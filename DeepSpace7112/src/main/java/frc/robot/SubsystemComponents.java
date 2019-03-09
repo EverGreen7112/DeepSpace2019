@@ -54,9 +54,8 @@ public class SubsystemComponents {
         
         public static double getStallSpeed()
         { 
-            return //0.2;
-                SubsystemConstants.Elevator.kStallMaxMultiplier.get() *
-                (SubsystemComponents.Elevator.getElevatorHeight()/SubsystemConstants.Elevator.kEncoderMaxHeight.get()); 
+            double percentVoltage = getElevatorHeightByLazer()/SubsystemConstants.Elevator.kMaxHeight.get();
+            return percentVoltage * SubsystemConstants.Elevator.kStallMaxMultiplier.get();
         }
         //^^^ Gets the speed needed at the elevator's maximum height, and multiplies it by the percentage rose so far.
         public static final  SpeedControllerGroup motors = new SpeedControllerGroup (
@@ -91,9 +90,15 @@ public class SubsystemComponents {
         public static double getElevatorHeightByEncoder(){
             return encoder.getDistance() + SubsystemConstants.Elevator.kEncoderBonusHeight.get();
         }
-
+        
+        /**
+         * @return - The elevatpr's height as determined by the lazer sensor's  value.
+         */
         public static double getElevatorHeightByLazer() {
-            return (7/0.02)*(lazerSensor.getValue()/600.0) * 100.0;
+            double relativeVoltage = lazerSensor.getVoltage() - SubsystemConstants.Elevator.minHeightVoltage.get(); //The p
+            double voltagePercentage = relativeVoltage/SubsystemConstants.Elevator.relativeMaxHeightVoltage.get();
+            return voltagePercentage * SubsystemConstants.Elevator.kMaxHeight.get();
+            // return (7/0.02)*(lazerSensor.getVoltage()/600.0) * 100.0;
         }
         
         /**Checks the height of the encoder by the lazer sensor and the encoder, and returns it by the sesnor(s) that make most sense. */

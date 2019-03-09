@@ -29,7 +29,7 @@ public class RobotMap {
 //----------Elevator----------
   public static final int
               elevatorMotorA = 3, //CAN
-              elevatorMotorB = 6, //CAN
+              elevatorMotorB = 6, //CAN 
               elevatorEncoderA = 0, //DIO
               elevatorEncoderB = 1, //DIO
               elevatorOpticSwitch = 6, //DIO
