@@ -17,6 +17,6 @@ public class SwitchToCameraA extends CommandGroup {
    */
 
   public SwitchToCameraA() {
-    Robot.cameraHandler.switchCamera(RobotMap.cameraA);
+    // Robot.cameraHandler.switchCamera(RobotMap.cameraA);
   }
 }

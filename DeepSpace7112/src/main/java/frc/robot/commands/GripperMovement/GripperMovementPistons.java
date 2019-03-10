@@ -20,10 +20,14 @@ public class GripperMovementPistons extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if(SubsystemComponents.GripperMovement.MovementPiston.get().compareTo(Value.kForward) == 0)
+    if(SubsystemComponents.GripperMovement.MovementPiston.get().compareTo(Value.kForward) == 0){
+      System.out.println("Gripper up");
       SubsystemComponents.GripperMovement.MovementPiston.set(Value.kReverse);
-    else
+    }
+    else{
+      System.out.println("Gripper down");
       SubsystemComponents.GripperMovement.MovementPiston.set(Value.kForward);
+    }
 
   }
 

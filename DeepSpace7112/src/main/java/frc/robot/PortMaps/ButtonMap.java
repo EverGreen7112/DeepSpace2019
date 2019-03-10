@@ -63,8 +63,8 @@ public class ButtonMap {
     public static interface PID
     {
         /**{@link OI#straighten} */
-        public static Supplier<Integer> straighten =
-            ConstantHandler.addConstantInt("PID loop button port (LB)", JoystickMap.LB); //Button currently taken
+        // public static Supplier<Integer> straighten =
+        //     ConstantHandler.addConstantInt("PID loop button port (LB)", JoystickMap.LB); //Button currently taken
     }
 
     public static interface Elevator
