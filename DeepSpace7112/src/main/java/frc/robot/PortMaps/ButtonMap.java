@@ -34,7 +34,8 @@ public class ButtonMap {
             ConstantHandler.addConstantInt("Toggle push pistons button port (Y)", JoystickMap.Y);
         
         //--------------------Testing--------------------
-            /**{@link OI#buttonJS} - START*/
+            /**{@link OI#buttonJ
+             * S} - START*/
             public static Supplier<Integer> setPistonForward = 
                 ConstantHandler.addConstantInt("Set gripper pistons forward port (START)", JoystickMap.start);
             /**{@link OI#buttonJS} - BACK */

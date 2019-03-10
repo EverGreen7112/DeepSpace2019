@@ -150,8 +150,6 @@ public class SubsystemComponents {
             public static final WPI_VictorSPX motorR = new WPI_VictorSPX(RobotMap.gripperMotorRight);
             public static SpeedControllerGroup motors;        
             public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
-            public static final DoubleSolenoid LockPiston = new DoubleSolenoid (
-                RobotMap.gripperMovementLockPistonF, RobotMap.gripperMovementLockPistonR);
             public static final DoubleSolenoid PushPiston = new DoubleSolenoid (
                 RobotMap.gripperMovementPushPistonF, RobotMap.gripperMovementPushPistonR);
         /**

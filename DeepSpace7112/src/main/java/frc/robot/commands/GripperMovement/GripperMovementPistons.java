@@ -20,7 +20,6 @@ public class GripperMovementPistons extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    SubsystemComponents.Gripper.LockPiston.set(Value.kReverse);
     if(SubsystemComponents.GripperMovement.MovementPiston.get().compareTo(Value.kForward) == 0)
       SubsystemComponents.GripperMovement.MovementPiston.set(Value.kReverse);
     else

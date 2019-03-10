@@ -56,10 +56,8 @@ public class RobotMap {
             
 //----------Gripper Movement----------
   public static final int
-    gripperMovementPushPistonF = 5, 
-    gripperMovementPushPistonR = 4, 
-    gripperMovementLockPistonF = 1, 
-    gripperMovementLockPistonR = 2, 
+    gripperMovementPushPistonF = 2, 
+    gripperMovementPushPistonR = 5,
     gripperMovementPistonF = 7,
     gripperMovementPistonR = 3,
     gripperMovementTopMicroswitch = 4, 
