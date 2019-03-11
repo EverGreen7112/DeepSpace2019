@@ -12,7 +12,7 @@ import com.spikes2212.dashboard.ConstantHandler;
 
 /**This is the class that contains each constant neccisaty */
 public class SubsystemConstants {
-
+	public static Supplier<Double> kCurrentSpeedModifier = ConstantHandler.addConstantDouble("Current Speed Modifier", 0.8);
 	/**The constants for the chassis' <a href="https://bit.ly/2H6fnUT">PID loop</a>*/
 	public static interface PID  { //All temp.
 		/**The point the system will try to drive to - the center of the reflectives seen by the camera. */
@@ -34,8 +34,10 @@ public class SubsystemConstants {
 	}
 	/**The constants for the chassis subsystem, which controls the robot's wheels. */
 	public static interface chassis {
-		public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.7);
-		// public static final Supplier<Double> kDrivin gSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.85); //temp
+		public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Speed Modifier", 0.7);
+		public static final Supplier<Double> kDefenseSpeedModifier = ConstantHandler.addConstantDouble("Defense Speed Modifier", 0.8);
+		// public static Supplier<Double> kCurrentSpeedModifier = ConstantHandler.addConstantDouble("Current Speed Modifier", 0.8);
+		// public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.85); //temp
 
 	}
 
@@ -73,20 +75,20 @@ public class SubsystemConstants {
 		 public static Supplier<Double> kMaxHeight = ConstantHandler.addConstantDouble("Elevator Max height", 225);
 		 /**The height of the encoder reset switch - the point where it is set zero (its refrence point).
 		  * The distance given from its information will be relative to this point. */
-		 public static Supplier<Double> kEncoderBonusHeight = ConstantHandler.addConstantDouble("Elevator bonus height", 57);
+		 public static Supplier<Double> kEncoderBonusHeight = ConstantHandler.addConstantDouble("Elevator bonus height", 47);
 		 /**The highest point the elevator can reach, relative to the reset switch, used to check the validity of the height sensors.  */ 
 		 public static Supplier<Double> kEncoderMaxHeight = ConstantHandler.addConstantDouble("Elevator Encoder max height", kMaxHeight.get() - kEncoderBonusHeight.get());
 		 /**The lowest point the elevator can reach, relative to the reset switch, used to check the validity of the height sensors. */
 		 public static Supplier<Double> kEncoderMinHeight = ConstantHandler.addConstantDouble("Elevator Encoder min height", 0);
 		
 		//----------Laser Constants----------
-			/**The voltage that lazerSensor.getValue() returns when the elevator is at maximum height. */
+			/**The voltage that lazerSensor.getVoltage() returns when the elevator is at maximum height. */
 			public static Supplier<Double> trueMaxHeightVoltage = 
 				ConstantHandler.addConstantDouble("Elevator maximum height voltage", 4); //temp
-			/**The voltage that lazerSensor.getValue() returns when the elevator is at maximum height */
+			/**The voltage that lazerSensor.getVoltage() returns when the elevator is at maximum height */
 			public static Supplier<Double> minHeightVoltage = 
 				ConstantHandler.addConstantDouble("Elevator minimum height voltage", 0); //temp
-			/**The voltage that {@link SubsystemComponents.Elevator#lazerSensor lazerSensor}.getValue() returns when the elevator is at maximum height 
+			/**The voltage that {@link SubsystemComponents.Elevator#lazerSensor lazerSensor}.getVoltage() returns when the elevator is at maximum height 
 			 * relative to the value it returns at minimum height,<p>
 			 * Used so we can derive the percentage of height the elevator rose from the laser sensor. */
 			public static Supplier<Double> relativeMaxHeightVoltage = 

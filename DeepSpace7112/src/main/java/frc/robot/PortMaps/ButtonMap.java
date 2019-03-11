@@ -73,12 +73,17 @@ public class ButtonMap {
             public static Supplier<Integer> setStall =
                 ConstantHandler.addConstantInt("Stall mode button port (RT)", JoystickMap.RT);
     }
+
+    public static interface Movement 
+    {
+        public static Supplier<Integer> toggleDefense = 
+            ConstantHandler.addConstantInt("Defense movement button port (LT)", JoystickMap.LT);
+    }
     
     /*
     Left:
         * Button Joystick:
             * A (2)
-            * Y (4) 
             * LT (7)
             * RT (8)
             * Left Joystick (11)
@@ -104,6 +109,7 @@ public class ButtonMap {
         * Button Joystick:
             * X (1)
             * B (3)
+            * Y (4)
             * LB (5)
             * RB (6)
             * BACK (9)

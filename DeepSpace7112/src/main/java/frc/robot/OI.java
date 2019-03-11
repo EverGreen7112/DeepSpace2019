@@ -10,6 +10,7 @@ package frc.robot;
 import frc.robot.commands.PID.driveArcadeWithPID;
 import frc.robot.commands.Gripper.GripperIn;
 import frc.robot.PortMaps.ButtonMap;
+import frc.robot.commands.ToggleDefense;
 import frc.robot.commands.Cameras.SwitchToCameraA;
 import frc.robot.commands.Cameras.SwitchToCameraB;
 import frc.robot.commands.Climbing.Climb;
@@ -89,6 +90,7 @@ public class OI {
   public Button togglePushPistons;
   public Button setPistonF;
   public Button setPistonR;
+  public Button toggleDefense;
 
   /**The method to adjust the Driving Joysticks' value, turning the speed by value into a curve instead of a line - 
    * instead of each movement of the joystick increasing the speed equally, the furthest you move it the more
@@ -128,6 +130,8 @@ public class OI {
         drivingJSLeft = new Joystick(0);
         drivingJSRight = new Joystick(1);
         buttonJS = new Joystick(2);
+      //----------Movement----------
+        toggleDefense = new JoystickButton(buttonJS, ButtonMap.Movement.toggleDefense.get());
       //----------Elevator Buttons----------
         setStall = new JoystickButton(buttonJS, ButtonMap.Elevator.setStall.get());
         /*bottomHatch = new JoystickButton(drivingJSLeft, 12);
@@ -148,8 +152,8 @@ public class OI {
       //----------Climb----------
         // climb = new JoystickButton(buttonJS, 6); //commented due to lack of climbing
       //----------Camera Buttons----------
-        switchToA = new JoystickButton(drivingJSRight, ButtonMap.Cameras.switchToA.get());
-        switchToB = new JoystickButton(drivingJSRight, ButtonMap.Cameras.switchToB.get());
+        // switchToA = new JoystickButton(drivingJSRight, ButtonMap.Cameras.switchToA.get());
+        // switchToB = new JoystickButton(drivingJSRight, ButtonMap.Cameras.switchToB.get());
       //----------PID----------
         // straighten = new JoystickButton(buttonJS, ButtonMap.PID.straighten.get()); //commented due to lack of PID testing.
 
@@ -170,6 +174,8 @@ public class OI {
    * and ends the action and command is the action to be executed when the button is pressed or held.*/
   private void bindButtons() 
   {
+    //----------Movement----------
+    toggleDefense.whenPressed(new ToggleDefense());
     //----------Elevator----------
       setStall.whenPressed(new SetStallMode());
     //----------Elevator to Hatch----------
@@ -193,8 +199,8 @@ public class OI {
       setPistonF.whenPressed(new pushPistonF());
       setPistonR.whenPressed(new pushPistonR());
     //----------Cameras----------
-      switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
-      switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras
+      // switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
+      // switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras
     //----------PID----------
       // straighten.whenPressed(new driveArcadeWithPID()); //Commented since RobotB does not have cameras.
     //--------------------Testing--------------------

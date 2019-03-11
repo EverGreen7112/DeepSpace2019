@@ -9,6 +9,8 @@ package frc.robot.commands.Elevator;
 
 import java.util.function.Supplier;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
@@ -19,47 +21,55 @@ public class ElevatorDefault extends Command {
   public ElevatorDefault() {
     requires(Robot.elevator);
   }
-  public static Supplier<Boolean> stallMode = () -> Robot.oi.getBTJoystickLeft() < 0.05 && Robot.oi.getBTJoystickLeft() > -0.05;
 
+  // public static Supplier<Boolean> stallMode = () -> Robot.oi.getBTJoystickLeft() < 0.05 && Robot.oi.getBTJoystickLeft() > -0.05;
+  public static boolean stallMode = false;
+  public static double stallSpeed = 0;
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.dbc.addBoolean("stalling", stallMode);
-    Robot.dbc.addNumber("Stall Speed", SubsystemComponents.Elevator::getStallSpeed);
+    // Robot.dbc.addBoolean("stalling", stallMode);
+    Robot.dbc.addBoolean("stalling", () -> stallMode);
+    // Robot.dbc.addNumber("Stall Speed", SubsystemComponents.Elevator::getStallSpeed);
     Robot.dbc.addNumber("Stall Speed", SubsystemComponents.Elevator::getElevatorHeight);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // if(stallMode.get()) 
-    // {
-    //   System.out.println("Stalling Elevator");
-    //   Robot.elevator.move(SubsystemComponents.Elevator.getStallSpeed());
-    // }
-
-    // else
-    // {
-      // System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
-      Robot.elevator.move(Robot.oi.getBTJoystickLeft());
-    // }
-    
-    /*if(SubsystemComponents.Elevator.opticSwitch.get()) 
+    if(stallMode) 
     {
-      SubsystemComponents.Elevator.encoderWasReset = true;
-      SubsystemComponents.Elevator.encoder.reset();
+      System.out.println("Stalling Elevator");
+      // Robot.elevator.move(SubsystemComponents.Elevator.getStallSpeed());
+      Robot.elevator.move(stallSpeed);
     }
 
-    if(oi.getBTJoystick()<0.05 && oi.getBTJoystick()>-0.05) {
-      stalling = true;
-      Robot.elevator.move(SubsystemComponents.Elevator.getStallSpeed());
-      // SubsystemComponents.Elevator.motors. //testing
+    else
+    {
+      System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
+      Robot.elevator.move(Robot.oi.getBTJoystickLeft());
     }
+    
+    // if(SubsystemComponents.Elevator.opticSwitch.get()) 
+    // {
+    //   System.out.println("aaa");
+    //   SubsystemComponents.Elevator.encoderWasReset = true;
+    //   SubsystemComponents.Elevator.encoder.reset();
+    // }
 
-    else {
-      stalling = false;
-      Robot.elevator.move(oi.getBTJoystick()); 
-    }*/ //commented for testing
+    // if(Robot.oi.getBTJoystickLeft()<0.05 && Robot.oi.getBTJoystickLeft()>-0.05) {
+    //   System.out.println("Stalling Elevator");
+    //   SubsystemComponents.Elevator.motorA.setNeutralMode(NeutralMode.Brake); 
+    //   SubsystemComponents.Elevator.motorB.setNeutralMode(NeutralMode.Brake);
+    // }
+
+    // else {
+    //   // stalling = false;
+    //   System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
+    //   SubsystemComponents.Elevator.motorA.setNeutralMode(NeutralMode.Coast); 
+    //   SubsystemComponents.Elevator.motorB.setNeutralMode(NeutralMode.Coast);
+    //   Robot.elevator.move(Robot.oi.getBTJoystickLeft()); 
+    // } //commented for testing
   }
 
   // Make this return true when this Command no longer needs to run execute()

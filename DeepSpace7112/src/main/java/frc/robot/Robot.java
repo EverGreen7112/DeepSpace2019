@@ -49,7 +49,8 @@ public class Robot extends TimedRobot {
   public static BasicSubsystem gripper;
   public static BasicSubsystem frame;
   public static BasicSubsystem climbingMovement;
-  
+  public static CamerasHandler cameraHandler;
+
   public static Compressor compressor;
 
   public static DashBoardController dbc;
@@ -63,6 +64,12 @@ public class Robot extends TimedRobot {
       SubsystemComponents.Elevator.setupSensors(); //Configures the elevator - inverts the motors and sets the distance per pulse.
       SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
       SubsystemComponents.GripperMovement.MovementPiston.set(Value.kReverse);
+
+    cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
+      SubsystemConstants.cameras.kCameraWidth.get(), 
+      SubsystemConstants.cameras.kCameraHeight.get(), 
+      RobotMap.cameraA);
+    cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
 
       compressor = new Compressor(); //Commented because RobotB does not have working pneomatics.
       compressor.start(); //Commented because RbotB does not have working pneomatics.
@@ -101,10 +108,12 @@ public class Robot extends TimedRobot {
       dbc.addNumber("Total elevator height", SubsystemComponents.Elevator::getElevatorHeight);
       // dbc.addBoolean("Sensors are Functioning", SubsystemComponents.Elevator.sensorsFunctionSupplier); //Currently MoveToTarget is not used, and therefore the height is not used.
       dbc.addNumber("Elevator Speed", oi::getBTJoystickLeft);
-      dbc.addNumber("lazer value", SubsystemComponents.Elevator.lazerSensor::getValue);
+      dbc.addNumber("lazer voltage", SubsystemComponents.Elevator.lazerSensor::getVoltage);
       dbc.addBoolean("elevator switched", () -> SubsystemComponents.Elevator.encoderWasReset);
       dbc.addNumber("gripper speed", gripper::getSpeed);
-      dbc.addNumber("Chassis Speed", this::getChassisSpeed);
+      dbc.addNumber("Chassis Left Speed", oi::getBTJoystickLeft);
+      dbc.addNumber("Chassis Right Speed", oi::getRightJoystick);
+      dbc.addNumber("Chassis Mean Speed", this::getChassisSpeed);
   }
 
   @Override

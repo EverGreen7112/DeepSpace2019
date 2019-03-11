@@ -5,14 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Elevator;
+package frc.robot.commands;
+
+import com.spikes2212.dashboard.ConstantHandler;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import frc.robot.SubsystemConstants;
 
-public class SetStallMode extends Command {
-  public boolean finished;
-  public SetStallMode() {
+public class ToggleDefense extends Command {
+  public static boolean defense = false;
+  public ToggleDefense() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -25,15 +27,23 @@ public class SetStallMode extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    ElevatorDefault.stallSpeed = Robot.oi.getBTJoystickLeft();
-    ElevatorDefault.stallMode = !(ElevatorDefault.stallMode);
-    finished = true;
+    if (!defense)
+    {
+      defense = true;
+      SubsystemConstants.kCurrentSpeedModifier = ConstantHandler.addConstantDouble("Current Speed Modifier", SubsystemConstants.chassis.kDefenseSpeedModifier.get()); //SubsystemConstants.chassis.kDefenseSpeedModifier.get();
+    }
+
+    else
+    {
+      defense = false;
+      // SubsystemConstants.
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return finished;
+    return false;
   }
 
   // Called once after isFinished returns true

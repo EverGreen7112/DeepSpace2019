@@ -41,6 +41,7 @@ public class SubsystemComponents {
             new WPI_VictorSPX(RobotMap.chassisVictorBL), new WPI_VictorSPX(RobotMap.chassisVictorFL));
         public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup (
             new WPI_TalonSRX(RobotMap.chassisVictorBR), new WPI_TalonSRX(RobotMap.chassisVictorFR));
+        public static double currentSpeed;
     }
 
     /**
@@ -58,8 +59,10 @@ public class SubsystemComponents {
             return percentVoltage * SubsystemConstants.Elevator.kStallMaxMultiplier.get();
         }
         //^^^ Gets the speed needed at the elevator's maximum height, and multiplies it by the percentage rose so far.
+        public static WPI_VictorSPX motorA = new WPI_VictorSPX(RobotMap.elevatorMotorA);
+        public static WPI_VictorSPX motorB = new WPI_VictorSPX(RobotMap.elevatorMotorB);
         public static final  SpeedControllerGroup motors = new SpeedControllerGroup (
-            new WPI_VictorSPX(RobotMap.elevatorMotorA), new WPI_VictorSPX(RobotMap.elevatorMotorB));
+            motorA, motorB);
         public static final Encoder encoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB);
         public static final DigitalInput opticSwitch = new DigitalInput(RobotMap.elevatorOpticSwitch);
         public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.elevatorLazerDistanceSensor);
@@ -80,7 +83,7 @@ public class SubsystemComponents {
         }
         
         /**The configuration of the elevator's sensors, which must be ran before its Subsystem is created.
-         * It inverts the motor, sets the encoder's Distance per pulse by SubsystemConstants, and sets that the encoder was not reset yet.*/
+         * It inverts the mo    `tor, sets the encoder's Distance per pulse by SubsystemConstants, and sets that the encoder was not reset yet.*/
         public static void setupSensors() {
             motors.setInverted(true);
             encoder.setDistancePerPulse(SubsystemConstants.Elevator.kDistancePerPulse.get());
@@ -95,10 +98,10 @@ public class SubsystemComponents {
          * @return - The elevatpr's height as determined by the lazer sensor's  value.
          */
         public static double getElevatorHeightByLazer() {
-            double relativeVoltage = lazerSensor.getVoltage() - SubsystemConstants.Elevator.minHeightVoltage.get(); //The p
-            double voltagePercentage = relativeVoltage/SubsystemConstants.Elevator.relativeMaxHeightVoltage.get();
-            return voltagePercentage * SubsystemConstants.Elevator.kMaxHeight.get();
-            // return (7/0.02)*(lazerSensor.getVoltage()/600.0) * 100.0;
+            // double relativeVoltage = lazerSensor.getVoltage() - SubsystemConstants.Elevator.minHeightVoltage.get(); //The p
+            // double voltagePercentage = relativeVoltage/SubsystemConstants.Elevator.relativeMaxHeightVoltage.get();
+            // return voltagePercentage * SubsystemConstants.Elevator.kMaxHeight.get();
+            return (7/0.02)*(lazerSensor.getVoltage()/600.0) * 100.0;
         }
         
         /**Checks the height of the encoder by the lazer sensor and the encoder, and returns it by the sesnor(s) that make most sense. */
@@ -109,7 +112,7 @@ public class SubsystemComponents {
                 blockString = "in try block";
                 if(getElevatorHeightByLazer() < SubsystemConstants.Elevator.kMaxHeight.get()) { //If the lazer sensor shows that the elevator height is permitted:
                     blockString = "in LaserIsPossible block";
-                    if(SubsystemComponents.Elevator.encoderWasReset //If the encoder shows the the height is possible and it was reset at least once (as before it's values re invalid):
+                    if(SubsystemComponents.Elevator.encoderWasReset //If the encoder shows the the height is possible and it was reset at least once (as before it's values are invalid):
                     && getElevatorHeightByEncoder() != 0 
                     && getElevatorHeightByEncoder() > SubsystemConstants.Elevator.kEncoderMinHeight.get()
                     && getElevatorHeightByEncoder() < SubsystemConstants.Elevator.kEncoderMaxHeight.get()) {
