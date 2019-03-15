@@ -10,6 +10,7 @@ package frc.robot;
 import java.awt.event.MouseWheelEvent;
 import java.util.function.Supplier;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -36,12 +37,12 @@ public class SubsystemComponents {
     /**The DriveTrain is the part that controls the robot's wheels.
      * It consists of two sets of motors, a pair for each side of the robot - two left ones and two right ones.
      */
-    public static class DriveTrain {
+    public static class Chassis {
         public static final SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup (
             new WPI_VictorSPX(RobotMap.chassisVictorBL), new WPI_VictorSPX(RobotMap.chassisVictorFL));
         public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup (
             new WPI_TalonSRX(RobotMap.chassisVictorBR), new WPI_TalonSRX(RobotMap.chassisVictorFR));
-        public static double currentSpeed;
+        public static double currentSpeed = SubsystemConstants.Chassis.kDrivingSpeedModifier.get();
     }
 
     /**
@@ -61,8 +62,7 @@ public class SubsystemComponents {
         //^^^ Gets the speed needed at the elevator's maximum height, and multiplies it by the percentage rose so far.
         public static WPI_VictorSPX motorA = new WPI_VictorSPX(RobotMap.elevatorMotorA);
         public static WPI_VictorSPX motorB = new WPI_VictorSPX(RobotMap.elevatorMotorB);
-        public static final  SpeedControllerGroup motors = new SpeedControllerGroup (
-            motorA, motorB);
+        public static  SpeedControllerGroup motors;
         public static final Encoder encoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB);
         public static final DigitalInput opticSwitch = new DigitalInput(RobotMap.elevatorOpticSwitch);
         public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.elevatorLazerDistanceSensor);
@@ -85,13 +85,17 @@ public class SubsystemComponents {
         /**The configuration of the elevator's sensors, which must be ran before its Subsystem is created.
          * It inverts the mo    `tor, sets the encoder's Distance per pulse by SubsystemConstants, and sets that the encoder was not reset yet.*/
         public static void setupSensors() {
+            // motorA.setNeutralMode(NeutralMode.Brake);
+            // motorB.setNeutralMode(NeutralMode.Brake);
+            motors = new SpeedControllerGroup (motorA, motorB);
             motors.setInverted(true);
+            
             encoder.setDistancePerPulse(SubsystemConstants.Elevator.kDistancePerPulse.get());
             encoderWasReset = false;
         }
 
         public static double getElevatorHeightByEncoder(){
-            return encoder.getDistance() + SubsystemConstants.Elevator.kEncoderBonusHeight.get();
+            return encoder.getDistance() + SubsystemConstants.Elevator.kBonusEncoderHeight.get();
         }
         
         /**
@@ -151,6 +155,7 @@ public class SubsystemComponents {
      * The subsystem contains one analog proximity lazer based sensor.*/
     public static class Gripper {
             public static final WPI_VictorSPX motorR = new WPI_VictorSPX(RobotMap.gripperMotorRight);
+            public static final WPI_VictorSPX motorL = new WPI_VictorSPX(RobotMap.gripperMotorLeft);
             public static SpeedControllerGroup motors;        
             public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
             public static final DoubleSolenoid PushPiston = new DoubleSolenoid (

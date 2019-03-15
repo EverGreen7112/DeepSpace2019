@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
@@ -26,8 +27,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.PortMaps.RobotMap;
 import frc.robot.SubsystemComponents.GripperMovement;
+import frc.robot.commands.Chassis.DefaultDrive;
 import frc.robot.commands.Elevator.ElevatorDefault;
-import frc.robot.commands.GripperMovement.GripperMovementPistons;
+import frc.robot.commands.GripperMovement.FoldGripper;
 
 /** This is the code ran (together with the OI) when activating the robot - 
  * it includes the decleration, intialization and confguration of the Subsystems.
@@ -60,7 +62,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     //----------Sensor Configs----------
       // SubsystemComponents.Gripper.motorR.setInverted(true);
-      SubsystemComponents.Gripper.motors = new SpeedControllerGroup(SubsystemComponents.Gripper.motorR, new WPI_VictorSPX(RobotMap.gripperMotorLeft));
+      // SubsystemComponents.Gripper.motorR.setNeutralMode(NeutralMode.Brake);
+      // SubsystemComponents.Gripper.motorL.setNeutralMode(NeutralMode.Brake);
+      SubsystemComponents.Gripper.motors = new SpeedControllerGroup(SubsystemComponents.Gripper.motorR, SubsystemComponents.Gripper.motorL);
       SubsystemComponents.Elevator.setupSensors(); //Configures the elevator - inverts the motors and sets the distance per pulse.
       SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
       SubsystemComponents.GripperMovement.MovementPiston.set(Value.kReverse);
@@ -76,17 +80,18 @@ public class Robot extends TimedRobot {
       compressor.setClosedLoopControl(true); //Commented because RobotB does not have pneomtics.
 
     //----------BasicSubsystems----------
-      drivetrain = new TankDrivetrain(SubsystemComponents.DriveTrain.leftMotorGroup::set, SubsystemComponents.DriveTrain.rightMotorGroup::set);
+      drivetrain = new TankDrivetrain(SubsystemComponents.Chassis.leftMotorGroup::set, SubsystemComponents.Chassis.rightMotorGroup::set);
       
-      // gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new MinLimit (
-      //  SubsystemComponents.Gripper::isCargoCaught)); //Commented due to the MaxVoltage elevator constant not bring determined yet, making testing the gripper with this limit impossible. 
+      gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new MaxLimit(
+        SubsystemComponents.Gripper::isCargoCaught)); //Commented due to the MaxVoltage elevator constant not bring determined yet, making testing the gripper with this limit impossible. 
       
-      gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new Limitless()); //testing
+    //  gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new Limitless()); //testing
       
-      elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
-        () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kEncoderMaxHeight.get()))); 
+      // elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
+      //   () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kEncoderMaxHeight.get()))); 
         //^^^Maximum Limit by the encoder - if it transmits that the elevator has surpussed our determained maximum height, it'll stop the movement
       
+        elevator  = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new Limitless());
       elevatorClimb = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MinLimit(SubsystemComponents.ClimbingFrame.bottomLimiter::get));
     
       frame = new BasicSubsystem(SubsystemComponents.ClimbingFrame.motor::set, new MinLimit(
@@ -101,6 +106,7 @@ public class Robot extends TimedRobot {
     
     //----------DefaultCommands----------
       drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
+      // drivetrain.setDefaultCommand(new defaultDrive());
       elevator.setDefaultCommand(new ElevatorDefault());
     //----------Shuffleboard data----------
       dbc.addNumber("Lazer elevator height", SubsystemComponents.Elevator::getElevatorHeightByLazer);
@@ -111,9 +117,11 @@ public class Robot extends TimedRobot {
       dbc.addNumber("lazer voltage", SubsystemComponents.Elevator.lazerSensor::getVoltage);
       dbc.addBoolean("elevator switched", () -> SubsystemComponents.Elevator.encoderWasReset);
       dbc.addNumber("gripper speed", gripper::getSpeed);
+      dbc.addNumber("Chassis current speed modifier", () -> SubsystemComponents.Chassis.currentSpeed);
       dbc.addNumber("Chassis Left Speed", oi::getBTJoystickLeft);
       dbc.addNumber("Chassis Right Speed", oi::getRightJoystick);
       dbc.addNumber("Chassis Mean Speed", this::getChassisSpeed);
+      dbc.addNumber("Elevator JS", oi::getBTJoystickLeft);
   }
 
   @Override

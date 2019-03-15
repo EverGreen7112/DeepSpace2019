@@ -12,7 +12,6 @@ import com.spikes2212.dashboard.ConstantHandler;
 
 /**This is the class that contains each constant neccisaty */
 public class SubsystemConstants {
-	public static Supplier<Double> kCurrentSpeedModifier = ConstantHandler.addConstantDouble("Current Speed Modifier", 0.8);
 	/**The constants for the chassis' <a href="https://bit.ly/2H6fnUT">PID loop</a>*/
 	public static interface PID  { //All temp.
 		/**The point the system will try to drive to - the center of the reflectives seen by the camera. */
@@ -33,9 +32,13 @@ public class SubsystemConstants {
 		public static final Supplier<Double> kMovement = ConstantHandler.addConstantDouble("Arcade PID movement speed.", 5); //All temp	
 	}
 	/**The constants for the chassis subsystem, which controls the robot's wheels. */
-	public static interface chassis {
-		public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Speed Modifier", 0.7);
+	public static interface Chassis {
+		public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Speed Modifier", 0.8);
 		public static final Supplier<Double> kDefenseSpeedModifier = ConstantHandler.addConstantDouble("Defense Speed Modifier", 0.8);
+		public static final Supplier<Double> kSlowSpeedModifier = ConstantHandler.addConstantDouble("Slow Speed Modifier", 0.4);
+		public static final Supplier<Double> kfastSpeedModifier = ConstantHandler.addConstantDouble("Fast Speed Modifier", 0.95);
+
+
 		// public static Supplier<Double> kCurrentSpeedModifier = ConstantHandler.addConstantDouble("Current Speed Modifier", 0.8);
 		// public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.85); //temp
 
@@ -75,9 +78,9 @@ public class SubsystemConstants {
 		 public static Supplier<Double> kMaxHeight = ConstantHandler.addConstantDouble("Elevator Max height", 225);
 		 /**The height of the encoder reset switch - the point where it is set zero (its refrence point).
 		  * The distance given from its information will be relative to this point. */
-		 public static Supplier<Double> kEncoderBonusHeight = ConstantHandler.addConstantDouble("Elevator bonus height", 47);
+		 public static Supplier<Double> kBonusEncoderHeight = ConstantHandler.addConstantDouble("Elevator bonus height", 47);
 		 /**The highest point the elevator can reach, relative to the reset switch, used to check the validity of the height sensors.  */ 
-		 public static Supplier<Double> kEncoderMaxHeight = ConstantHandler.addConstantDouble("Elevator Encoder max height", kMaxHeight.get() - kEncoderBonusHeight.get());
+		 public static Supplier<Double> kEncoderMaxHeight = ConstantHandler.addConstantDouble("Elevator Encoder max height", kMaxHeight.get() - kBonusEncoderHeight.get());
 		 /**The lowest point the elevator can reach, relative to the reset switch, used to check the validity of the height sensors. */
 		 public static Supplier<Double> kEncoderMinHeight = ConstantHandler.addConstantDouble("Elevator Encoder min height", 0);
 		
@@ -105,9 +108,9 @@ public class SubsystemConstants {
 		/**The speed of the gripper when it catches things.*/
 		public static final Supplier<Double> kGripperInSpeed = ConstantHandler.addConstantDouble("Gripper In Speed", 0.8);
 		/**The speed of the gripper when it releases things. */
-		public static final Supplier<Double> kGripperOutSpeed = ConstantHandler.addConstantDouble("Gripper Out Speed", -0.8);
+		public static final Supplier<Double> kGripperOutSpeed = ConstantHandler.addConstantDouble("Gripper Out Speed", -0.7);
 		/**The voltage of the optic sensor, which when reached, means the gripper catched the cargo.  */
-		public static final Supplier<Double> kVoltageLimit = ConstantHandler.addConstantDouble("Optic Sensor voltage limit", 4); //temp
+		public static final Supplier<Double> kVoltageLimit = ConstantHandler.addConstantDouble("Optic Sensor voltage limit", 0.7); //temp
 	}
 	
 	public static interface ClimbingFrame {

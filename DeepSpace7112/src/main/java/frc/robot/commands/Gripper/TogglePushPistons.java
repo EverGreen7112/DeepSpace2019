@@ -24,6 +24,7 @@ public class TogglePushPistons extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    // SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
     if(reversed)
     {
       System.out.println("Set Push Piston Reverse");

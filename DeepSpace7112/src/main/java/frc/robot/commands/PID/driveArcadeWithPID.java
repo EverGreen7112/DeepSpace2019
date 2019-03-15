@@ -26,7 +26,7 @@ public class driveArcadeWithPID extends CommandGroup {
     addSequential(new DriveArcadeWithPID (
       Robot.drivetrain, //The subsystem the PID will strighten - the DriveTrain
       ImageProccessingSuppliers.center, //The PID source - the center of the objects seen on the camera.
-      SubsystemConstants.PID.kSetPoint.get(), //The set point - the  thing the robot will try to move towards, here, the center of the 
+      ImageProccessingSuppliers.center.pidGet(), //The set point - the  thing the robot will try to move towards, here, the center of the 
       SubsystemConstants.PID.kMovement.get(), //The amount of forward movement. 
       new PIDSettings ( //The settings for the PID system (its constants):
         SubsystemConstants.PID.kP.get(), //The proportional constant of the PID system

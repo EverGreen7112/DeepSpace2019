@@ -5,30 +5,31 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.GripperMovement;
+package frc.robot.commands.Chassis;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import com.spikes2212.dashboard.ConstantHandler;
+
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
 import frc.robot.SubsystemComponents;
+import frc.robot.SubsystemConstants;
 
-public class pushPistonF extends Command {
-  public pushPistonF() {
+public class ToggleDefense extends Command {
+  public static boolean defense = false;
+  public ToggleDefense() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.gripper);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-      SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
-      System.out.println("Piston Forward");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    DefaultDrive.defenseMode = !(DefaultDrive.defenseMode);
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()

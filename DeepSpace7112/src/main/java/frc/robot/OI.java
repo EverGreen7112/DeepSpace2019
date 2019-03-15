@@ -10,7 +10,7 @@ package frc.robot;
 import frc.robot.commands.PID.driveArcadeWithPID;
 import frc.robot.commands.Gripper.GripperIn;
 import frc.robot.PortMaps.ButtonMap;
-import frc.robot.commands.ToggleDefense;
+import frc.robot.commands.Chassis.ToggleDefense;
 import frc.robot.commands.Cameras.SwitchToCameraA;
 import frc.robot.commands.Cameras.SwitchToCameraB;
 import frc.robot.commands.Climbing.Climb;
@@ -19,16 +19,16 @@ import frc.robot.commands.Elevator.SetStallMode;
 import frc.robot.commands.Gripper.GripperOut;
 import frc.robot.commands.Gripper.StopGripper;
 import frc.robot.commands.Gripper.TogglePushPistons;
-import frc.robot.commands.GripperMovement.GripperMovementPistons;
-import frc.robot.commands.GripperMovement.pushPistonF;
-import frc.robot.commands.GripperMovement.pushPistonR;
-import frc.robot.commands.GripperMovement.throwHatch;
+import frc.robot.commands.GripperMovement.FoldGripper;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 
+import java.util.function.Supplier;
+
 import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -91,6 +91,9 @@ public class OI {
   public Button setPistonF;
   public Button setPistonR;
   public Button toggleDefense;
+  public Button slowAdjust;
+  public Button fastAdjust;
+
 
   /**The method to adjust the Driving Joysticks' value, turning the speed by value into a curve instead of a line - 
    * instead of each movement of the joystick increasing the speed equally, the furthest you move it the more
@@ -104,7 +107,7 @@ public class OI {
   
   /**return the Y axis of the {@link #buttonJS Button Joytick's} left joystick, used to move the elevator, adjusted to move more slowly to increase safety.    */
   public double getBTJoystickLeft() {
-    return buttonJS.getRawAxis(1) * 0.55;
+    return -buttonJS.getRawAxis(1) * 0.55;
   }
 
   /**return the Y axis of the {@link #buttonJS Button Joystick's} right joystick, used to move the elevator at faster speeds. */
@@ -114,13 +117,13 @@ public class OI {
 
   /**@return the {@link #adjustInput(double) adjusted} current Y axis of the {@link #drivingJSLeft left driving Joystic}*/
   public double getLeftJoystick() {
-    return -adjustInput(drivingJSLeft.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get() * 1.07;
+    return -adjustInput(drivingJSLeft.getY()) * 1.07; //Left deviation
   }
 
     
   /**@return the {@link #adjustInput(double) adjusted} current Y axis of the {@link #drivingJSRight d riving Joystic}*/
   public double getRightJoystick() {
-    return adjustInput(drivingJSRight.getY()) * SubsystemConstants.chassis.kDrivingSpeedModifier.get();
+    return adjustInput(drivingJSRight.getY());
   }
 
   //--------------------Initializations--------------------
@@ -130,8 +133,10 @@ public class OI {
         drivingJSLeft = new Joystick(0);
         drivingJSRight = new Joystick(1);
         buttonJS = new Joystick(2);
-      //----------Movement----------
-        toggleDefense = new JoystickButton(buttonJS, ButtonMap.Movement.toggleDefense.get());
+      //----------Chassis----------
+        toggleDefense = new JoystickButton(buttonJS, ButtonMap.Chassis.toggleDefenseButton.get());
+        slowAdjust = new JoystickButton(drivingJSRight, ButtonMap.Chassis.slowAdjustButton.get());
+        fastAdjust = new JoystickButton(drivingJSRight, ButtonMap.Chassis.fastAdjustButton.get());
       //----------Elevator Buttons----------
         setStall = new JoystickButton(buttonJS, ButtonMap.Elevator.setStall.get());
         /*bottomHatch = new JoystickButton(drivingJSLeft, 12);
@@ -174,8 +179,15 @@ public class OI {
    * and ends the action and command is the action to be executed when the button is pressed or held.*/
   private void bindButtons() 
   {
-    //----------Movement----------
+    // ----------Chassis----------
     toggleDefense.whenPressed(new ToggleDefense());
+    slowAdjust.whileHeld(new DriveTank(Robot.drivetrain, 
+     () ->  Robot.oi.getLeftJoystick() * 0.4,
+     () -> Robot.oi.getRightJoystick() * 0.4));
+    fastAdjust.whileHeld(new DriveTank(Robot.drivetrain,
+     () -> Robot.oi.getRightJoystick() * 0.9,
+     () -> Robot.oi.getLeftJoystick() * 0.9 ));
+    // fastAdjust.whileHeld(new MoveBasicSubsystem(Robot.drivetrain, () -> 2));
     //----------Elevator----------
       setStall.whenPressed(new SetStallMode());
     //----------Elevator to Hatch----------
@@ -195,9 +207,9 @@ public class OI {
       releaseButton.whenReleased(new StopGripper()); //testing - GripperOut's end() did not work
       togglePushPistons.whenPressed(new TogglePushPistons());
     //----------Gripper Movement----------
-      flipGripper.whenPressed(new GripperMovementPistons());
-      setPistonF.whenPressed(new pushPistonF());
-      setPistonR.whenPressed(new pushPistonR());
+      flipGripper.whenPressed(new FoldGripper());
+      // setPistonF.whenPressed(new pushPistonF());
+      // setPistonR.whenPressed(new pushPistonR());
     //----------Cameras----------
       // switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
       // switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras
@@ -205,7 +217,7 @@ public class OI {
       // straighten.whenPressed(new driveArcadeWithPID()); //Commented since RobotB does not have cameras.
     //--------------------Testing--------------------
       //----------Climbing---------
-      //----------Climbing Movement----------
+      //----------Climbing Movement---------- 
         // ClimbingMovementB.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
         // ClimbingMovementF.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeedForward));
       //----------Climbing Frame----------

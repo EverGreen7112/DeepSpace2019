@@ -26,9 +26,4 @@ public class JoystickMap {
         start = ConstantHandler.addConstantInt("Button Joystick START port", 10).get(),
         leftJoystick = ConstantHandler.addConstantInt("Button Joystick left joystick button port", 11).get(),
         rightJoystick = ConstantHandler.addConstantInt("Button joystick right joytsick button port", 12).get(); 
-
-
-        
-
-
 }

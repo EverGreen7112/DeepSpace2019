@@ -74,10 +74,11 @@ public class ButtonMap {
                 ConstantHandler.addConstantInt("Stall mode button port (RT)", JoystickMap.RT);
     }
 
-    public static interface Movement 
+    public static interface Chassis 
     {
-        public static Supplier<Integer> toggleDefense = 
-            ConstantHandler.addConstantInt("Defense movement button port (LT)", JoystickMap.LT);
+        public static Supplier<Integer> toggleDefenseButton = ConstantHandler.addConstantInt("Defense toggle button port (LT)", JoystickMap.LT);
+        public static Supplier<Integer> slowAdjustButton = ConstantHandler.addConstantInt("Adjust to slow button port (Right Thumb)", 2);
+        public static Supplier<Integer> fastAdjustButton = ConstantHandler.addConstantInt("Adjust to slow buttonn port (Right Driving Trigger)", 1);
     }
     
     /*

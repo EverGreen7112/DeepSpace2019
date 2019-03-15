@@ -25,6 +25,7 @@ public class ElevatorDefault extends Command {
   // public static Supplier<Boolean> stallMode = () -> Robot.oi.getBTJoystickLeft() < 0.05 && Robot.oi.getBTJoystickLeft() > -0.05;
   public static boolean stallMode = false;
   public static double stallSpeed = 0;
+  public static boolean switchHit = false;
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
@@ -44,10 +45,21 @@ public class ElevatorDefault extends Command {
       Robot.elevator.move(stallSpeed);
     }
 
-    else
+    
     {
       System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
+      if(Robot.oi.getBTJoystickLeft() < 0 && !switchHit)
+        if(SubsystemComponents.Elevator.opticSwitch.get()){
+          SubsystemComponents.Elevator.encoder.reset();
+          switchHit = true;
+        }
+      if(Robot.oi.getBTJoystickLeft() > 0)
+        switchHit = false;
+      if(Math.abs(Robot.oi.getBTJoystickLeft()) > 0.13)
       Robot.elevator.move(Robot.oi.getBTJoystickLeft());
+      else
+      Robot.elevator.move(0);
+
     }
     
     // if(SubsystemComponents.Elevator.opticSwitch.get()) 
