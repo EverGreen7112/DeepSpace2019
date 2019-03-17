@@ -134,7 +134,7 @@ public class OI {
         drivingJSRight = new Joystick(1);
         buttonJS = new Joystick(2);
       //----------Chassis----------
-        toggleDefense = new JoystickButton(buttonJS, ButtonMap.Chassis.toggleDefenseButton.get());
+        toggleDefense = new JoystickButton(drivingJSLeft, ButtonMap.Chassis.toggleDefenseButton.get());
         slowAdjust = new JoystickButton(drivingJSRight, ButtonMap.Chassis.slowAdjustButton.get());
         fastAdjust = new JoystickButton(drivingJSRight, ButtonMap.Chassis.fastAdjustButton.get());
       //----------Elevator Buttons----------

@@ -122,6 +122,7 @@ public class Robot extends TimedRobot {
       dbc.addNumber("Chassis Right Speed", oi::getRightJoystick);
       dbc.addNumber("Chassis Mean Speed", this::getChassisSpeed);
       dbc.addNumber("Elevator JS", oi::getBTJoystickLeft);
+      dbc.addBoolean("Defense Mode", () -> DefaultDrive.defenseMode);
   }
 
   @Override
