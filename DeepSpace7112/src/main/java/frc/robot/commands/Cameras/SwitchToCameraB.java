@@ -9,13 +9,13 @@ package frc.robot.commands.Cameras;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
+import frc.robot.PortMaps.*;
 
 public class SwitchToCameraB extends CommandGroup {
   /**
    * The command to switch the CameraHandler (that is, the view in the shuffleboard) camera B (from port 1).
    */
   public SwitchToCameraB() {
-    Robot.cameraHandler.switchCamera(RobotMap.cameraB);
+    // Robot.cameraHandler.switchCamera(RobotMap.cameraB);
   }
 }

@@ -27,7 +27,7 @@ public class ImageProccessingSuppliers {
     public static final NetworkTable camNetworkTable = NetworkTableInstance.getDefault().getTable("ImageProcessing");
     /**The lastest center poit. If information for one or more reflectives are missing,
      *  the robot will use the lastest valid information.*/
-    public static Supplier<Double> lastCenter;
+    // public static Supplier<Double> lastCenter;
     /**The property suppliers for the closer reflective (0 in the Network Tables) - Width, Height, Center (in X values), and whether or not it's currently transmiting innformation about it ("is updated"). */
     public static class Reflective0 {
         public static final Supplier<Double>
@@ -76,11 +76,12 @@ public class ImageProccessingSuppliers {
         @Override
         public double pidGet() {
             if (Reflective0.isUpdated.get() && Reflective1.isUpdated.get()) {
-                lastCenter = () -> twoReflectivesCenter.get(); //Puts the valid value in a variable for the next iiteration
+                // lastCenter = () -> twoReflectivesCenter.get(); //Puts the valid value in a variable for the next iteration
                 return twoReflectivesCenter.get();
             }
             else {
-                return lastCenter.get();
+                // return lastCenter.get();
+                return 0;
             }
         }
 
