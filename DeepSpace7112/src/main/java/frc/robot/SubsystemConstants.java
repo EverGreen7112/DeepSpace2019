@@ -19,24 +19,24 @@ public class SubsystemConstants {
 		/**The range of speed multipliers the system can output for the fix - here, from -0.5 to 0.5. (|-0.5 - 0.5| = 1)*/
 		public static final Supplier<Double> kOutputRange = ConstantHandler.addConstantDouble("PID Output Range", 1);
 		/** The proportional constant for the PID */
-        public static final Supplier<Double> kP = ConstantHandler.addConstantDouble("Arcade PID proportional constant", 1);
+        public static final Supplier<Double> kP = ConstantHandler.addConstantDouble("PID proportional constant", 0);
         /**The Integral Constant for the PID. */ 
-        public static final Supplier<Double> kI = ConstantHandler.addConstantDouble("Arcade PID integral constant", 0.01);
+        public static final Supplier<Double> kI = ConstantHandler.addConstantDouble("PID integral constant", 0);
         /**The Derviative constant for the PID. */
-        public static final Supplier<Double> kD = ConstantHandler.addConstantDouble("Arcade PID derivative constant", 0.1);
+        public static final Supplier<Double> kD = ConstantHandler.addConstantDouble("PID derivative constant", 0);
         /**The tolerance constant for the PID - how much deviation should the robot tolerate before trying to move back to the line? */
-        public static final Supplier<Double> kTolerance = ConstantHandler.addConstantDouble("Arcade PID tolerance", 0.02);
+        public static final Supplier<Double> kTolerance = ConstantHandler.addConstantDouble("PID tolerance", 0.02);
         /**The Wait Time constant for the PID - How much time should the robot stay in a too deviated position before trying to move back to the line? */
-        public static final Supplier<Double> kWaitTime = ConstantHandler.addConstantDouble("Arcade PID wait time", 1);
+        public static final Supplier<Double> kWaitTime = ConstantHandler.addConstantDouble("PID wait time", 1);
         /**The Movement  Constant for the PID - How fast will the system move when driven. */
-		public static final Supplier<Double> kMovement = ConstantHandler.addConstantDouble("Arcade PID movement speed.", 5); //All temp	
+		public static final Supplier<Double> kMovement = ConstantHandler.addConstantDouble("PID movement speed.", 5); //All temp	
 	}
 	/**The constants for the chassis subsystem, which controls the robot's wheels. */
 	public static interface Chassis {
 		public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Speed Modifier", 0.8);
 		public static final Supplier<Double> kDefenseSpeedModifier = ConstantHandler.addConstantDouble("Defense Speed Modifier", 0.8);
-		public static final Supplier<Double> kSlowSpeedModifier = ConstantHandler.addConstantDouble("Slow Speed Modifier", 0.4);
-		public static final Supplier<Double> kfastSpeedModifier = ConstantHandler.addConstantDouble("Fast Speed Modifier", 0.95);
+		public static final Supplier<Double> kSlowSpeedModifier = ConstantHandler.addConstantDouble("Slow Speed Modifier", 0.3);
+		public static final Supplier<Double> kFastSpeedModifier = ConstantHandler.addConstantDouble("Fast Speed Modifier", 0.9);
 
 
 		// public static Supplier<Double> kCurrentSpeedModifier = ConstantHandler.addConstantDouble("Current Speed Modifier", 0.8);

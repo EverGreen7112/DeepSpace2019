@@ -14,7 +14,9 @@ import frc.robot.SubsystemComponents;
 import frc.robot.SubsystemConstants;
 
 public class ToggleDefense extends Command {
-  public static boolean defense = false;
+  public static boolean defense;
+  // public static boolean finished;
+
   public ToggleDefense() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -23,6 +25,7 @@ public class ToggleDefense extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    // finished = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -35,7 +38,7 @@ public class ToggleDefense extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

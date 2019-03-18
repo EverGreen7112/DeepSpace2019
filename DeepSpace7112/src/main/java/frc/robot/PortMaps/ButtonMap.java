@@ -22,63 +22,63 @@ public class ButtonMap {
     {
         /**X*/
         public static Supplier<Integer> catchPort = 
-            ConstantHandler.addConstantInt("Gripper catch button port (X)", JoystickMap.X);
+            ConstantHandler.addConstantInt("Gripper catch button port (X)", JoystickMap.ButtonJoystick.X);
         /**B*/
         public static  Supplier<Integer> releasePort = 
-            ConstantHandler.addConstantInt("Gripper release button port (B)", JoystickMap.B);
+            ConstantHandler.addConstantInt("Gripper release button port (B)", JoystickMap.ButtonJoystick.B);
         /**RB*/
         public static Supplier<Integer> throwHatch = 
-            ConstantHandler.addConstantInt("Gripper throw hatch button port (RB)", JoystickMap.RB);
+            ConstantHandler.addConstantInt("Gripper throw hatch button port (RB)", JoystickMap.ButtonJoystick.RB);
         /**Y*/
         public static Supplier<Integer> togglePushPistons =
-            ConstantHandler.addConstantInt("Toggle push pistons button port (Y)", JoystickMap.Y);
+            ConstantHandler.addConstantInt("Toggle push pistons button port (Y)", JoystickMap.ButtonJoystick.Y);
         
         //--------------------Testing--------------------
             /**{@link OI#buttonJ
              * S} - START*/
             public static Supplier<Integer> setPistonForward = 
-                ConstantHandler.addConstantInt("Set gripper pistons forward port (START)", JoystickMap.start);
+                ConstantHandler.addConstantInt("Set gripper pistons forward port (START)", JoystickMap.ButtonJoystick.start);
             /**{@link OI#buttonJS} - BACK */
             public static Supplier<Integer> setPistonReverse = 
-                ConstantHandler.addConstantInt("Set gripper pistons reverse port (BACK)", JoystickMap.back);
+                ConstantHandler.addConstantInt("Set gripper pistons reverse port (BACK)", JoystickMap.ButtonJoystick.back);
     }
 
     public static interface GripperMovement
     {
         /**{@link OI#buttonJS} - LB*/
         public static Supplier<Integer> flipGripper = 
-            ConstantHandler.addConstantInt("Flip Gripper button port (LB)", JoystickMap.LB);
+            ConstantHandler.addConstantInt("Flip Gripper button port (LB)", JoystickMap.ButtonJoystick.LB);
     }
 
     public static interface Cameras
     {
         /**{@link OI#switchToA}*/
         public static Supplier<Integer> switchToA =
-            ConstantHandler.addConstantInt("Switch to camera A button port (Left Joystick 5)", 5);
+            ConstantHandler.addConstantInt("Switch to camera A button port (Left Joystick 5)", JoystickMap.DrivingJoystick.topfrontLeft);
         /**{@link OI#switchToB}*/
         public static Supplier<Integer> switchToB =
-            ConstantHandler.addConstantInt("Switch to camera B button port (Left Joystick 6)", 6);
+            ConstantHandler.addConstantInt("Switch to camera B button port (Left Joystick 6)", JoystickMap.DrivingJoystick.topBackRight);
     }
 
     public static interface PID
     {
-        /**{@link OI#straighten} */
-        // public static Supplier<Integer> straighten =
-        //     ConstantHandler.addConstantInt("PID loop button port (LB)", JoystickMap.LB); //Button currently taken
+        /**LB -  {@link OI#straighten} */
+        public static Supplier<Integer> straighten =
+            ConstantHandler.addConstantInt("PID loop button port (LB)", JoystickMap.ButtonJoystick.LB); //Button currently taken
     }
 
     public static interface Elevator
     {
         //--------------------Testing--------------------
             public static Supplier<Integer> setStall =
-                ConstantHandler.addConstantInt("Stall mode button port (RT)", JoystickMap.RT);
+                ConstantHandler.addConstantInt("Stall mode button port (RT)", JoystickMap.ButtonJoystick.RT);
     }
 
     public static interface Chassis 
     {
-        public static Supplier<Integer> toggleDefenseButton = ConstantHandler.addConstantInt("Defense toggle button port (Left Thumb)", 2); //temp
-        public static Supplier<Integer> slowAdjustButton = ConstantHandler.addConstantInt("Adjust to slow button port (Right Thumb)", 2);
-        public static Supplier<Integer> fastAdjustButton = ConstantHandler.addConstantInt("Adjust to fasr buttonn port (Right Driving Trigger)", 1);
+        public static Supplier<Integer> toggleDefenseButton = ConstantHandler.addConstantInt("Defense toggle button port (Left Trigger)",JoystickMap.DrivingJoystick.trigger); //temp
+        public static Supplier<Integer> slowAdjustButton = ConstantHandler.addConstantInt("Adjust to slow button port (Right Thumb)", JoystickMap.DrivingJoystick.thumb);
+        public static Supplier<Integer> fastAdjustButton = ConstantHandler.addConstantInt("Adjust to fasr buttonn port (Right Driving Trigger)", JoystickMap.DrivingJoystick.trigger);
     }
     
     /*

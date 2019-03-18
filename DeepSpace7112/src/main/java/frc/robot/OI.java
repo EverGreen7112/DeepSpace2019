@@ -160,7 +160,7 @@ public class OI {
         // switchToA = new JoystickButton(drivingJSRight, ButtonMap.Cameras.switchToA.get());
         // switchToB = new JoystickButton(drivingJSRight, ButtonMap.Cameras.switchToB.get());
       //----------PID----------
-        // straighten = new JoystickButton(buttonJS, ButtonMap.PID.straighten.get()); //commented due to lack of PID testing.
+        straighten = new JoystickButton(buttonJS, ButtonMap.PID.straighten.get()); //commented due to lack of PID testing.
 
       /*//----------Climbing Movement Testing---------
         ClimbingMovementB = new JoystickButton(buttonJS, 7);
@@ -180,13 +180,14 @@ public class OI {
   private void bindButtons() 
   {
     // ----------Chassis----------
+    
     toggleDefense.whenPressed(new ToggleDefense());
     slowAdjust.whileHeld(new DriveTank(Robot.drivetrain, 
-     () ->  Robot.oi.getLeftJoystick() * 0.4,
-     () -> Robot.oi.getRightJoystick() * 0.4));
+     () -> Robot.oi.getLeftJoystick() * SubsystemConstants.Chassis.kSlowSpeedModifier.get(),
+     () -> Robot.oi.getRightJoystick() * SubsystemConstants.Chassis.kSlowSpeedModifier.get()));
     fastAdjust.whileHeld(new DriveTank(Robot.drivetrain,
-     () -> Robot.oi.getRightJoystick() * 0.9,
-     () -> Robot.oi.getLeftJoystick() * 0.9 ));
+     () -> Robot.oi.getLeftJoystick() * SubsystemConstants.Chassis.kFastSpeedModifier.get(),
+     () -> Robot.oi.getRightJoystick() * SubsystemConstants.Chassis.kFastSpeedModifier.get()));
     // fastAdjust.whileHeld(new MoveBasicSubsystem(Robot.drivetrain, () -> 2));
     //----------Elevator----------
       setStall.whenPressed(new SetStallMode());
@@ -213,8 +214,8 @@ public class OI {
     //----------Cameras----------
       // switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
       // switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras
-    //----------PID----------
-      // straighten.whenPressed(new driveArcadeWithPID()); //Commented since RobotB does not have cameras.
+    // ----------PID----------
+      straighten.whenPressed(new driveArcadeWithPID()); //Commented since RobotB does not have cameras.
     //--------------------Testing--------------------
       //----------Climbing---------
       //----------Climbing Movement---------- 

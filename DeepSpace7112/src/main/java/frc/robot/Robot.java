@@ -68,6 +68,7 @@ public class Robot extends TimedRobot {
       SubsystemComponents.Elevator.setupSensors(); //Configures the elevator - inverts the motors and sets the distance per pulse.
       SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
       SubsystemComponents.GripperMovement.MovementPiston.set(Value.kReverse);
+      DefaultDrive.defenseMode = false;
 
     cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
       SubsystemConstants.cameras.kCameraWidth.get(), 
