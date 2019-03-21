@@ -7,7 +7,7 @@
 
 package frc.robot;
 
-import frc.robot.commands.PID.driveArcadeWithPID;
+import frc.robot.commands.PID.CargoFocusPID;
 import frc.robot.commands.Gripper.GripperIn;
 import frc.robot.PortMaps.ButtonMap;
 import frc.robot.commands.Chassis.ToggleDefense;
@@ -139,12 +139,12 @@ public class OI {
         fastAdjust = new JoystickButton(drivingJSRight, ButtonMap.Chassis.fastAdjustButton.get());
       //----------Elevator Buttons----------
         setStall = new JoystickButton(buttonJS, ButtonMap.Elevator.setStall.get());
-        /*bottomHatch = new JoystickButton(drivingJSLeft, 12);
+        bottomHatch = new JoystickButton(drivingJSLeft, 12);
         middleHatch= new JoystickButton(drivingJSLeft, 10);
         topHatch = new JoystickButton(drivingJSLeft, 8);
         bottomCargo = new JoystickButton(drivingJSLeft, 11);
         middleCargo = new JoystickButton(drivingJSLeft, 9);
-        topCargo = new JoystickButton(drivingJSLeft, 7);*/
+        topCargo = new JoystickButton(drivingJSLeft, 7);
         //Commented since stall would be too difficult with the autonomus rise.
       //----------Gripper Buttons----------
         catchButton = new JoystickButton(buttonJS, ButtonMap.gripper.catchPort.get());
@@ -160,7 +160,7 @@ public class OI {
         // switchToA = new JoystickButton(drivingJSRight, ButtonMap.Cameras.switchToA.get());
         // switchToB = new JoystickButton(drivingJSRight, ButtonMap.Cameras.switchToB.get());
       //----------PID----------
-        straighten = new JoystickButton(buttonJS, ButtonMap.PID.straighten.get()); //commented due to lack of PID testing.
+        straighten = new JoystickButton(drivingJSRight, ButtonMap.PID.straighten.get()); //commented due to lack of PID testing.
 
       /*//----------Climbing Movement Testing---------
         ClimbingMovementB = new JoystickButton(buttonJS, 7);
@@ -191,14 +191,14 @@ public class OI {
     // fastAdjust.whileHeld(new MoveBasicSubsystem(Robot.drivetrain, () -> 2));
     //----------Elevator----------
       setStall.whenPressed(new SetStallMode());
-    //----------Elevator to Hatch----------
-    //   topHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopHatchHeight));
-    //   middleHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketMiddleHatchHeight));
-    //   bottomHatch.whenPressed(new ElevatorMoveToTarget( SubsystemConstants.Elevator.kTargetSpeedModifier,  SubsystemConstants.Elevator.kRocketBottomHatchHeight));
-    // //----------Elevator to Cargo----------
-    //   topCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopCargoHeight));
-    //   middleCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketMiddleCargoHeight));
-    //   bottomCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketBottomCargoHeight));
+    // ----------Elevator to Hatch----------
+      topHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopHatchHeight));
+      middleHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketMiddleHatchHeight));
+      bottomHatch.whenPressed(new ElevatorMoveToTarget( SubsystemConstants.Elevator.kTargetSpeedModifier,  SubsystemConstants.Elevator.kRocketBottomHatchHeight));
+    //----------Elevator to Cargo----------
+      topCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopCargoHeight));
+      middleCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketMiddleCargoHeight));
+      bottomCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketBottomCargoHeight));
     //----------Gripper----------
      //  catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed)); //commented due to not working.
      // releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed)); //commented due to not working.
@@ -215,7 +215,7 @@ public class OI {
       // switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
       // switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras
     // ----------PID----------
-      straighten.whenPressed(new driveArcadeWithPID()); //Commented since RobotB does not have cameras.
+      straighten.whenPressed(new CargoFocusPID()); //Commented since RobotB does not have cameras.
     //--------------------Testing--------------------
       //----------Climbing---------
       //----------Climbing Movement---------- 

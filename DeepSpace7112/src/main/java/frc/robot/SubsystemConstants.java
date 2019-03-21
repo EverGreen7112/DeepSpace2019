@@ -10,6 +10,8 @@ import java.util.function.Supplier;
 
 import com.spikes2212.dashboard.ConstantHandler;
 
+import frc.robot.PortMaps.ButtonMap.Cameras;
+
 /**This is the class that contains each constant neccisaty */
 public class SubsystemConstants {
 	/**The constants for the chassis' <a href="https://bit.ly/2H6fnUT">PID loop</a>*/
@@ -17,9 +19,9 @@ public class SubsystemConstants {
 		/**The point the system will try to drive to - the center of the reflectives seen by the camera. */
 		public static final Supplier<Double> kSetPoint = () -> ImageProccessingSuppliers.center.pidGet();
 		/**The range of speed multipliers the system can output for the fix - here, from -0.5 to 0.5. (|-0.5 - 0.5| = 1)*/
-		public static final Supplier<Double> kOutputRange = ConstantHandler.addConstantDouble("PID Output Range", 1);
+		public static final Supplier<Double> kInputRange = ConstantHandler.addConstantDouble("PID Output Range", SubsystemConstants.cameras.kCameraWidth.get());
 		/** The proportional constant for the PID */
-        public static final Supplier<Double> kP = ConstantHandler.addConstantDouble("PID proportional constant", 0);
+        public static final Supplier<Double> kP = ConstantHandler.addConstantDouble("PID proportional constant", 0.8);
         /**The Integral Constant for the PID. */ 
         public static final Supplier<Double> kI = ConstantHandler.addConstantDouble("PID integral constant", 0);
         /**The Derviative constant for the PID. */

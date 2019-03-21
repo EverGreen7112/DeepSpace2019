@@ -23,10 +23,9 @@ import edu.wpi.first.wpilibj.PIDSourceType;
  * BigReflective and SmallReflective, each containig their own data.
  */
 public class ImageProccessingSuppliers {
-    /**This is the table of informationn gained from the Image Proccesing python code. */
+    /**This is the table of informationn gained from the raspberry pi with the Image Proccesing python code. */
+    String ip = "10.71.12.6";
     public static final NetworkTable camNetworkTable = NetworkTableInstance.getDefault().getTable("ImageProcessing");
-    /**The lastest center poit. If information for one or more reflectives are missing,
-     *  the robot will use the lastest valid information.*/
     // public static Supplier<Double> lastCenter;
     /**The property suppliers for the closer reflective (0 in the Network Tables) - Width, Height, Center (in X values), and whether or not it's currently transmiting innformation about it ("is updated"). */
     public static class Reflective0 {
