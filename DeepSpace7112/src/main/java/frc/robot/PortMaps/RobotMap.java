@@ -82,8 +82,8 @@ public class RobotMap {
   * Pistons:
     * 1 - push forward;
     * 2 - push reverse;
-    * 4 - lock reverse; \\
-    * 5 - lock forward; \\
+    * 4 - lock reverse;
+    * 5 - lock forward;
     * 7 - movement forward;
   * Cameras:
     * 0 - Front;

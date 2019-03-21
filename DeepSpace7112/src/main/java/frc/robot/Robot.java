@@ -30,7 +30,6 @@ import frc.robot.SubsystemComponents.GripperMovement;
 import frc.robot.commands.Chassis.DefaultDrive;
 import frc.robot.commands.Elevator.ElevatorDefault;
 import frc.robot.commands.GripperMovement.FoldGripper;
-import frc.robot.commands.PID.CargoFocusPID;
 
 /** This is the code ran (together with the OI) when activating the robot - 
  * it includes the decleration, intialization and confguration of the Subsystems.
@@ -70,13 +69,12 @@ public class Robot extends TimedRobot {
       SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
       SubsystemComponents.GripperMovement.MovementPiston.set(Value.kReverse);
       DefaultDrive.defenseMode = false;
-      CargoFocusPID.working = false;
 
     cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
       SubsystemConstants.cameras.kCameraWidth.get(), 
       SubsystemConstants.cameras.kCameraHeight.get(), 
       RobotMap.cameraA);
-      cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
+    cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
 
       compressor = new Compressor(); //Commented because RobotB does not have working pneomatics.
       compressor.start(); //Commented because RbotB does not have working pneomatics.
@@ -126,12 +124,6 @@ public class Robot extends TimedRobot {
       dbc.addNumber("Chassis Mean Speed", this::getChassisSpeed);
       dbc.addNumber("Elevator JS", oi::getBTJoystickLeft);
       dbc.addBoolean("Defense Mode", () -> DefaultDrive.defenseMode);
-      dbc.addBoolean("PID Loop", () -> CargoFocusPID.working);
-      dbc.addNumber("PID X value", () -> ImageProccessingSuppliers.twoReflectivesCenter.get());
-      dbc.addNumber("PID reflective 0 X value ", () -> ImageProccessingSuppliers.Reflective0.centerXSupplier.get());
-      dbc.addNumber("PID reflective 1 X value ", () -> ImageProccessingSuppliers.Reflective1.centerXSupplier.get());
-      dbc.addBoolean("PID reflective 0 seen", () -> ImageProccessingSuppliers.Reflective0.isUpdated.get());
-      dbc.addBoolean("PID reflective 1 seen", () -> ImageProccessingSuppliers.Reflective1.isUpdated.get());
   }
 
   @Override
@@ -174,6 +166,7 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     Scheduler.getInstance().run();
     dbc.update();
+
   }
 
   public double getChassisSpeed()
