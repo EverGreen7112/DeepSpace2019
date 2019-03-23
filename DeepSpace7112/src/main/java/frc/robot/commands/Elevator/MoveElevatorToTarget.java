@@ -21,65 +21,70 @@ import frc.robot.SubsystemConstants;
  * If the elevator is above the target, it will move down.
  * If the elevator is under the target, it will move up.
  */
-public class ElevatorMoveToTarget extends Command {
+public class MoveElevatorToTarget extends Command {
 
   /**The speed modifier of the elevator as it moves to target.*/
   private Supplier<Double> speedModifier;
   /**The height of the target relative  to the ground.*/ 
-  private Supplier<Double> target;
-  /**The subsystem which will move to the target - the elevator subsystem */
-  private BasicSubsystem subsystem;
-  /**Whether or not the elevator is above the target.*/
-  private boolean flag;
-
+  public Supplier<Double> target;
+  /**Whether or not the elevator was above the target when the command initilized.*/
+  private boolean startedAboveTarget;
+  /**Whether it not the encoder should be reset yet. */
   private boolean resetFlag;
 
   /**The constructor for this class, which sets its speed and target.
    * @param speedModifier - the speed modifier for the elevator's movement to the target.
-   * @param target - the height of the target that the elevator need to move to, relative to the ground.
-  */
-  public ElevatorMoveToTarget(Supplier<Double> speedModifier, Supplier<Double> target) {
+   * @param target - the height of the target that the elevator need to move to, relative to the ground.*/
+  public MoveElevatorToTarget(Supplier<Double> speedModifier, Supplier<Double> target) {
     requires(Robot.elevator);
     this.speedModifier = speedModifier;
     this.target = target;
   }
 
-  /**Called just before this Command runs the first time -
-   * initlizes the subsystem as elevatora ans sets the current state of {@link #flag}.*/
+  /**When the comand starts: determine if the elevator is above or below the target.*/
+  //At the start of the command:
   @Override
   protected void initialize() {
-    subsystem = Robot.elevator;
-    if(target.get() - SubsystemComponents.Elevator.encoder.getDistance() > 0)
-      flag = false;
-    else flag = true;
-    resetFlag = true;
+    if(target.get() - SubsystemComponents.Elevator.lazerSensor.getVoltage() > 0) //If the elevator is below the target:
+    {
+      startedAboveTarget = false; //Turn the apropriate boolean false.
+    }
+    
+    else //If the elevator is above the target or is on the target
+    {
+       startedAboveTarget = true; //Turn the apropriate boolean true
+    }
+
+    resetFlag = true; //Since this is the start of the command, reset flag is i
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
    
-   
-    if(target.get() - SubsystemComponents.Elevator.encoder.getDistance() > 0){
-      subsystem.move(speedModifier.get());
+    System.out.println("Elevator to Target");
+    if(target.get() - SubsystemComponents.Elevator.lazerSensor.getVoltage() > 0) //If the elevator is below the target:
+    {
+      Robot.elevator.move(speedModifier.get()); //Move the elevator upwards.
     }
     
-    else
+    else //If the elevator is above the target:
     {
-      subsystem.move(-speedModifier.get());
+      Robot.elevator.move(-speedModifier.get()); //Move the elevator downwards.
 
-      if(SubsystemComponents.Elevator.opticSwitch.get() && resetFlag){
-        SubsystemComponents.Elevator.encoder.reset();
-        resetFlag = false;
-      }
+      // if(SubsystemComponents.Elevator.opticSwitch.get() && resetFlag) //If the optic switch is pressed and it still need to be reset:
+      // {
+      //   SubsystemComponents.Elevator.encoder.reset(); //reset the encoder
+      //   resetFlag = false; //Turn resetFlag false.
+      // }
     }
   }
 
-  // Make this return true when this Command no longer needs to run execute()
+  /**If the elevator has passed the target, stop the command. */
   @Override
   protected boolean isFinished() {
-    if(flag)
-      return SubsystemComponents.Elevator.encoder.getDistance() <= target.get();
+    if(startedAboveTarget)
+      return SubsystemComponents.Elevator.encoder.getDistance() <= target.get(); // 
     else
       return SubsystemComponents.Elevator.encoder.getDistance() >= target.get();
   }
@@ -87,7 +92,7 @@ public class ElevatorMoveToTarget extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    subsystem.move(SubsystemConstants.Elevator.kStallMaxMultiplier.get());
+    Robot.elevator.move(SubsystemComponents.Elevator.getStallSpeed());
   }
 
   // Called when another command which requires one or more of the same

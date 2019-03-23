@@ -61,6 +61,7 @@ public class SubsystemComponents {
             double percentVoltage = getElevatorHeightByLazer()/SubsystemConstants.Elevator.kMaxHeight.get();
             return percentVoltage * SubsystemConstants.Elevator.kStallMaxMultiplier.get();
         }
+
         //^^^ Gets the speed needed at the elevator's maximum height, and multiplies it by the percentage rose so far.
         public static WPI_VictorSPX motorA = new WPI_VictorSPX(RobotMap.elevatorMotorA);
         public static WPI_VictorSPX motorB = new WPI_VictorSPX(RobotMap.elevatorMotorB);
@@ -104,10 +105,17 @@ public class SubsystemComponents {
          * @return - The elevatpr's height as determined by the lazer sensor's  value.
          */
         public static double getElevatorHeightByLazer() {
-            // double relativeVoltage = lazerSensor.getVoltage() - SubsystemConstants.Elevator.minHeightVoltage.get(); //The p
-            // double voltagePercentage = relativeVoltage/SubsystemConstants.Elevator.relativeMaxHeightVoltage.get();
-            // return voltagePercentage * SubsystemConstants.Elevator.kMaxHeight.get();
-            return (7/0.02)*(lazerSensor.getVoltage()/600.0) * 100.0;
+            return (76.6 * SubsystemComponents.Elevator.lazerSensor.getVoltage()) - 28; //According to the produced linear function.
+            // return getHeightPercentageByLaser() * SubsystemConstants.Elevator.kMaxHeight.get();
+            // return (7/0.02)*(lazerSensor.getVoltage()/600.0) * 100.0;
+        }
+
+        public static double getHeightPercentageByLaser() 
+        {
+        double relativeVoltage = lazerSensor.getVoltage() - SubsystemConstants.Elevator.minHeightVoltage.get(); //The p
+        double voltagePercentage = relativeVoltage/SubsystemConstants.Elevator.relativeMaxHeightVoltage.get();
+        return voltagePercentage;
+
         }
         
         /**Checks the height of the encoder by the lazer sensor and the encoder, and returns it by the sesnor(s) that make most sense. */

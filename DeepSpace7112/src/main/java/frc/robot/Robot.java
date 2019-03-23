@@ -69,6 +69,7 @@ public class Robot extends TimedRobot {
       SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
       SubsystemComponents.GripperMovement.MovementPiston.set(Value.kReverse);
       DefaultDrive.defenseMode = false;
+      ElevatorDefault.stallMode = false;
 
     cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
       SubsystemConstants.cameras.kCameraWidth.get(), 
@@ -114,16 +115,21 @@ public class Robot extends TimedRobot {
       dbc.addNumber("Encoder elevator height", SubsystemComponents.Elevator::getElevatorHeightByEncoder);
       dbc.addNumber("Total elevator height", SubsystemComponents.Elevator::getElevatorHeight);
       // dbc.addBoolean("Sensors are Functioning", SubsystemComponents.Elevator.sensorsFunctionSupplier); //Currently MoveToTarget is not used, and therefore the height is not used.
-      dbc.addNumber("Elevator Speed", oi::getBTJoystickLeft);
-      dbc.addNumber("lazer voltage", SubsystemComponents.Elevator.lazerSensor::getVoltage);
-      dbc.addBoolean("elevator switched", () -> SubsystemComponents.Elevator.encoderWasReset);
-      dbc.addNumber("gripper speed", gripper::getSpeed);
-      dbc.addNumber("Chassis current speed modifier", () -> SubsystemComponents.Chassis.currentSpeed);
+      dbc.addNumber("Elevator Speed", oi::getBTJoystickLeft); //Left Speed
+      dbc.addBoolean("elevator switched", () -> SubsystemComponents.Elevator.encoderWasReset); //Was the encoder reset since RobotInit()?
+      dbc.addNumber("gripper speed", gripper::getSpeed); //Gripper Speed
+      dbc.addNumber("Chassis current speed modifier", () -> SubsystemComponents.Chassis.currentSpeed); //
       dbc.addNumber("Chassis Left Speed", oi::getBTJoystickLeft);
       dbc.addNumber("Chassis Right Speed", oi::getRightJoystick);
       dbc.addNumber("Chassis Mean Speed", this::getChassisSpeed);
       dbc.addNumber("Elevator JS", oi::getBTJoystickLeft);
       dbc.addBoolean("Defense Mode", () -> DefaultDrive.defenseMode);
+      dbc.addNumber("PID X value", () -> ImageProccessingSuppliers.twoReflectivesCenter.get());
+      dbc.addNumber("PID reflective 0 X value ", () -> ImageProccessingSuppliers.Reflective0.centerXSupplier.get());
+      dbc.addNumber("PID reflective 1 X value ", () -> ImageProccessingSuppliers.Reflective1.centerXSupplier.get());
+      dbc.addBoolean("PID reflective 0 seen", () -> ImageProccessingSuppliers.Reflective0.isUpdated.get());
+      dbc.addBoolean("PID reflective 1 seen", () -> ImageProccessingSuppliers.Reflective1.isUpdated.get());
+      dbc.addNumber("Laser Percentage", () -> SubsystemComponents.Elevator.getHeightPercentageByLaser());
   }
 
   @Override

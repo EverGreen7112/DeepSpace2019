@@ -33,7 +33,7 @@ public class RobotMap {
               elevatorEncoderA = 0, //DIO
               elevatorEncoderB = 1, //DIO
               elevatorOpticSwitch = 6, //DIO
-              elevatorLazerDistanceSensor = 5; //Analog
+              elevatorLazerDistanceSensor= 0; //Analog 
 
 //----------Climbing Frame----------
   public static final int 
@@ -52,7 +52,7 @@ public class RobotMap {
     gripperMotorRight = 4, //CAN
     gripperRightPistonF = 2, //Right Forward
     gripperRightPistonR = 3, //Right Reverse
-    gripperAnalogLazerSensor = 2; //analog
+    gripperAnalogLazerSensor = 1; //analog
             
 //----------Gripper Movement----------
       public static final int

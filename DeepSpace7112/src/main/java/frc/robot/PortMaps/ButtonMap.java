@@ -64,7 +64,7 @@ public class ButtonMap {
     {
         /**LB -  {@link OI#straighten} */
         public static Supplier<Integer> straighten =
-            ConstantHandler.addConstantInt("PID loop button port (LB)", JoystickMap.ButtonJoystick.LB); //Button currently taken
+            ConstantHandler.addConstantInt("PID loop button port (Left Driving Triggrt)", JoystickMap.DrivingJoystick.trigger); //Button currently taken
     }
 
     public static interface Elevator
@@ -72,6 +72,12 @@ public class ButtonMap {
         //--------------------Testing--------------------
             public static Supplier<Integer> setStall =
                 ConstantHandler.addConstantInt("Stall mode button port (RT)", JoystickMap.ButtonJoystick.RT);
+            public static Supplier<Integer> topHatch =
+                ConstantHandler.addConstantInt("Top Hatch button port (Left Joystick 8)", JoystickMap.DrivingJoystick.bottomRightFront);
+            public static Supplier<Integer> middleHatch =
+                ConstantHandler.addConstantInt("TMiddle Hatch button port (Left Joystick 10)", JoystickMap.DrivingJoystick.bottomRightMiddle);
+            public static Supplier<Integer> bottomHatch =
+                ConstantHandler.addConstantInt("Bottom Hatch button port (Left Joystick 12)", JoystickMap.DrivingJoystick.bottomRightBack);
     }
 
     public static interface Chassis 

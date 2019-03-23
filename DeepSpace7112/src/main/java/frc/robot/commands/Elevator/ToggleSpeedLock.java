@@ -10,9 +10,9 @@ package frc.robot.commands.Elevator;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class SetStallMode extends Command {
+public class ToggleSpeedLock extends Command {
   public boolean finished;
-  public SetStallMode() {
+  public ToggleSpeedLock() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }

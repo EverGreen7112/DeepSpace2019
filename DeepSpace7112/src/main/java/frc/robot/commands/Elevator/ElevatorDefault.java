@@ -40,25 +40,36 @@ public class ElevatorDefault extends Command {
   protected void execute() {
     if(stallMode) 
     {
-      System.out.println("Stalling Elevator");
+      System.out.println("Stalling Elevator: " + stallSpeed);
       // Robot.elevator.move(SubsystemComponents.Elevator.getStallSpeed());
       Robot.elevator.move(stallSpeed);
     }
 
-    
+    else
     {
-      System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
-      if(Robot.oi.getBTJoystickLeft() < 0 && !switchHit)
-        if(SubsystemComponents.Elevator.opticSwitch.get()){
-          SubsystemComponents.Elevator.encoder.reset();
-          switchHit = true;
-        }
+      // System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
+
+      if(Robot.oi.getBTJoystickLeft() < 0 && !switchHit && SubsystemComponents.Elevator.opticSwitch.get())
+      {
+        SubsystemComponents.Elevator.encoder.reset();
+        switchHit = true;
+        SubsystemComponents.Elevator.encoderWasReset = true;
+      }
+
       if(Robot.oi.getBTJoystickLeft() > 0)
+      {
         switchHit = false;
+      }
+
       if(Math.abs(Robot.oi.getBTJoystickLeft()) > 0.13)
-      Robot.elevator.move(Robot.oi.getBTJoystickLeft());
+      {
+        Robot.elevator.move(Robot.oi.getBTJoystickLeft());
+      }
+
       else
-      Robot.elevator.move(0);
+      {
+        Robot.elevator.move(0);
+      }
 
     }
     

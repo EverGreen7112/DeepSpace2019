@@ -64,14 +64,20 @@ public class SubsystemConstants {
 		 public static Supplier<Double> kElevatorClimbingSpeedModifier = ConstantHandler.addConstantDouble("Elevator climbing speed modifier", 0.2); //temp
 
 		//----------Hatch Heights----------
-		 public static Supplier<Double> kRocketBottomHatchHeight = ConstantHandler.addConstantDouble("Rocket bottom hatch height", 48.26); 
-		 public static Supplier<Double> kRocketMiddleHatchHeight = ConstantHandler.addConstantDouble("Rocket middle hatch height", 119.38); 
-		 public static Supplier<Double> kRocketTopHatchHeight = ConstantHandler.addConstantDouble("Rocket top hatch height", 190.5); 
+		//  public static Supplier<Double> kRocketBottomHatchHeight = ConstantHandler.addConstantDouble("Rocket bottom hatch height", 48.26); 
+		 public static Supplier<Double> kRocketBottomHatchVoltage = ConstantHandler.addConstantDouble("Rocket Middle Hatch Voltage", 4);
+		//  public static Supplier<Double> kRocketMiddleHatchHeight = ConstantHandler.addConstantDouble("Rocket middle hatch height", 119.38);
+		 public static Supplier<Double> kRocketMiddleHatchVoltage =ConstantHandler.addConstantDouble("Rocket Middle Hatch Voltage", 2);
+		//  public static Supplier<Double> kRocketTopHatchHeight = ConstantHandler.addConstantDouble("Rocket top hatch height", 190.5);
+		 public static Supplier<Double> kRocketTopHatchVoltage =ConstantHandler.addConstantDouble("Rocket Top Hatch Voltage", 1); 
 		
 		//----------Cargo Heights----------
-		 public static Supplier<Double> kRocketBottomCargoHeight = ConstantHandler.addConstantDouble("Rocket bottom cargo height", 69.85); 
-		 public static Supplier<Double> kRocketMiddleCargoHeight = ConstantHandler.addConstantDouble("Rocket middle cargo height", 140.97); 
-	 	 public static Supplier<Double> kRocketTopCargoHeight = ConstantHandler.addConstantDouble("Rocket top cargo height", 212.09); 
+		//  public static Supplier<Double> kRocketBottomCargoHeight = ConstantHandler.addConstantDouble("Rocket bottom cargo height", 69.85); 
+		//  public static Supplier<Double> kRocketMiddleCargoHeight = ConstantHandler.addConstantDouble("Rocket middle cargo height", 140.97); 
+		 //  public static Supplier<Double> kRocketTopCargoHeight = ConstantHandler.addConstantDouble("Rocket top cargo height", 212.09); 
+		 public static Supplier<Double> kRocketBottomCargoVoltage = ConstantHandler.addConstantDouble("Rocket bottom cargo voltage", 1.05); 
+		 public static Supplier<Double> kRocketMiddleCargoVoltage = ConstantHandler.addConstantDouble("Rocket middle cargo voltage", 1.44); 
+	 	 public static Supplier<Double> kRocketTopCargoVoltage = ConstantHandler.addConstantDouble("Rocket top cargo voltage", 212.09);
 		
 		//----------Elevator Limit Heights----------
 	 	 /**The highest point the elevator can reach relative to the ground.*/		 
