@@ -23,14 +23,14 @@ public class ElevatorDefault extends Command {
   }
 
   // public static Supplier<Boolean> stallMode = () -> Robot.oi.getBTJoystickLeft() < 0.05 && Robot.oi.getBTJoystickLeft() > -0.05;
-  public static boolean stallMode = false;
-  public static double stallSpeed = 0;
+  public static boolean speedLock = false;
   public static boolean switchHit = false;
+  public static double lockedSpeed = 0;
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     // Robot.dbc.addBoolean("stalling", stallMode);
-    Robot.dbc.addBoolean("stalling", () -> stallMode);
+    Robot.dbc.addBoolean("stalling", () -> speedLock);
     // Robot.dbc.addNumber("Stall Speed", SubsystemComponents.Elevator::getStallSpeed);
     Robot.dbc.addNumber("Stall Speed", SubsystemComponents.Elevator::getElevatorHeight);
   }
@@ -38,11 +38,11 @@ public class ElevatorDefault extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(stallMode) 
+    if(speedLock) 
     {
-      System.out.println("Stalling Elevator: " + stallSpeed);
+      System.out.println("Stalling Elevator: " + lockedSpeed);
       // Robot.elevator.move(SubsystemComponents.Elevator.getStallSpeed());
-      Robot.elevator.move(stallSpeed);
+      Robot.elevator.move(lockedSpeed);
     }
 
     else

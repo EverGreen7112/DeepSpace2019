@@ -26,7 +26,7 @@ public class Climb extends CommandGroup {
 
     //-----Sequence-----
     addSequential(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifierUp), 1);
-    addParallel(new MoveBasicSubsystem(Robot.elevatorClimb, SubsystemConstants.Elevator.kElevatorClimbingSpeedModifier)); //Move the elevator
+    addParallel(new MoveBasicSubsystem(Robot.elevatorClimb, SubsystemConstants.Elevator.SpeedModifiers.kElevatorClimbingSpeedModifier)); //Move the elevator
     addSequential(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifier));
     //addSequential(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
     //addSequential(new MoveBasicSubsystem(Robot.frame, -SubsystemConstants.Climbingframe.kframeMotorStallSpeed.get()));

@@ -58,8 +58,8 @@ public class SubsystemComponents {
         
         public static double getStallSpeed()
         { 
-            double percentVoltage = getElevatorHeightByLazer()/SubsystemConstants.Elevator.kMaxHeight.get();
-            return percentVoltage * SubsystemConstants.Elevator.kStallMaxMultiplier.get();
+            double percentVoltage = getElevatorHeightByLaser()/SubsystemConstants.Elevator.ElevatorLimitHeights.kMaxHeight.get();
+            return percentVoltage * SubsystemConstants.Elevator.SpeedModifiers.kStallMaxMultiplier.get();
         }
 
         //^^^ Gets the speed needed at the elevator's maximum height, and multiplies it by the percentage rose so far.
@@ -93,27 +93,27 @@ public class SubsystemComponents {
             motors = new SpeedControllerGroup (motorA, motorB);
             motors.setInverted(true);
             
-            encoder.setDistancePerPulse(SubsystemConstants.Elevator.kDistancePerPulse.get());
+            encoder.setDistancePerPulse(SubsystemConstants.Elevator.Sensors.kDistancePerPulse.get());
             encoderWasReset = false;
         }
 
         public static double getElevatorHeightByEncoder(){
-            return encoder.getDistance() + SubsystemConstants.Elevator.kBonusEncoderHeight.get();
+            return encoder.getDistance() + SubsystemConstants.Elevator.ElevatorLimitHeights.kBonusEncoderHeight.get();
         }
         
         /**
-         * @return - The elevatpr's height as determined by the lazer sensor's  value.
+         * @return - The elevator's height as determined by the laser sensor's value.
          */
-        public static double getElevatorHeightByLazer() {
-            return (76.6 * SubsystemComponents.Elevator.lazerSensor.getVoltage()) - 28; //According to the produced linear function.
-            // return getHeightPercentageByLaser() * SubsystemConstants.Elevator.kMaxHeight.get();
-            // return (7/0.02)*(lazerSensor.getVoltage()/600.0) * 100.0;
+        public static double getElevatorHeightByLaser() { //By the laser's linear function ax + b, as we calaculated.
+            return SubsystemConstants.Elevator.Laser.kLaserFunctionSlope.get() //a
+             * lazerSensor.getVoltage() // * x
+             + SubsystemConstants.Elevator.Laser.kLaserFunctionB.get(); // + b
         }
 
         public static double getHeightPercentageByLaser() 
         {
-        double relativeVoltage = lazerSensor.getVoltage() - SubsystemConstants.Elevator.minHeightVoltage.get(); //The p
-        double voltagePercentage = relativeVoltage/SubsystemConstants.Elevator.relativeMaxHeightVoltage.get();
+        double relativeVoltage = lazerSensor.getVoltage() - SubsystemConstants.Elevator.Laser.minHeightVoltage.get(); //The p
+        double voltagePercentage = relativeVoltage/SubsystemConstants.Elevator.Laser.relativeMaxHeightVoltage.get();
         return voltagePercentage;
 
         }
@@ -124,24 +124,24 @@ public class SubsystemComponents {
             try
             {
                 blockString = "in try block";
-                if(getElevatorHeightByLazer() < SubsystemConstants.Elevator.kMaxHeight.get()) { //If the lazer sensor shows that the elevator height is permitted:
+                if(getElevatorHeightByLaser() < SubsystemConstants.Elevator.ElevatorLimitHeights.kMaxHeight.get()) { //If the lazer sensor shows that the elevator height is permitted:
                     blockString = "in LaserIsPossible block";
                     if(SubsystemComponents.Elevator.encoderWasReset //If the encoder shows the the height is possible and it was reset at least once (as before it's values are invalid):
                     && getElevatorHeightByEncoder() != 0 
-                    && getElevatorHeightByEncoder() > SubsystemConstants.Elevator.kEncoderMinHeight.get()
-                    && getElevatorHeightByEncoder() < SubsystemConstants.Elevator.kEncoderMaxHeight.get()) {
+                    && getElevatorHeightByEncoder() > SubsystemConstants.Elevator.ElevatorLimitHeights.kEncoderMinHeight.get()
+                    && getElevatorHeightByEncoder() < SubsystemConstants.Elevator.ElevatorLimitHeights.kEncoderMaxHeight.get()) {
                         blockString = "Laser and encoder are possible block";
-                        return (getElevatorHeightByLazer() + getElevatorHeightByEncoder()) / 2; }//If both of the sensors show a possible height, return the mean of both of their values.
+                        return (getElevatorHeightByLaser() + getElevatorHeightByEncoder()) / 2; }//If both of the sensors show a possible height, return the mean of both of their values.
                     else {
                         blockString = "only Laser possible";
-                        return getElevatorHeightByLazer(); //If only the lazer sesor returns a possible height, return only its value. 
+                        return getElevatorHeightByLaser(); //If only the lazer sesor returns a possible height, return only its value. 
                    }
                 }
                 else 
                     blockString = "laser impossibe";
                     if(getElevatorHeightByEncoder() != 0 //If the encoder shows the elevator's height is possible: 
-                    && getElevatorHeightByEncoder() > SubsystemConstants.Elevator.kEncoderMinHeight.get()
-                    && getElevatorHeightByEncoder() < SubsystemConstants.Elevator.kEncoderMaxHeight.get()
+                    && getElevatorHeightByEncoder() > SubsystemConstants.Elevator.ElevatorLimitHeights.kEncoderMinHeight.get()
+                    && getElevatorHeightByEncoder() < SubsystemConstants.Elevator.ElevatorLimitHeights.kEncoderMaxHeight.get()
                     && encoderWasReset) {
                         blockString = "laser impossible, encoder not.";
                         return getElevatorHeightByEncoder(); //If only the encoder shows a possible height, return only its value.

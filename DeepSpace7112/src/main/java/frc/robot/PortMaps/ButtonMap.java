@@ -78,6 +78,14 @@ public class ButtonMap {
                 ConstantHandler.addConstantInt("TMiddle Hatch button port (Left Joystick 10)", JoystickMap.DrivingJoystick.bottomRightMiddle);
             public static Supplier<Integer> bottomHatch =
                 ConstantHandler.addConstantInt("Bottom Hatch button port (Left Joystick 12)", JoystickMap.DrivingJoystick.bottomRightBack);
+            public static Supplier<Integer> topCargo =
+                ConstantHandler.addConstantInt("Top Cargo button port (Left Joystick 7)", JoystickMap.DrivingJoystick.bottomLeftFront);
+            public static Supplier<Integer> middleCargo =
+                ConstantHandler.addConstantInt("Middle Cargo button port (Left Joystick 9)", JoystickMap.DrivingJoystick.bottomLeftMiddle);
+            public static Supplier<Integer> bottomCargo =
+                ConstantHandler.addConstantInt("Bottom Cargo button port (Left Joystick 11)", JoystickMap.DrivingJoystick.bottomLeftBack);
+            public static Supplier<Integer> toggleElevatorDefault = 
+                ConstantHandler.addConstantInt("Toggle ElevatorDefault button port (LT)", JoystickMap.ButtonJoystick.LT);
     }
 
     public static interface Chassis 
@@ -92,7 +100,6 @@ public class ButtonMap {
         * Button Joystick:
             * A (2)
             * LT (7)
-            * RT (8)
             * Left Joystick (11)
             * Right Joystick (12)
         

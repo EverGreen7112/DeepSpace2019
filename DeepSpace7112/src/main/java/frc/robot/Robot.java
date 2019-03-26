@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import javax.imageio.plugins.tiff.GeoTIFFTagSet;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.spikes2212.dashboard.DashBoardController;
@@ -29,6 +31,7 @@ import frc.robot.PortMaps.RobotMap;
 import frc.robot.SubsystemComponents.GripperMovement;
 import frc.robot.commands.Chassis.DefaultDrive;
 import frc.robot.commands.Elevator.ElevatorDefault;
+import frc.robot.commands.Elevator.MoveElevatorToTarget;
 import frc.robot.commands.GripperMovement.FoldGripper;
 
 /** This is the code ran (together with the OI) when activating the robot - 
@@ -56,6 +59,7 @@ public class Robot extends TimedRobot {
   public static Compressor compressor;
 
   public static DashBoardController dbc;
+  double test;
 
   @Override
   /**The function ran when the robot is activated.*/
@@ -69,13 +73,15 @@ public class Robot extends TimedRobot {
       SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
       SubsystemComponents.GripperMovement.MovementPiston.set(Value.kReverse);
       DefaultDrive.defenseMode = false;
-      ElevatorDefault.stallMode = false;
+      DefaultDrive.smartPMode = false;
+      ElevatorDefault.speedLock = false;
+      test = 0;
 
-    cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
-      SubsystemConstants.cameras.kCameraWidth.get(), 
-      SubsystemConstants.cameras.kCameraHeight.get(), 
-      RobotMap.cameraA);
-    cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
+    // cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
+    //   SubsystemConstants.cameras.kCameraWidth.get(), 
+    //   SubsystemConstants.cameras.kCameraHeight.get(), 
+    //   RobotMap.cameraA);
+    //   cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
 
       compressor = new Compressor(); //Commented because RobotB does not have working pneomatics.
       compressor.start(); //Commented because RbotB does not have working pneomatics.
@@ -107,34 +113,43 @@ public class Robot extends TimedRobot {
       dbc = new DashBoardController(); 
     
     //----------DefaultCommands----------
-      drivetrain.setDefaultCommand(new DriveTank(drivetrain, oi::getLeftJoystick, oi::getRightJoystick));
+      drivetrain.setDefaultCommand(new DefaultDrive());
       // drivetrain.setDefaultCommand(new defaultDrive());
       elevator.setDefaultCommand(new ElevatorDefault());
     //----------Shuffleboard data----------
-      dbc.addNumber("Lazer elevator height", SubsystemComponents.Elevator::getElevatorHeightByLazer);
+      // (Currently Unneccesary values commented)
+      dbc.addNumber("Laser elevator height", SubsystemComponents.Elevator::getElevatorHeightByLaser);
       dbc.addNumber("Encoder elevator height", SubsystemComponents.Elevator::getElevatorHeightByEncoder);
-      dbc.addNumber("Total elevator height", SubsystemComponents.Elevator::getElevatorHeight);
+      dbc.addNumber("getElevatorHeight()", SubsystemComponents.Elevator::getElevatorHeight);
       // dbc.addBoolean("Sensors are Functioning", SubsystemComponents.Elevator.sensorsFunctionSupplier); //Currently MoveToTarget is not used, and therefore the height is not used.
       dbc.addNumber("Elevator Speed", oi::getBTJoystickLeft); //Left Speed
-      dbc.addBoolean("elevator switched", () -> SubsystemComponents.Elevator.encoderWasReset); //Was the encoder reset since RobotInit()?
-      dbc.addNumber("gripper speed", gripper::getSpeed); //Gripper Speed
-      dbc.addNumber("Chassis current speed modifier", () -> SubsystemComponents.Chassis.currentSpeed); //
-      dbc.addNumber("Chassis Left Speed", oi::getBTJoystickLeft);
-      dbc.addNumber("Chassis Right Speed", oi::getRightJoystick);
-      dbc.addNumber("Chassis Mean Speed", this::getChassisSpeed);
-      dbc.addNumber("Elevator JS", oi::getBTJoystickLeft);
-      dbc.addBoolean("Defense Mode", () -> DefaultDrive.defenseMode);
-      dbc.addNumber("PID X value", () -> ImageProccessingSuppliers.twoReflectivesCenter.get());
-      dbc.addNumber("PID reflective 0 X value ", () -> ImageProccessingSuppliers.Reflective0.centerXSupplier.get());
-      dbc.addNumber("PID reflective 1 X value ", () -> ImageProccessingSuppliers.Reflective1.centerXSupplier.get());
-      dbc.addBoolean("PID reflective 0 seen", () -> ImageProccessingSuppliers.Reflective0.isUpdated.get());
-      dbc.addBoolean("PID reflective 1 seen", () -> ImageProccessingSuppliers.Reflective1.isUpdated.get());
-      dbc.addNumber("Laser Percentage", () -> SubsystemComponents.Elevator.getHeightPercentageByLaser());
+      dbc.addBoolean("elevator switched", () -> ElevatorDefault.switchHit); //Was the encoder reset since RobotInit()?
+      // dbc.addNumber("gripper speed", gripper::getSpeed); //Gripper Speed
+      // dbc.addNumber("Chassis Left Speed", oi::getBTJoystickLeft);
+      // dbc.addNumber("Chassis Right Speed", oi::getRightJoystick);
+      // dbc.addNumber("Chassis Mean Speed", this::getChassisSpeed);
+      // dbc.addBoolean("Defense Mode", () -> DefaultDrive.defenseMode);
+      // dbc.addNumber("PID X value", () -> ImageProccessingSuppliers.twoReflectivesCenter.get());
+      // dbc.addNumber("PID reflective 0 X value ", () -> ImageProccessingSuppliers.Reflective0.centerXSupplier.get());
+      // dbc.addNumber("PID reflective 1 X value ", () -> ImageProccessingSuppliers.Reflective1.centerXSupplier.get());
+      // dbc.addBoolean("PID reflective 0 seen", () -> ImageProccessingSuppliers.Reflective0.isUpdated.get());
+      // dbc.addBoolean("PID reflective 1 seen", () -> ImageProccessingSuppliers.Reflective1.isUpdated.get());
+      // dbc.addNumber("Laser Percentage", () -> SubsystemComponents.Elevator.getHeightPercentageByLaser());
+      // dbc.addBoolean("Smart P", () -> DefaultDrive.smartPMode);
+      // dbc.addNumber("Laser Value", () -> SubsystemComponents.Elevator.lazerSensor.getValue());
+      // dbc.addNumber("name", this::getTest);
+      dbc.addBoolean("Elevator default toggled", () -> MoveElevatorToTarget.defaultToggled);
   }
 
   @Override
   public void robotPeriodic() {
     dbc.update();
+  }
+
+  public double getTest()
+  {
+    test++;
+    return test;
   }
 
   @Override

@@ -31,21 +31,27 @@ public class MoveElevatorToTarget extends Command {
   private boolean startedAboveTarget;
   /**Whether it not the encoder should be reset yet. */
   private boolean resetFlag;
+  /**If the command malfunctions, the driver will be able to press a button to turn this true and finish the command. */
+  public static boolean defaultToggled;
+  public static int counter = 0;
+  public static Supplier<Double> stallSpeed;
 
   /**The constructor for this class, which sets its speed and target.
    * @param speedModifier - the speed modifier for the elevator's movement to the target.
    * @param target - the height of the target that the elevator need to move to, relative to the ground.*/
-  public MoveElevatorToTarget(Supplier<Double> speedModifier, Supplier<Double> target) {
+  public MoveElevatorToTarget(Supplier<Double> speedModifier, Supplier<Double> target, Supplier<Double> stallSpeed) {
     requires(Robot.elevator);
     this.speedModifier = speedModifier;
     this.target = target;
+    this.stallSpeed = stallSpeed;
   }
 
   /**When the comand starts: determine if the elevator is above or below the target.*/
   //At the start of the command:
   @Override
   protected void initialize() {
-    if(target.get() - SubsystemComponents.Elevator.lazerSensor.getVoltage() > 0) //If the elevator is below the target:
+    Robot.dbc.addNumber("Target #" + counter, () -> target.get());
+    if(target.get() - SubsystemComponents.Elevator.getElevatorHeight() > 0) //If the elevator is below the target:
     {
       startedAboveTarget = false; //Turn the apropriate boolean false.
     }
@@ -54,24 +60,25 @@ public class MoveElevatorToTarget extends Command {
     {
        startedAboveTarget = true; //Turn the apropriate boolean true
     }
-
+    Robot.dbc.addBoolean("flag #"+counter++, () -> startedAboveTarget);
     resetFlag = true; //Since this is the start of the command, reset flag is i
+    defaultToggled = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-   
-    System.out.println("Elevator to Target");
-    if(target.get() - SubsystemComponents.Elevator.lazerSensor.getVoltage() > 0) //If the elevator is below the target:
+    // System.out.println(String.format("Elevator to Target: \nSpeed: " +speedModifier.get() + "\nTarget: " + target.get() +"\nPosition: " + SubsystemComponents.Elevator.getElevatorHeight()));
+    if(target.get() - SubsystemComponents.Elevator.getElevatorHeight() > 0) //If the elevator is below the target:
     {
+      System.out.println("Moving Elevator Up: "+ speedModifier.get());
       Robot.elevator.move(speedModifier.get()); //Move the elevator upwards.
     }
     
     else //If the elevator is above the target:
     {
+      System.out.println("Moving Elevator Down: " + -speedModifier.get());
       Robot.elevator.move(-speedModifier.get()); //Move the elevator downwards.
-
       // if(SubsystemComponents.Elevator.opticSwitch.get() && resetFlag) //If the optic switch is pressed and it still need to be reset:
       // {
       //   SubsystemComponents.Elevator.encoder.reset(); //reset the encoder
@@ -84,15 +91,15 @@ public class MoveElevatorToTarget extends Command {
   @Override
   protected boolean isFinished() {
     if(startedAboveTarget)
-      return SubsystemComponents.Elevator.encoder.getDistance() <= target.get(); // 
+      return SubsystemComponents.Elevator.getElevatorHeight() <= target.get() || defaultToggled; // 
     else
-      return SubsystemComponents.Elevator.encoder.getDistance() >= target.get();
+      return SubsystemComponents.Elevator.getElevatorHeight() >= target.get() || defaultToggled;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.elevator.move(SubsystemComponents.Elevator.getStallSpeed());
+    Robot.elevator.move(stallSpeed.get());
   }
 
   // Called when another command which requires one or more of the same
