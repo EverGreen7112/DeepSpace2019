@@ -23,8 +23,8 @@ public class RobotMap {
   
 //----------cameras----------
   public static final int
-    cameraA = 0,
-    cameraB = 1;
+              cameraA = 0,
+              cameraB = 1;
   
 //----------Elevator----------
   public static final int

@@ -7,7 +7,7 @@
 
 package frc.robot;
 
-import frc.robot.commands.PID.driveArcadeWithPID;
+import frc.robot.commands.PID.TogglePID;
 import frc.robot.commands.Gripper.GripperIn;
 import frc.robot.PortMaps.ButtonMap;
 import frc.robot.commands.Chassis.ToggleDefense;
@@ -215,7 +215,7 @@ public class OI {
       // switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
       // switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras
     // ----------PID----------
-      straighten.whenPressed(new driveArcadeWithPID()); //Commented since RobotB does not have cameras.
+      straighten.whenPressed(new TogglePID()); //Commented since RobotB does not have cameras.
     //--------------------Testing--------------------
       //----------Climbing---------
       //----------Climbing Movement---------- 

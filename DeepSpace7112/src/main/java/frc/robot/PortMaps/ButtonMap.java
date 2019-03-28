@@ -52,12 +52,14 @@ public class ButtonMap {
 
     public static interface Cameras
     {
-        /**{@link OI#switchToA}*/
+        /**{@link OI#switchToA} Driving TopFrontLeft (5)*/
         public static Supplier<Integer> switchToA =
-            ConstantHandler.addConstantInt("Switch to camera A button port (Left Joystick 5)", JoystickMap.DrivingJoystick.topfrontLeft);
-        /**{@link OI#switchToB}*/
+            ConstantHandler.addConstantInt("Switch to camera A button port (Left Joystick 5)",
+            JoystickMap.DrivingJoystick.topFrontLeft);
+        /**{@link OI#switchToB} Driving TopBackRight (6)*/
         public static Supplier<Integer> switchToB =
-            ConstantHandler.addConstantInt("Switch to camera B button port (Left Joystick 6)", JoystickMap.DrivingJoystick.topBackRight);
+            ConstantHandler.addConstantInt("Switch to camera B button port (Left Joystick 6)",
+            JoystickMap.DrivingJoystick.topBackRight);
     }
 
     public static interface PID

@@ -30,6 +30,7 @@ import frc.robot.SubsystemComponents.GripperMovement;
 import frc.robot.commands.Chassis.DefaultDrive;
 import frc.robot.commands.Elevator.ElevatorDefault;
 import frc.robot.commands.GripperMovement.FoldGripper;
+import frc.robot.commands.PID.TogglePID;
 
 /** This is the code ran (together with the OI) when activating the robot - 
  * it includes the decleration, intialization and confguration of the Subsystems.
@@ -69,6 +70,7 @@ public class Robot extends TimedRobot {
       SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
       SubsystemComponents.GripperMovement.MovementPiston.set(Value.kReverse);
       DefaultDrive.defenseMode = false;
+      TogglePID.looped = false;
 
     cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
       SubsystemConstants.cameras.kCameraWidth.get(), 
@@ -76,17 +78,16 @@ public class Robot extends TimedRobot {
       RobotMap.cameraA);
     cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
 
-      compressor = new Compressor(); //Commented because RobotB does not have working pneomatics.
-      compressor.start(); //Commented because RbotB does not have working pneomatics.
-      compressor.setClosedLoopControl(true); //Commented because RobotB does not have pneomtics.
+      // compressor = new Compressor(); //Commented because RobotB does not have working pneomatics.
+      // compressor.start(); //Commented because RbotB does not have working pneomatics.
+      // compressor.setClosedLoopControl(true); //Commented because RobotB does not have pneomtics.
 
     //----------BasicSubsystems----------
       drivetrain = new TankDrivetrain(SubsystemComponents.Chassis.leftMotorGroup::set, SubsystemComponents.Chassis.rightMotorGroup::set);
       
       gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new MaxLimit(
         SubsystemComponents.Gripper::isCargoCaught)); //Commented due to the MaxVoltage elevator constant not bring determined yet, making testing the gripper with this limit impossible. 
-      
-    //  gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new Limitless()); //testing
+      // gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new Limitless()); //testing
       
       // elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
       //   () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kEncoderMaxHeight.get()))); 
