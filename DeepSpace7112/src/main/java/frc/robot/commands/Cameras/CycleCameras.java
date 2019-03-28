@@ -8,11 +8,12 @@
 package frc.robot.commands.Cameras;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.SubsystemConstants;
 
-public class SwitchCamera extends Command {
-  public SwitchCamera() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class CycleCameras extends Command {
+  public static int currentCamera;
+  public CycleCameras() {
   }
 
   // Called just before this Command runs the first time
@@ -23,6 +24,7 @@ public class SwitchCamera extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.cameraHandler.switchCamera(++currentCamera % SubsystemConstants.cameras.kCamerasNumber.get());
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -46,9 +46,14 @@ public class SubsystemConstants {
 
 	/**the constants for the CameraHandler, which shows camera video on the shuffleboard.  */
     public static interface cameras {
-		public static final Supplier<Integer> kCameraWidth = ConstantHandler.addConstantInt("Camera Width", 320);
-		public static final Supplier<Integer> kCameraHeight = ConstantHandler.addConstantInt("Camera Height", 240);
-		public static final Supplier<Integer> kCameraExposure = ConstantHandler.addConstantInt("Camera Exposure", 50);
+		public static final Supplier<Integer> kCameraWidth = 
+			ConstantHandler.addConstantInt("Camera Width", 320);
+		public static final Supplier<Integer> kCameraHeight = 
+			ConstantHandler.addConstantInt("Camera Height", 240);
+		public static final Supplier<Integer> kCameraExposure = 
+			ConstantHandler.addConstantInt("Camera Exposure", 50);
+		public static final Supplier<Integer> kCamerasNumber = 
+			ConstantHandlerEG.addConstantInt("Cameras Number", 2); //The amount of cameras.
 	}
 
 	/**The constants for the elevator subsystem which lifts the gripper to the desired hatches:

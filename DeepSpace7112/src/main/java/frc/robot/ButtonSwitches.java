@@ -17,7 +17,14 @@ public class ButtonSwitches {
     {
         public static Supplier<Boolean>
             gripperIn = ConstantHandlerEG.addConstantBool("Gripper In Enable", true),
-            gripperOut = ConstantHandlerEG.addConstantBool("Gripper Out enable", true);
+            gripperOut = ConstantHandlerEG.addConstantBool("Gripper Out enable", true),
+            togglePistons = ConstantHandlerEG.addConstantBool("Toggle Push Pistons Enabled", true);
+    }
+
+    public static interface GripperMovement
+    {
+        public static Supplier<Boolean> 
+            flipGripper = ConstantHandlerEG.addConstantBool("Flip Gripper Button Enabled", true); 
     }
 
     public static interface Elevator

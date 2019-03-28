@@ -12,18 +12,16 @@ import java.util.function.Supplier;
 import com.spikes2212.genericsubsystems.basicSubsystem.BasicSubsystem;
 import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 public class MoveBasicSubsystemWithSwitch extends MoveBasicSubsystem {
   public Supplier<Boolean> switchOn;
 
-  public MoveBasicSubsystemWithSwitch(Supplier<Double> speedSupplier, BasicSubsystem subsystem,
+  public MoveBasicSubsystemWithSwitch(BasicSubsystem subsystem, Supplier<Double> speedSupplier,
   Supplier<Boolean> switchOn) {
     super(subsystem, speedSupplier);
     this.switchOn = switchOn;
   }
 
-  public MoveBasicSubsystemWithSwitch(double speed, BasicSubsystem subsystem,
+  public MoveBasicSubsystemWithSwitch(BasicSubsystem subsystem, double speed,
   Supplier<Boolean> switchOn) {
     super(subsystem, speed);
     this.switchOn = switchOn;

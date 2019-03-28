@@ -10,6 +10,7 @@ package frc.robot.commands.Gripper;
 import java.util.function.Predicate;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.ButtonSwitches;
 import frc.robot.Robot;
 import frc.robot.SubsystemComponents;
 import frc.robot.SubsystemConstants;
@@ -28,9 +29,10 @@ public class GripperIn extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    SubsystemComponents.Gripper.motors.set(SubsystemConstants.gripper.kGripperInSpeed.get()); //testing - maybe setting setting the speed directly through the motor instead of using spikeslib will set a right speed.
-    // Robot.gripper.move(SubsystemConstants.gripper.kGripperInSpeed.get()); //commented for testing - currently this only produces 0.3 speed.
-
+    if(ButtonSwitches.Gripper.gripperIn.get()) {
+      SubsystemComponents.Gripper.motors.set(SubsystemConstants.gripper.kGripperInSpeed.get()); //testing - maybe setting setting the speed directly through the motor instead of using spikeslib will set a right speed.
+      // Robot.gripper.move(SubsystemConstants.gripper.kGripperInSpeed.get()); //commented for testing - currently this only produces 0.3 speed.
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

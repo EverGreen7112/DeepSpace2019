@@ -111,7 +111,6 @@ public class Robot extends TimedRobot {
       // drivetrain.setDefaultCommand(new defaultDrive());
       elevator.setDefaultCommand(new ElevatorDefault());
     //----------Shuffleboard data----------
-      dbc.addNumber("Lazer elevator height", SubsystemComponents.Elevator::getElevatorHeightByLazer);
       dbc.addNumber("Encoder elevator height", SubsystemComponents.Elevator::getElevatorHeightByEncoder);
       dbc.addNumber("Total elevator height", SubsystemComponents.Elevator::getElevatorHeight);
       // dbc.addBoolean("Sensors are Functioning", SubsystemComponents.Elevator.sensorsFunctionSupplier); //Currently MoveToTarget is not used, and therefore the height is not used.

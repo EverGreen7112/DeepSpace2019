@@ -7,38 +7,26 @@
 
 package frc.robot.commands.Generic;
 
-import edu.wpi.first.wpilibj.command.Command;
+import java.util.function.Supplier;
 
-public class DriveTankWithSwitch extends Command {
-  public DriveTankWithSwitch() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
+
+public class DriveTankWithSwitch extends DriveTank {
+  Supplier<Boolean> switchOn;
+
+  public DriveTankWithSwitch(TankDrivetrain drivetrain, Supplier<Double> leftSpeedSupplier,
+    Supplier<Double> rightSpeedSupplier, Supplier<Boolean> switchOn) {
+    super(drivetrain, leftSpeedSupplier, rightSpeedSupplier);
+    this.switchOn = switchOn;
   }
-
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-  }
-
+  
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-  }
-
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
-
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
+    if(switchOn.get())
+    {
+      super.execute();
+    }
   }
 }
