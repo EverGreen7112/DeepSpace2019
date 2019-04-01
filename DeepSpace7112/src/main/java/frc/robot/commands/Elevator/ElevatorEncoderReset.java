@@ -22,7 +22,7 @@ import frc.robot.SubsystemComponents;
  */
 public class ElevatorEncoderReset extends Command {
   public ElevatorEncoderReset() {
-    requires(Robot.elevator);
+    // requires(Robot.elevator);
   }
 
   /** Called just before this Command runs the first time - 

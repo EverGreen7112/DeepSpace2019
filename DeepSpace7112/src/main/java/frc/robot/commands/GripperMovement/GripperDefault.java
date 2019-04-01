@@ -7,57 +7,49 @@
 
 package frc.robot.commands.GripperMovement;
 
-import java.util.function.Supplier;
-
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.SubsystemComponents;
+import frc.robot.commands.GripperMovement.FoldGripper;
 
-public class FoldGripper extends Command {
-  public static Supplier<Boolean> gripperFolded = () -> SubsystemComponents.GripperMovement.MovementPiston.get().compareTo(Value.kReverse) == 0;
-  public FoldGripper() {
+public class GripperDefault extends FoldGripper {
+  public GripperDefault() {
     requires(Robot.gripper);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if(!gripperFolded.get()) {
-      System.out.println("Gripper up");
-      SubsystemComponents.Gripper.PushPiston.set(Value.kForward);
-      SubsystemComponents.GripperMovement.MovementPiston.set(Value.kReverse);
-    }
-
-    else {
-      System.out.println("Gripper down");
-      // SubsystemComponents.Gripper.PushPiston.set(Value.kForward);
-      SubsystemComponents.GripperMovement.MovementPiston.set(Value.kForward);
-    }
-
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
+   if(Robot.oi.getBTJoystickRight()>0.9 && !FoldGripper.gripperFolded.get())
+   {
+     Robot.dbc.addBoolean("ggtrgt", () -> true);
+     super.execute();
+   }
+
+   else if(Robot.oi.getBTJoystickRight()<-0.9 && FoldGripper.gripperFolded.get())
+   {
+     Robot.dbc.addBoolean("dcdcdfr4t", () -> true);
+     super.execute();
+   }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
-  protected void interrupted() { 
+  protected void interrupted() {
   }
 }

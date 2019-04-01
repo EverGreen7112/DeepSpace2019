@@ -13,7 +13,15 @@ import frc.robot.SubsystemComponents;
 
 public class TogglePushPistons extends Command {
   public static boolean reversed = true;
+
   public TogglePushPistons() {
+  }
+
+    /**Input a boolean value to specificlly open or close the thingie:
+   * True to open, false to close.
+   */
+  public TogglePushPistons(boolean reversedSet) {
+    reversed = reversedSet;
   }
 
   // Called just before this Command runs the first time

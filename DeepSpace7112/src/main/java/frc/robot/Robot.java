@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer.Range;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.PortMaps.RobotMap;
 import frc.robot.SubsystemComponents.GripperMovement;
@@ -33,6 +34,7 @@ import frc.robot.commands.Chassis.DefaultDrive;
 import frc.robot.commands.Elevator.ElevatorDefault;
 import frc.robot.commands.Elevator.MoveElevatorToTarget;
 import frc.robot.commands.GripperMovement.FoldGripper;
+import frc.robot.commands.GripperMovement.GripperDefault;
 
 /** This is the code ran (together with the OI) when activating the robot - 
  * it includes the decleration, intialization and confguration of the Subsystems.
@@ -70,12 +72,16 @@ public class Robot extends TimedRobot {
       // SubsystemComponents.Gripper.motorL.setNeutralMode(NeutralMode.Brake);
       SubsystemComponents.Gripper.motors = new SpeedControllerGroup(SubsystemComponents.Gripper.motorR, SubsystemComponents.Gripper.motorL);
       SubsystemComponents.Elevator.setupSensors(); //Configures the elevator - inverts the motors and sets the distance per pulse.
-      SubsystemComponents.Gripper.PushPiston.set(Value.kReverse);
-      SubsystemComponents.GripperMovement.MovementPiston.set(Value.kReverse);
+      SubsystemComponents.Gripper.PushPiston.set(Value.kForward);
+      SubsystemComponents.GripperMovement.MovementPiston.set(Value.kForward);
+      SubsystemComponents.Gripper.toungePiston.set(Value.kReverse);
       DefaultDrive.defenseMode = false;
       DefaultDrive.smartPMode = false;
       ElevatorDefault.speedLock = false;
       test = 0;
+
+      DefaultDrive.defenseMode = false;
+      DefaultDrive.smartPMode = false;
 
     // cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
     //   SubsystemConstants.cameras.kCameraWidth.get(), 
@@ -83,9 +89,9 @@ public class Robot extends TimedRobot {
     //   RobotMap.cameraA);
     //   cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
 
-      compressor = new Compressor(); //Commented because RobotB does not have working pneomatics.
-      compressor.start(); //Commented because RbotB does not have working pneomatics.
-      compressor.setClosedLoopControl(true); //Commented because RobotB does not have pneomtics.
+      compressor = new Compressor(); //Commented because RobotB does not have working pneumatics.
+      compressor.start(); //Commented because RobotB does not have working pneumatics.
+      compressor.setClosedLoopControl(true); //Commented because RobotB does not have pneumatics.
 
     //----------BasicSubsystems----------
       drivetrain = new TankDrivetrain(SubsystemComponents.Chassis.leftMotorGroup::set, SubsystemComponents.Chassis.rightMotorGroup::set);
@@ -109,13 +115,12 @@ public class Robot extends TimedRobot {
       climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.motor::set, new Limitless());
       
     //----------Class Constructors----------
+      dbc = new DashBoardController();
       oi = new OI();
-      dbc = new DashBoardController(); 
-    
     //----------DefaultCommands----------
       drivetrain.setDefaultCommand(new DefaultDrive());
-      // drivetrain.setDefaultCommand(new defaultDrive());
       elevator.setDefaultCommand(new ElevatorDefault());
+      gripper.setDefaultCommand(new GripperDefault());
     //----------Shuffleboard data----------
       // (Currently Unneccesary values commented)
       dbc.addNumber("Laser elevator height", SubsystemComponents.Elevator::getElevatorHeightByLaser);
@@ -123,10 +128,11 @@ public class Robot extends TimedRobot {
       dbc.addNumber("getElevatorHeight()", SubsystemComponents.Elevator::getElevatorHeight);
       // dbc.addBoolean("Sensors are Functioning", SubsystemComponents.Elevator.sensorsFunctionSupplier); //Currently MoveToTarget is not used, and therefore the height is not used.
       dbc.addNumber("Elevator Speed", oi::getBTJoystickLeft); //Left Speed
+      dbc.addNumber("Elevator Locked Speed", () -> ElevatorDefault.lockedSpeed); //Left Speed
       dbc.addBoolean("elevator switched", () -> ElevatorDefault.switchHit); //Was the encoder reset since RobotInit()?
       // dbc.addNumber("gripper speed", gripper::getSpeed); //Gripper Speed
-      // dbc.addNumber("Chassis Left Speed", oi::getBTJoystickLeft);
-      // dbc.addNumber("Chassis Right Speed", oi::getRightJoystick);
+      // dbc.addNumber("Chassis Left Speed", () -> oi.getLeftJoystick() * SubsystemConstants.Chassis.kDrivingSpeedModifier.get());
+      // dbc.addNumber("Chassis Right Speed", () -> oi.getRightJoystick() * SubsystemConstants.Chassis.kDrivingSpeedModifier.get());
       // dbc.addNumber("Chassis Mean Speed", this::getChassisSpeed);
       // dbc.addBoolean("Defense Mode", () -> DefaultDrive.defenseMode);
       // dbc.addNumber("PID X value", () -> ImageProccessingSuppliers.twoReflectivesCenter.get());
@@ -138,7 +144,13 @@ public class Robot extends TimedRobot {
       // dbc.addBoolean("Smart P", () -> DefaultDrive.smartPMode);
       // dbc.addNumber("Laser Value", () -> SubsystemComponents.Elevator.lazerSensor.getValue());
       // dbc.addNumber("name", this::getTest);
-      dbc.addBoolean("Elevator default toggled", () -> MoveElevatorToTarget.defaultToggled);
+      // dbc.addBoolean("Elevator default toggled", () -> MoveElevatorToTarget.defaultToggled);
+      // dbc.addNumber("Smart P Fix", () -> DefaultDrive.fixSupplier.get());
+      // dbc.addNumber("Smart P SetPoint", () -> DefaultDrive.setPoint.get());
+      // dbc.addBoolean("smart P", () -> DefaultDrive.smartPMode);
+      // dbc.addNumber("Smart P Left Speed", () -> DefaultDrive.leftSmartSpeed);
+      // dbc.addNumber("Smart P Right Speed", () -> DefaultDrive.rightSmartSpeed);
+      dbc.addNumber("speeeeed", oi::getBTJoystickRight);
   }
 
   @Override
@@ -192,7 +204,9 @@ public class Robot extends TimedRobot {
 
   public double getChassisSpeed()
   {
-    return (oi.getLeftJoystick() + oi.getRightJoystick())/2;
+    return (oi.getLeftJoystick()*SubsystemConstants.Chassis.kDrivingSpeedModifier.get()
+     + oi.getRightJoystick()*SubsystemConstants.Chassis.kDrivingSpeedModifier.get())
+     /2;
   }
 
 }

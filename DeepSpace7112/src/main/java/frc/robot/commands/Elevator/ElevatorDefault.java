@@ -11,6 +11,7 @@ import java.util.function.Supplier;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
@@ -47,7 +48,7 @@ public class ElevatorDefault extends Command {
 
     else
     {
-      // System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
+      System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
 
       if(Robot.oi.getBTJoystickLeft() < 0 && !switchHit && SubsystemComponents.Elevator.opticSwitch.get())
       {
@@ -61,9 +62,11 @@ public class ElevatorDefault extends Command {
         switchHit = false;
       }
 
-      if(Math.abs(Robot.oi.getBTJoystickLeft()) > 0.13)
+      if(Math.abs(Robot.oi.getBTJoystickLeft()) > 0.13) //If the elevator's joystick is moves
       {
-        Robot.elevator.move(Robot.oi.getBTJoystickLeft());
+        SubsystemComponents.Gripper.PushPiston.set(Value.kReverse); //Close the hatch - 
+        // if it were open the elevator would hit itr when it moved. 
+        Robot.elevator.move(Robot.oi.getBTJoystickLeft()); //and move the elevator.
       }
 
       else

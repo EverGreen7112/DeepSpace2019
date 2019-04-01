@@ -24,8 +24,10 @@ public class ToggleSmartP extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    System.out.println("Toggle SmartP Mode");
     DefaultDrive.smartPMode = !(DefaultDrive.smartPMode);
-    
+    if (DefaultDrive.smartPMode)
+      DefaultDrive.defenseMode = false;
   }
   
  

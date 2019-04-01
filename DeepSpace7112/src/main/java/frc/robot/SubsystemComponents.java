@@ -65,7 +65,7 @@ public class SubsystemComponents {
         //^^^ Gets the speed needed at the elevator's maximum height, and multiplies it by the percentage rose so far.
         public static WPI_VictorSPX motorA = new WPI_VictorSPX(RobotMap.elevatorMotorA);
         public static WPI_VictorSPX motorB = new WPI_VictorSPX(RobotMap.elevatorMotorB);
-        public static  SpeedControllerGroup motors;
+        public static SpeedControllerGroup motors;
         public static final Encoder encoder = new Encoder(RobotMap.elevatorEncoderA, RobotMap.elevatorEncoderB);
         public static final DigitalInput opticSwitch = new DigitalInput(RobotMap.elevatorOpticSwitch);
         public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.elevatorLazerDistanceSensor);
@@ -112,10 +112,9 @@ public class SubsystemComponents {
 
         public static double getHeightPercentageByLaser() 
         {
-        double relativeVoltage = lazerSensor.getVoltage() - SubsystemConstants.Elevator.Laser.minHeightVoltage.get(); //The p
-        double voltagePercentage = relativeVoltage/SubsystemConstants.Elevator.Laser.relativeMaxHeightVoltage.get();
-        return voltagePercentage;
-
+            double relativeVoltage = lazerSensor.getVoltage() - SubsystemConstants.Elevator.Laser.minHeightVoltage.get(); //The p
+            double voltagePercentage = relativeVoltage/SubsystemConstants.Elevator.Laser.relativeMaxHeightVoltage.get();
+            return voltagePercentage;
         }
         
         /**Checks the height of the encoder by the lazer sensor and the encoder, and returns it by the sesnor(s) that make most sense. */
@@ -169,7 +168,11 @@ public class SubsystemComponents {
             public static SpeedControllerGroup motors;        
             public static final AnalogInput lazerSensor = new AnalogInput(RobotMap.gripperAnalogLazerSensor);
             public static final DoubleSolenoid PushPiston = new DoubleSolenoid (
-                RobotMap.gripperMovementPushPistonF, RobotMap.gripperMovementPushPistonR);
+                RobotMap.gripperMovementPushPistonF,
+                RobotMap.gripperMovementPushPistonR);
+            public static final DoubleSolenoid toungePiston = new DoubleSolenoid (
+                RobotMap.gripperToungePistonF,
+                RobotMap.gripperToungePistonR);
         /**
          * @return true if a cargo is inside the gripper, false otherwise.
          */

@@ -32,7 +32,8 @@ public class ToggleDefense extends Command {
   @Override
   protected void execute() {
     DefaultDrive.defenseMode = !(DefaultDrive.defenseMode);
-    
+    if (DefaultDrive.defenseMode == true)
+      DefaultDrive.smartPMode = false;
   }
   
  

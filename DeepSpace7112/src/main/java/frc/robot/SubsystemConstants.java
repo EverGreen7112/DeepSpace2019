@@ -15,7 +15,9 @@ public class SubsystemConstants {
 	/**The constants for the chassis' <a href="https://bit.ly/2H6fnUT">PID loop</a>*/
 	public static interface SmartP
 	{
-		public static Supplier<Double> kA = ConstantHandler.addConstantDouble("A Smart P Constant", 4);
+		public static Supplier<Double> kA = ConstantHandler.addConstantDouble("Smart P - a Constant", 0.8);
+		public static Supplier<Double> kMaxDeviationFix = ConstantHandler.addConstantDouble("Smart P - Max deviation Fix Speed", 85);
+		public static Supplier<Double> kSpeedModifier = ConstantHandler.addConstantDouble("Smart P - Speed Moifier", 0.6);
 	}
 	public static interface PID  { //All temp.
 		/**The point the system will try to drive to - the center of the reflectives seen by the camera. */
@@ -63,6 +65,9 @@ public class SubsystemConstants {
 
 		public static interface SpeedModifiers
 		{
+			/**The elevator's speed modifier as it is moved by the joystick */
+			public static Supplier<Double> kJoystickSpeedModifier = 
+				ConstantHandler.addConstantDouble("Elevator Joystick Move Speed Modifier", 0.8);
 			/**The elevator's speed as it moves to a hatch or a cargo on the rocket.*/
 			public static Supplier<Double> kTargetSpeedModifier = 
 				ConstantHandler.addConstantDouble("Elevator Move to target speed modfier", 0.7); //temp
@@ -90,19 +95,20 @@ public class SubsystemConstants {
 
 		public static interface RocketStall
 		{
+			public static Supplier<Double> kTopHatch = 
+				ConstantHandler.addConstantDouble("Rocket top hatch stall speed", 0.15);
+			public static Supplier<Double> kMiddleHatch = 
+				ConstantHandler.addConstantDouble("Rocket middle hatch stall speed", 0.13);
 			public static Supplier<Double> kBottomHatch = 
 				ConstantHandler.addConstantDouble("Rocket bottom hatch stall speed", 0);
-			public static Supplier<Double> kMiddleHatch = 
-				ConstantHandler.addConstantDouble("Rocket middle hatch stall speed", 0);
-			public static Supplier<Double> kTopHatch = 
-				ConstantHandler.addConstantDouble("Rocket top hatch stall speed", 0);
-			public static Supplier<Double> kBottomCargo = 
-				ConstantHandler.addConstantDouble("Rocket bottom cargo stall speed", 0); 
-			public static Supplier<Double> kMiddleCargo = 
-				ConstantHandler.addConstantDouble("Rocket middle cargo stall speed", 0); 
 			public static Supplier<Double> kTopCargo = 
-				ConstantHandler.addConstantDouble("Rocket top cargo stall speed", 0);
+				ConstantHandler.addConstantDouble("Rocket top cargo stall speed", 0.15);
+			public static Supplier<Double> kMiddleCargo = 
+				ConstantHandler.addConstantDouble("Rocket middle cargo stall speed", 0.13); 
+			public static Supplier<Double> kBottomCargo = 
+				ConstantHandler.addConstantDouble("Rocket bottom cargo stall speed", 0);
 		}
+
 		public static interface ElevatorLimitHeights
 		{
 			/**The highest point the elevator can reach relative to the ground.*/		 
@@ -142,6 +148,14 @@ public class SubsystemConstants {
 		 /**The distance the elevator passes between the encoder's ticks. */
 		  public static Supplier<Double> kDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 0.8157894); //19 ticks per motor turn, 15.5 cm per crank turn
 		}
+
+		public static interface targetMove
+		{
+			public static Supplier<Double> raiseBy = 
+				ConstantHandler.addConstantDouble("Elevator raise  - Raise by value", 1.5);
+			public static Supplier<Double> lowereBy = 
+				ConstantHandler.addConstantDouble("Elevator lower  - lower by value", -1.5);
+		}
 	}
 	
     public static interface gripper {
@@ -151,6 +165,9 @@ public class SubsystemConstants {
 		public static final Supplier<Double> kGripperOutSpeed = ConstantHandler.addConstantDouble("Gripper Out Speed", -0.7);
 		/**The voltage of the optic sensor, which when reached, means the gripper catched the cargo.  */
 		public static final Supplier<Double> kVoltageLimit = ConstantHandler.addConstantDouble("Optic Sensor voltage limit", 0.7); //temp
+		/**The difference between the  */
+		public static final Supplier<Double> kCargoGripperLaserDiffrence = ConstantHandler.addConstantDouble("Gripper-Laser diffrence - unflipped", 0); //temp
+		public static final Supplier<Double> kHatchGripperLaserDiffrence = ConstantHandler.addConstantDouble("Gripper-Laser difference - flipped", 0); //temp
 	}
 	
 	public static interface ClimbingFrame {
