@@ -68,6 +68,7 @@ public class ButtonMap {
     {
         public static Supplier<Integer> lockSpeed =
             ConstantHandler.addConstantInt("Stall mode button port (back)", JoystickMap.ButtonJoystick.back);
+        public static Supplier<Integer> stopAutoElevator = 
             ConstantHandler.addConstantInt("Toggle ElevatorDefault button port (start)", JoystickMap.ButtonJoystick.start);
         
         public static interface MoveToHatch 
