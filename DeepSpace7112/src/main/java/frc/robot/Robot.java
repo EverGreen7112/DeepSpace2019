@@ -79,7 +79,6 @@ public class Robot extends TimedRobot {
       DefaultDrive.smartPMode = false;
       ElevatorDefault.speedLock = false;
       test = 0;
-
       DefaultDrive.defenseMode = false;
       DefaultDrive.smartPMode = false;
 
@@ -89,9 +88,9 @@ public class Robot extends TimedRobot {
     //   RobotMap.cameraA);
     //   cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
 
-      compressor = new Compressor(); //Commented because RobotB does not have working pneumatics.
-      compressor.start(); //Commented because RobotB does not have working pneumatics.
-      compressor.setClosedLoopControl(true); //Commented because RobotB does not have pneumatics.
+      compressor = new Compressor();  
+      compressor.start();
+      compressor.setClosedLoopControl(true);
 
     //----------BasicSubsystems----------
       drivetrain = new TankDrivetrain(SubsystemComponents.Chassis.leftMotorGroup::set, SubsystemComponents.Chassis.rightMotorGroup::set);
@@ -175,7 +174,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-
+    SubsystemComponents.Gripper.PushPiston.set(Value.kForward);
+    SubsystemComponents.GripperMovement.MovementPiston.set(Value.kForward);
+    SubsystemComponents.Gripper.toungePiston.set(Value.kReverse);
   }
 
   @Override
@@ -186,7 +187,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-   
+    SubsystemComponents.Gripper.PushPiston.set(Value.kForward);
+    SubsystemComponents.GripperMovement.MovementPiston.set(Value.kForward);
+    SubsystemComponents.Gripper.toungePiston.set(Value.kReverse);
   }
 
   @Override
