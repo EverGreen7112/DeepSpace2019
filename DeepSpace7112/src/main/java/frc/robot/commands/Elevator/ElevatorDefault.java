@@ -11,6 +11,7 @@ import java.util.function.Supplier;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
@@ -23,14 +24,14 @@ public class ElevatorDefault extends Command {
   }
 
   // public static Supplier<Boolean> stallMode = () -> Robot.oi.getBTJoystickLeft() < 0.05 && Robot.oi.getBTJoystickLeft() > -0.05;
-  public static boolean stallMode = false;
-  public static double stallSpeed = 0;
+  public static boolean speedLock = false;
   public static boolean switchHit = false;
+  public static double lockedSpeed = 0;
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     // Robot.dbc.addBoolean("stalling", stallMode);
-    Robot.dbc.addBoolean("stalling", () -> stallMode);
+    Robot.dbc.addBoolean("stalling", () -> speedLock);
     // Robot.dbc.addNumber("Stall Speed", SubsystemComponents.Elevator::getStallSpeed);
     Robot.dbc.addNumber("Stall Speed", SubsystemComponents.Elevator::getElevatorHeight);
   }
@@ -38,27 +39,40 @@ public class ElevatorDefault extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(stallMode) 
+    if(speedLock) 
     {
-      System.out.println("Stalling Elevator");
+      System.out.println("Stalling Elevator: " + lockedSpeed);
       // Robot.elevator.move(SubsystemComponents.Elevator.getStallSpeed());
-      Robot.elevator.move(stallSpeed);
+      Robot.elevator.move(lockedSpeed);
     }
 
-    
+    else
     {
       System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
-      if(Robot.oi.getBTJoystickLeft() < 0 && !switchHit)
-        if(SubsystemComponents.Elevator.opticSwitch.get()){
-          SubsystemComponents.Elevator.encoder.reset();
-          switchHit = true;
-        }
+
+      if(Robot.oi.getBTJoystickLeft() < 0 && !switchHit && SubsystemComponents.Elevator.opticSwitch.get())
+      {
+        SubsystemComponents.Elevator.encoder.reset();
+        switchHit = true;
+        SubsystemComponents.Elevator.encoderWasReset = true;
+      }
+
       if(Robot.oi.getBTJoystickLeft() > 0)
+      {
         switchHit = false;
-      if(Math.abs(Robot.oi.getBTJoystickLeft()) > 0.13)
-      Robot.elevator.move(Robot.oi.getBTJoystickLeft());
+      }
+
+      if(Math.abs(Robot.oi.getBTJoystickLeft()) > 0.13) //If the elevator's joystick is moves
+      {
+        SubsystemComponents.Gripper.PushPiston.set(Value.kReverse); //Close the hatch - 
+        // if it were open the elevator would hit itr when it moved. 
+        Robot.elevator.move(Robot.oi.getBTJoystickLeft()); //and move the elevator.
+      }
+
       else
-      Robot.elevator.move(0);
+      {
+        Robot.elevator.move(0);
+      }
 
     }
     

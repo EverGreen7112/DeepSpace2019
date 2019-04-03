@@ -33,7 +33,7 @@ public class RobotMap {
               elevatorEncoderA = 0, //DIO
               elevatorEncoderB = 1, //DIO
               elevatorOpticSwitch = 6, //DIO
-              elevatorLazerDistanceSensor = 5; //Analog
+              elevatorLazerDistanceSensor= 0; //Analog 
 
 //----------Climbing Frame----------
   public static final int 
@@ -50,44 +50,44 @@ public class RobotMap {
   public static final int 
     gripperMotorLeft = 9  , //CAN
     gripperMotorRight = 4, //CAN
-    gripperRightPistonF = 2, //Right Forward
-    gripperRightPistonR = 3, //Right Reverse
-    gripperAnalogLazerSensor = 2; //analog
+    // gripperRightPistonF = 2, //Right Forward
+    // gripperRightPistonR = 3, //Right Reverse
+    gripperMovementPushPistonF = 4, 
+    gripperMovementPushPistonR = 5,
+    gripperAnalogLazerSensor = 1, //analog
+    gripperToungePistonF = 0, 
+    gripperToungePistonR = 6;
             
 //----------Gripper Movement----------
-      public static final int
-      gripperMovementPushPistonF = 4, 
-      gripperMovementPushPistonR = 5, 
-      gripperMovementLockPistonF = 7, 
-      gripperMovementLockPistonR = 1, 
-      gripperMovementPistonF = 2,
-      gripperMovementPistonR = 3,
-      gripperMovementTopMicroswitch = 4, 
-      gripperMovementBottomMicroSwitch = 5; 
+    public static final int
+    gripperMovementPistonF = 2,
+    gripperMovementPistonR = 3,
+    gripperMovementTopMicroswitch = 4, 
+    gripperMovementBottomMicroSwitch = 5; 
   }
 
-/*
- * By Number:
+/*By Number:
   * Motors (Victors):
     * 0 - Climbing Movement;
     * 1 - Frame;
-    * 2 - Chassis Front-Right;
+    * 2 - Chassis back-right
     * 3 - ElevatorA;
     * 4 - Gripper right;
     * 5 - Chassis back-left;
     * 6 - ElevatorB;
-    * 7 - Chassis back-right;
+    * 7 - Chassis front-right;
     * 8 - Chassis front-left;
     * 9 - Gripper left;
   * Pistons:
-    * 1 - push forward;
-    * 2 - push reverse;
-    * 4 - lock reverse;
-    * 5 - lock forward;
-    * 7 - movement forward;
+    * 0 - tounge forward;
+    * 1 - tounge reverse;
+    * 2 - movement forward;
+    * 3 - movement reverse;
+    * 4 - push forward;
+    * 5 - push reverse;
   * Cameras:
     * 0 - Front;
-    * 1 - Back;
+    * 1 - Side;
   * Encoders:
     * 0 - Elevator A;
     * 1 - Elevator B;
@@ -99,6 +99,6 @@ public class RobotMap {
     * 5 - Gripper movement bottom;
     * 6 - Elevator optic;
   * Laser:
-    * 2 - Elevator distance;
-    * 5 - Gripper CargoCaught;
+    * 0 - Elevator distance;
+    * 1 - Gripper CargoCaught;
  */
