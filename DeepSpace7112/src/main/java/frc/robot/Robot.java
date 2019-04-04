@@ -82,11 +82,11 @@ public class Robot extends TimedRobot {
       DefaultDrive.defenseMode = false;
       DefaultDrive.smartPMode = false;
 
-    // cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
-    //   SubsystemConstants.cameras.kCameraWidth.get(), 
-    //   SubsystemConstants.cameras.kCameraHeight.get(), 
-    //   RobotMap.cameraA);
-    //   cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
+    cameraHandler = new CamerasHandler ( //configures the cameras - puts the cameras' video on the shuffleboard, and creates a CameraHandler for easy manipulation of it.
+      SubsystemConstants.cameras.kCameraWidth.get(), 
+      SubsystemConstants.cameras.kCameraHeight.get(), 
+      RobotMap.cameraB, RobotMap.cameraA);
+      // cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
 
       compressor = new Compressor();  
       compressor.start();
@@ -189,7 +189,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     SubsystemComponents.Gripper.PushPiston.set(Value.kForward);
     SubsystemComponents.GripperMovement.MovementPiston.set(Value.kForward);
-    SubsystemComponents.Gripper.toungePiston.set(Value.kReverse);
+    SubsystemComponents.Gripper.toungePiston.set(Value.kForward);
   }
 
   @Override

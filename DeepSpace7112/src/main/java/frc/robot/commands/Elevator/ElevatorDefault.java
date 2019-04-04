@@ -17,6 +17,7 @@ import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.SubsystemComponents;
 import frc.robot.SubsystemConstants;
+import frc.robot.commands.GripperMovement.FoldGripper;
 
 public class ElevatorDefault extends Command {
   public ElevatorDefault() {
@@ -64,8 +65,11 @@ public class ElevatorDefault extends Command {
 
       if(Math.abs(Robot.oi.getBTJoystickLeft()) > 0.13) //If the elevator's joystick is moves
       {
-        SubsystemComponents.Gripper.PushPiston.set(Value.kReverse); //Close the hatch - 
-        // if it were open the elevator would hit itr when it moved. 
+        if(!FoldGripper.gripperFolded.get())
+        {
+          SubsystemComponents.Gripper.PushPiston.set(Value.kReverse); //Close the hatch - 
+          // if it were open the elevator would hit itr when it moved. 
+        }
         Robot.elevator.move(Robot.oi.getBTJoystickLeft()); //and move the elevator.
       }
 

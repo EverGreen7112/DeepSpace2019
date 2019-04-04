@@ -31,7 +31,7 @@ public class FoldGripper extends Command {
 
     else {
       System.out.println("Gripper down");
-      // SubsystemComponents.Gripper.PushPiston.set(Value.kForward);
+      SubsystemComponents.Gripper.PushPiston.set(Value.kForward);
       SubsystemComponents.GripperMovement.MovementPiston.set(Value.kForward);
     }
 

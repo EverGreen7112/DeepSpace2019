@@ -276,7 +276,7 @@ public class OI {
       // switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
       // switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras
     // ----------PID----------
-      straighten.whenPressed(new ToggleSmartP()); 
+      // straighten.whenPressed(new ToggleSmartP()); 
     //--------------------Testing--------------------
       //----------Climbing---------
       //----------Climbing Movement---------- 

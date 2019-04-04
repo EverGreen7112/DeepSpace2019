@@ -42,7 +42,7 @@ public class ButtonMap {
 
     public static interface GripperMovement
     {
-        /**{@link OI#buttonJS} - LB*/
+        /**{@link OI#buttonJS} - RJ*/
         public static Supplier<Integer> flipGripper = 
             ConstantHandler.addConstantInt("Flip Gripper button port (RJ)", JoystickMap.ButtonJoystick.rightJoystick);
     }

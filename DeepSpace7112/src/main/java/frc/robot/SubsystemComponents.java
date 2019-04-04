@@ -37,13 +37,14 @@ public class SubsystemComponents {
     /**The DriveTrain is the part that controls the robot's wheels.
      * It consists of two sets of motors, a pair for each side of the robot - two left ones and two right ones.
      */
-    public static class Chassis {
+    public static class Chassis { 
+        
         public static final SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup (
             new WPI_VictorSPX(RobotMap.chassisVictorBL), new WPI_VictorSPX(RobotMap.chassisVictorFL));
         // public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup (
         //     new WPI_TalonSRX(RobotMap.chassisVictorBR), new WPI_TalonSRX(RobotMap.chassisVictorFR)); //commented since RobotB has victors
         public static final SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup (
-            new WPI_VictorSPX(RobotMap.chassisVictorBR), new WPI_VictorSPX(RobotMap.chassisVictorFR));
+            new WPI_TalonSRX(RobotMap.chassisVictorBR), new WPI_TalonSRX(RobotMap.chassisVictorFR));
         public static double currentSpeed = SubsystemConstants.Chassis.kDrivingSpeedModifier.get();
     }
 
