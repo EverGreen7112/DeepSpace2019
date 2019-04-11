@@ -7,22 +7,27 @@
 
 package frc.robot.commands.Gripper;
 
+import java.util.function.Supplier;
+
+import com.sun.jdi.connect.Connector.BooleanArgument;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
-import frc.robot.SubsystemComponents;;
+import frc.robot.SubsystemComponents;
+import frc.robot.SwitchHandler;;
 
 public class ToggleToungePistons extends Command {
   public static boolean reversed = true;
-  public ToggleToungePistons() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+  public static Supplier<Boolean> switchOn;
+  public ToggleToungePistons(boolean switchDefault) {
+    switchOn = SwitchHandler.addButtonSwitch("Gripper - Tounge Pistons Toggle", switchDefault);
   }
 
   /**Input a boolean value to specificlly open or close the thingie:
    * True to open, false to close.
    */
-  public ToggleToungePistons(boolean reversedSet) {
+  public ToggleToungePistons(boolean reversedSet, boolean switchDefault) {
     reversed = reversedSet;
   }
 
@@ -34,18 +39,21 @@ public class ToggleToungePistons extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(reversed)
+    if(switchOn.get())
     {
-      System.out.println("Set Push Piston Reverse");
-      SubsystemComponents.Gripper.toungePiston.set(Value.kForward);
-      reversed = false;
-    }
+      if(reversed)
+      {
+        System.out.println("Set Push Piston Reverse");
+        SubsystemComponents.Gripper.toungePiston.set(Value.kForward);
+        reversed = false;
+      }
 
-    else
-    {
-      System.out.println("Set Push Piston Forward");
-      SubsystemComponents.Gripper.toungePiston.set(Value.kReverse);
-      reversed = true;
+      else
+      {
+        System.out.println("Set Push Piston Forward");
+        SubsystemComponents.Gripper.toungePiston.set(Value.kReverse);
+        reversed = true;
+      }
     }
   }
 

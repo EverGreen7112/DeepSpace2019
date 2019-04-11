@@ -7,31 +7,19 @@
 
 package frc.robot;
 
-import frc.robot.commands.PID.driveArcadeWithPID;
-import frc.robot.commands.Gripper.GripperIn;
 import frc.robot.PortMaps.ButtonMap;
-import frc.robot.PortMaps.JoystickMap;
-import frc.robot.commands.Chassis.ToggleDefense;
-import frc.robot.commands.Chassis.ToggleSmartP;
-import frc.robot.commands.Cameras.SwitchToCameraA;
-import frc.robot.commands.Cameras.SwitchToCameraB;
-import frc.robot.commands.Climbing.Climb;
-import frc.robot.commands.Elevator.MoveElevatorToTarget;
-import frc.robot.commands.Elevator.RaiseElevator;
 import frc.robot.commands.Elevator.ToggleSpeedLock;
-import frc.robot.commands.Elevator.ToggleElevatorDefault;
-import frc.robot.commands.Gripper.GripperOut;
-import frc.robot.commands.Gripper.StopGripper;
+import frc.robot.commands.Generic.DriveTankWithSwitch;
 import frc.robot.commands.Gripper.TogglePushPistons;
-import frc.robot.commands.Gripper.ToggleToungePistons;
 import frc.robot.commands.GripperMovement.FoldGripper;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Command;
-
-import java.util.function.Supplier;
-
+import frc.robot.commands.Elevator.ToggleElevatorDefault;
+import frc.robot.commands.Chassis.ToggleSmartP;
+import frc.robot.commands.Elevator.MoveElevatorToTargetWithSwitch;
+import frc.robot.commands.Generic.MoveBasicSubsystemWithSwitch;
+import frc.robot.commands.Gripper.ToggleToungePistons;
 import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 
@@ -198,75 +186,100 @@ public class OI {
     // ----------Chassis----------
     
     // toggleDefense.whenPressed(new ToggleDefense());
-    slowAdjust.whileHeld(new DriveTank(Robot.drivetrain, 
+    slowAdjust.whileHeld(new DriveTankWithSwitch(Robot.drivetrain, 
      () -> Robot.oi.getLeftJoystick() * SubsystemConstants.Chassis.kSlowSpeedModifier.get(),
-     () -> Robot.oi.getRightJoystick() * SubsystemConstants.Chassis.kSlowSpeedModifier.get()));
-    fastAdjust.whileHeld(new DriveTank(Robot.drivetrain,
+     () -> Robot.oi.getRightJoystick() * SubsystemConstants.Chassis.kSlowSpeedModifier.get(),
+     "Chassis - Slow Adjust"));
+    fastAdjust.whileHeld(new DriveTankWithSwitch(Robot.drivetrain,
      () -> Robot.oi.getLeftJoystick() * SubsystemConstants.Chassis.kFastSpeedModifier.get(),
-     () -> Robot.oi.getRightJoystick() * SubsystemConstants.Chassis.kFastSpeedModifier.get()));
+     () -> Robot.oi.getRightJoystick() * SubsystemConstants.Chassis.kFastSpeedModifier.get(),
+     "Chassis - Fast Adjust"));
     // fastAdjust.whileHeld(new MoveBasicSubsystem(Robot.drivetrain, () -> 2));
     //----------Elevator----------
       lockSpeed.whenPressed(new ToggleSpeedLock());
       toggleElevatorDefault.whenPressed(new ToggleElevatorDefault());
     //----------Elevator to Hatch----------
+    //   topHatch.whenPressed(new ElevatorMoveToTarget(SubsystaemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopHatchHeight));
+    //   middleHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketMiddleHatchHeight));
+    //   bottomHatch.whenPressed(new ElevatorMoveToTarget( SubsystemConstants.Elevator.kTargetSpeedModifier,  SubsystemConstants.Elevator.kRocketBottomHatchHeight));
+    // //----------Elevator to Cargo----------
+    //   topCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopCargoHeight));
+    //   middleCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketMiddleCargoHeight));
+    //   bottomCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketBottomCargoHeight));
       topHatch.whenPressed(
-        new MoveElevatorToTarget(
+        new MoveElevatorToTargetWithSwitch(
           SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier, 
           SubsystemConstants.Elevator.RocketHeights.kTopHatch, 
-          SubsystemConstants.Elevator.RocketStall.kTopHatch));
+          SubsystemConstants.Elevator.RocketStall.kTopHatch,
+          "Elevator - Move To Hatch - Top"));
       
       middleHatch.whenPressed(
-        new MoveElevatorToTarget(
+        new MoveElevatorToTargetWithSwitch(
           SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier, //speed
           SubsystemConstants.Elevator.RocketHeights.kMiddleHatch, //
-          SubsystemConstants.Elevator.RocketStall.kMiddleHatch));
+          SubsystemConstants.Elevator.RocketStall.kMiddleHatch,
+          "Elevator - Move To Hatch - Middle"));
 
       bottomHatchDRV.whenPressed(
-        new MoveElevatorToTarget(
+        new MoveElevatorToTargetWithSwitch(
           SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier,
           SubsystemConstants.Elevator.RocketHeights.kBottomHatch, 
-          SubsystemConstants.Elevator.RocketStall.kBottomHatch));
+          SubsystemConstants.Elevator.RocketStall.kBottomHatch,
+          "Elevator - Move To Hatch - Bottom - Driving JS"));
 
-      bottomCargoBT.whenPressed(
-        new MoveElevatorToTarget(
+      bottomHatchBT.whenPressed(
+        new MoveElevatorToTargetWithSwitch(
           SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier,
           SubsystemConstants.Elevator.RocketHeights.kBottomHatch, 
-          SubsystemConstants.Elevator.RocketStall.kBottomHatch));
+          SubsystemConstants.Elevator.RocketStall.kBottomHatch,
+          "Elevator - Move To Hatch - Bottom - Button JS"));
     //----------Elevator to Cargo----------
       topCargo.whenPressed(
-        new MoveElevatorToTarget(
+        new MoveElevatorToTargetWithSwitch(
           SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier,
           SubsystemConstants.Elevator.RocketHeights.kTopCargo, 
-          SubsystemConstants.Elevator.RocketStall.kTopCargo));
+          SubsystemConstants.Elevator.RocketStall.kTopCargo,
+          "Elevator - Move To Cargo - Top"));
       
       middleCargo.whenPressed(
-        new MoveElevatorToTarget(
+        new MoveElevatorToTargetWithSwitch(
         SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier, 
         SubsystemConstants.Elevator.RocketHeights.kMiddleCargo,
-        SubsystemConstants.Elevator.RocketStall.kMiddleCargo));
+        SubsystemConstants.Elevator.RocketStall.kMiddleCargo,
+        "Elevator - Move To Cargo - Middle"));
 
       bottomCargoDRV.whenPressed(
-        new MoveElevatorToTarget(
+        new MoveElevatorToTargetWithSwitch(
           SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier,
           SubsystemConstants.Elevator.RocketHeights.kBottomCargo,
-          SubsystemConstants.Elevator.RocketStall.kBottomCargo));
+          SubsystemConstants.Elevator.RocketStall.kBottomCargo,
+          "Elevator - Move To Cargo - Bottom - Driving JS"));
       
       bottomCargoBT.whenPressed(
-        new MoveElevatorToTarget(
+        new MoveElevatorToTargetWithSwitch(
           SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier,
           SubsystemConstants.Elevator.RocketHeights.kBottomCargo,
-          SubsystemConstants.Elevator.RocketStall.kBottomCargo));
-    //----------Gripper----------
-     //  catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed)); //commented due to not working.
-     // releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed)); //commented due to not working.
-      catchButton.whileHeld(new GripperIn());
-      catchButton.whenReleased(new StopGripper()); //testing - GripperIn's end() did not work 
-      releaseButton.whileHeld(new GripperOut());
-      releaseButton.whenReleased(new StopGripper()); //testing - GripperOut's end() did not work
-      openHatch.whenPressed(new TogglePushPistons(true));
-      closeHatch.whenPressed(new TogglePushPistons(false));
-      openTounge.whenPressed(new ToggleToungePistons(true));
-      closeTounge.whenPressed(new ToggleToungePistons(false));
+          SubsystemConstants.Elevator.RocketStall.kBottomCargo,
+          "Elevator - Move To Cargo - Bottom - Button JS"));
+    //----------Gripper-----------
+        catchButton.whileHeld(new MoveBasicSubsystemWithSwitch(
+          Robot.gripper, 
+          SubsystemConstants.gripper.kGripperInSpeed, 
+          "Gripper - Catch")); //commented due to not working.
+       releaseButton.whileHeld(new MoveBasicSubsystemWithSwitch(
+         Robot.gripper, 
+         SubsystemConstants.gripper.kGripperOutSpeed,
+         "Gripper - Catch")); //commented due to not working.
+        // catchButton.whileHeld(new GripperIn());
+        // catchButton.whenReleased(new StopGripper()); //testing - GripperIn's end() did not work 
+        // releaseButton.whileHeld(new GripperOut());
+        // releaseButton.whenReleased(new StopGripper()); //testing - GripperOut's end() did not work
+        //  catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed)); //commented due to not working.
+        // releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed)); //commented due to not working.
+      openHatch.whenPressed(new TogglePushPistons(true, true));
+      closeHatch.whenPressed(new TogglePushPistons(false, true));
+      openTounge.whenPressed(new ToggleToungePistons(true, true));
+      closeTounge.whenPressed(new ToggleToungePistons(false, true));
 
     //----------Gripper Movement----------
       flipGripper.whenPressed(new FoldGripper());

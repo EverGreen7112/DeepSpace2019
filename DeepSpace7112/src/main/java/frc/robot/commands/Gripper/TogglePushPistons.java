@@ -7,21 +7,29 @@
 
 package frc.robot.commands.Gripper;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.ConstantHandlerEG;
 import frc.robot.SubsystemComponents;
+import frc.robot.SwitchHandler;
 
 public class TogglePushPistons extends Command {
   public static boolean reversed = true;
+  public static Supplier<Boolean> switchOn;
 
-  public TogglePushPistons() {
+  public TogglePushPistons(boolean switchDefault) {
+    switchOn = SwitchHandler.addButtonSwitch("Gripper - Push Pistons Toggle", switchDefault);
   }
 
     /**Input a boolean value to specificlly open or close the thingie:
    * True to open, false to close.
    */
-  public TogglePushPistons(boolean reversedSet) {
+  public TogglePushPistons(boolean reversedSet, boolean switchDefault) {
     reversed = reversedSet;
+    switchOn = SwitchHandler.addButtonSwitch("Gripper - Push Pistons Toggle", switchDefault);
+
   }
 
   // Called just before this Command runs the first time

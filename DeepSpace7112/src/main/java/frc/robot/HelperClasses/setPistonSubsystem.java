@@ -5,54 +5,46 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Gripper;
+package frc.robot.HelperClasses;
 
-import java.util.function.Predicate;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.ButtonSwitches;
-import frc.robot.Robot;
-import frc.robot.SubsystemComponents;
-import frc.robot.SubsystemConstants;
 
-public class GripperIn extends Command {
-  public GripperIn() {
-    requires(Robot.gripper);
+public class setPistonSubsystem extends Command {
+  Value state;
+  PistonSubsystem subsystem;
+
+  public setPistonSubsystem(PistonSubsystem subsystem, Value state) {
+    requires(subsystem);
+    this.state = state;
+    this.subsystem = subsystem;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("In");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(ButtonSwitches.Gripper.gripperIn.get()) {
-      SubsystemComponents.Gripper.motors.set(SubsystemConstants.gripper.kGripperInSpeed.get()); //testing - maybe setting setting the speed directly through the motor instead of using spikeslib will set a right speed.
-      // Robot.gripper.move(SubsystemConstants.gripper.kGripperInSpeed.get()); //commented for testing - currently this only produces 0.3 speed.
-    }
+    subsystem.set(state);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
+  @Override
   protected void end() {
-    // SubsystemComponents.Gripper.motors.set(0); //testing
-    //Robot.gripper.move(0); //Commented because it was constantly being called in execution. currently in WhenReleased.
-    
-
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }
