@@ -21,6 +21,9 @@ import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import com.spikes2212.utils.CamerasHandler;
 
+import frc.robot.commands.Gripper.*;
+
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -28,13 +31,13 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer.Range;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.HelperClasses.PistonSubsystem;
 import frc.robot.PortMaps.RobotMap;
 import frc.robot.SubsystemComponents.GripperMovement;
 import frc.robot.commands.Chassis.DefaultDrive;
 import frc.robot.commands.Elevator.ElevatorDefault;
 import frc.robot.commands.Elevator.MoveElevatorToTarget;
 import frc.robot.commands.GripperMovement.FoldGripper;
-import frc.robot.commands.GripperMovement.GripperDefault;
 
 /** This is the code ran (together with the OI) when activating the robot - 
  * it includes the decleration, intialization and confguration of the Subsystems.
@@ -57,6 +60,7 @@ public class Robot extends TimedRobot {
   public static BasicSubsystem frame;
   public static BasicSubsystem climbingMovement;
   public static CamerasHandler cameraHandler;
+  public static PistonSubsystem toungePistons;
 
   public static Compressor compressor;
 
@@ -103,7 +107,7 @@ public class Robot extends TimedRobot {
       // elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
       //   () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kEncoderMaxHeight.get()))); 
         //^^^Maximum Limit by the encoder - if it transmits that the elevator has surpussed our determained maximum height, it'll stop the movement
-      
+
         elevator  = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new Limitless());
       elevatorClimb = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MinLimit(SubsystemComponents.ClimbingFrame.bottomLimiter::get));
     
@@ -112,14 +116,13 @@ public class Robot extends TimedRobot {
       
       //frame = new BasicSubsystem(SubsystemComponents.Climbingframe.motor::set, new Limitless());
       climbingMovement = new BasicSubsystem(SubsystemComponents.ClimbingMovement.motor::set, new Limitless());
-      
+      toungePistons = new PistonSubsystem(SubsystemComponents.Gripper.toungePiston::set, SubsystemComponents.Gripper.toungePiston::get, Value.kForward);
     //----------Class Constructors----------
       dbc = new DashBoardController();
       oi = new OI();
     //----------DefaultCommands----------
       drivetrain.setDefaultCommand(new DefaultDrive());
       elevator.setDefaultCommand(new ElevatorDefault());
-      gripper.setDefaultCommand(new GripperDefault());
     //----------Shuffleboard data----------
       // (Currently Unneccesary values commented)
       dbc.addNumber("Laser elevator height", SubsystemComponents.Elevator::getElevatorHeightByLaser);

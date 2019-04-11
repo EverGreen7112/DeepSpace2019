@@ -5,30 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Gripper;
-
-import java.util.function.Supplier;
-
-import com.sun.jdi.connect.Connector.BooleanArgument;
+package frc.robot.HelperClasses;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
-import frc.robot.SubsystemComponents;
-import frc.robot.SwitchHandler;;
+public class setPistonSubsystem extends Command {
+  Value state;
+  PistonSubsystem subsystem;
 
-public class ToggleToungePistons extends Command {
-  public static boolean reversed = true;
-  public static Supplier<Boolean> switchOn;
-  public ToggleToungePistons(boolean switchDefault) {
-    switchOn = SwitchHandler.addButtonSwitch("Gripper - Tounge Pistons Toggle", switchDefault);
-  }
-
-  /**Input a boolean value to specificlly open or close the thingie:
-   * True to open, false to close.
-   */
-  public ToggleToungePistons(boolean reversedSet, boolean switchDefault) {
-    reversed = reversedSet;
+  public setPistonSubsystem(PistonSubsystem subsystem, Value state) {
+    requires(subsystem);
+    this.state = state;
+    this.subsystem = subsystem;
   }
 
   // Called just before this Command runs the first time
@@ -39,22 +28,7 @@ public class ToggleToungePistons extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(switchOn.get())
-    {
-      if(reversed)
-      {
-        System.out.println("Set Push Piston Reverse");
-        SubsystemComponents.Gripper.toungePiston.set(Value.kForward);
-        reversed = false;
-      }
-
-      else
-      {
-        System.out.println("Set Push Piston Forward");
-        SubsystemComponents.Gripper.toungePiston.set(Value.kReverse);
-        reversed = true;
-      }
-    }
+    subsystem.set(state);
   }
 
   // Make this return true when this Command no longer needs to run execute()

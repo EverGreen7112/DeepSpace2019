@@ -17,7 +17,6 @@ import frc.robot.ImageProccessingSuppliers;
 import frc.robot.Robot;
 import frc.robot.SubsystemComponents;
 import frc.robot.SubsystemConstants;
-import frc.robot.commands.PID.GripperFocusPID;
 
 public class DefaultDrive extends Command {
   public static boolean defenseMode;
