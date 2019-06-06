@@ -7,19 +7,19 @@
 
 package frc.robot;
 import java.util.function.Supplier;
-
+import frc.Library.OI.Switches.Classes.ConstantHandlerEG;
 import com.spikes2212.dashboard.ConstantHandler;
 
 /**This is the class that contains each constant neccisaty */
-public class SubsystemConstants {
+public interface SubsystemConstants {
 	/**The constants for the chassis' <a href="https://bit.ly/2H6fnUT">PID loop</a>*/
-	public static interface SmartP
+	public static interface SmartPConsts
 	{
-		public static Supplier<Double> kA = ConstantHandler.addConstantDouble("Smart P - a Constant", 0.8);
+		public static Supplier<Double> kPowerParaboleA = ConstantHandler.addConstantDouble("Smart P - a Constant", 0.8);
 		public static Supplier<Double> kMaxDeviationFix = ConstantHandler.addConstantDouble("Smart P - Max deviation Fix Speed", 85);
 		public static Supplier<Double> kSpeedModifier = ConstantHandler.addConstantDouble("Smart P - Speed Moifier", 0.6);
 	}
-	public static interface PID  { //All temp.
+	public static interface PIDConsts  { //All temp.
 		/**The point the system will try to drive to - the center of the reflectives seen by the camera. */
 		public static final Supplier<Double> kSetPoint = () -> ImageProccessingSuppliers.center.pidGet();
 		/**The range of speed multipliers the system can output for the fix - here, from -0.5 to 0.5. (|-0.5 - 0.5| = 1)*/
@@ -38,25 +38,20 @@ public class SubsystemConstants {
 		public static final Supplier<Double> kMovement = ConstantHandler.addConstantDouble("PID movement speed.", 5); //All temp	
 	}
 	/**The constants for the chassis subsystem, which controls the robot's wheels. */
-	public static interface Chassis {
+	public static interface ChassisConsts {
 		public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Speed Modifier", 0.8);
 		public static final Supplier<Double> kDefenseSpeedModifier = ConstantHandler.addConstantDouble("Defense Speed Modifier", 0.8);
 		public static final Supplier<Double> kSlowSpeedModifier = ConstantHandler.addConstantDouble("Slow Speed Modifier", 0.3);
 		public static final Supplier<Double> kFastSpeedModifier = ConstantHandler.addConstantDouble("Fast Speed Modifier", 0.9);
-
-
-		// public static Supplier<Double> kCurrentSpeedModifier = ConstantHandler.addConstantDouble("Current Speed Modifier", 0.8);
-		// public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Spped Modifier", 0.85); //temp
-
 	}
 
 	/**the constants for the CameraHandler, which shows camera video on the shuffleboard.  */
-    public static interface cameras {
-		public static final Supplier<Integer> kCameraWidth = 
+    public static interface CameraConsts {
+		public static final Supplier<Integer> kWidth = 
 			ConstantHandler.addConstantInt("Camera Width", 320);
-		public static final Supplier<Integer> kCameraHeight = 
+		public static final Supplier<Integer> kHeight = 
 			ConstantHandler.addConstantInt("Camera Height", 240);
-		public static final Supplier<Integer> kCameraExposure = 
+		public static final Supplier<Integer> kExposure = 
 			ConstantHandler.addConstantInt("Camera Exposure", 50);
 		public static final Supplier<Integer> kCamerasNumber = 
 			ConstantHandlerEG.addConstantInt("Cameras Number", 2); //The amount of cameras.
@@ -65,7 +60,7 @@ public class SubsystemConstants {
 	/**The constants for the elevator subsystem which lifts the gripper to the desired hatches:
 	 * The heights of the hatches and cargo on the rocket and the speed modifiers during its different movements
 	 * (Motor, Target and Stall), as well as the distance passd each tick of the encoder. */
-	public static interface Elevator
+	public static interface ElevatorConsts
 	{
 
 		public static interface SpeedModifiers
@@ -73,13 +68,10 @@ public class SubsystemConstants {
 			/**The elevator's speed modifier as it is moved by the joystick */
 			public static Supplier<Double> kJoystickSpeedModifier = 
 				ConstantHandler.addConstantDouble("Elevator Joystick Move Speed Modifier", 0.8);
-			/**The elevator's speed as it moves to a hatch or a cargo on the rocket.*/
+			/**The elevator's speed modifier as it moves automatically to a hatch or a cargo on the 
+			 * rocket.*/
 			public static Supplier<Double> kTargetSpeedModifier = 
-				ConstantHandler.addConstantDouble("Elevator Move to target speed modfier", 0.7); //temp
-			/**The modifier needed to give to the motors in order get the elevator to stay up while not moving, given maximum weight on it.*/		 
-			public static Supplier<Double> kStallMaxMultiplier = 
-				ConstantHandler.addConstantDouble("Stall elevator supplier", 0.17); //temp
-			 public static Supplier<Double> kElevatorClimbingSpeedModifier = ConstantHandler.addConstantDouble("Elevator climbing speed modifier", 0.2); //temp
+				ConstantHandler.addConstantDouble("Elevator Move to target speed modfier", 0.7);
 		}
 
 		public static interface RocketHeights
@@ -153,17 +145,9 @@ public class SubsystemConstants {
 		 /**The distance the elevator passes between the encoder's ticks. */
 		  public static Supplier<Double> kDistancePerPulse = ConstantHandler.addConstantDouble("Elevator distance per pulse", 0.8157894); //19 ticks per motor turn, 15.5 cm per crank turn
 		}
-
-		public static interface targetMove
-		{
-			public static Supplier<Double> raiseBy = 
-				ConstantHandler.addConstantDouble("Elevator raise  - Raise by value", 1.5);
-			public static Supplier<Double> lowereBy = 
-				ConstantHandler.addConstantDouble("Elevator lower  - lower by value", -1.5);
-		}
 	}
 	
-    public static interface gripper {
+    public static interface GripperConsts {
 		/**The speed of the gripper when it catches things.*/
 		public static final Supplier<Double> kGripperInSpeed = ConstantHandler.addConstantDouble("Gripper In Speed", 0.8);
 		/**The speed of the gripper when it releases things. */
@@ -173,17 +157,5 @@ public class SubsystemConstants {
 		/**The difference between the  */
 		public static final Supplier<Double> kCargoGripperLaserDiffrence = ConstantHandler.addConstantDouble("Gripper-Laser diffrence - unflipped", 0); //temp
 		public static final Supplier<Double> kHatchGripperLaserDiffrence = ConstantHandler.addConstantDouble("Gripper-Laser difference - flipped", 0); //temp
-	}
-	
-	public static interface ClimbingFrame {
-		public static final Supplier<Double> kFrameMotorSpeedModifier = ConstantHandler.addConstantDouble("Frame Motor Speed Modifier", 0.35);
-		public static final Supplier<Double> kFrameMotorSpeedModifierUp = ConstantHandler.addConstantDouble("Frame Motor Speed Modifier Upwards", -0.1);
-	}
-
-	public static interface ClimbingMovement {
-		public static Supplier<Double> kClimbingSpeed = ConstantHandler.addConstantDouble("Climbing movement speed modifier", 0.5); //temp
-		// public static Supplier<Double> kTargetHeight = ConstantHandler.addConstantDouble("Climbing movement target height", 1); //temp //Commented due to no use.
-		//------------Testing----------
-			// public static Supplier<Double> kClimbingSpeedForward = ConstantHandler.addConstantDouble("Climbing movemnt speed forward modifier -FOR TESTING-", -0.5); //temp
 	}
 }

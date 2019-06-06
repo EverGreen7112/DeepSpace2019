@@ -5,68 +5,66 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Elevator;
-
-import java.util.function.Supplier;
-
-import com.ctre.phoenix.motorcontrol.NeutralMode;
+package frc.robot.commands.Elevator; 
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.Library.OI.Switches.Classes.Switch;
+import frc.Library.OI.Switches.Classes.SwitchHandler;
 import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.SubsystemComponents;
-import frc.robot.SubsystemConstants;
+import frc.robot.SubsystemComponents.Elevator;
 
-public class ElevatorDefault extends Command {
+public class ElevatorDefault extends Command implements Elevator, SubsystemComponents {
+  
+  /**The boolean for whether or not the encoder was reset yet, because before the first time, 
+   * it gives incorrect value. */
+  public static boolean encoderWasReset = false;
+
   public ElevatorDefault() {
     requires(Robot.elevator);
   }
 
-  // public static Supplier<Boolean> stallMode = () -> Robot.oi.getBTJoystickLeft() < 0.05 && Robot.oi.getBTJoystickLeft() > -0.05;
-  public static boolean speedLock = false;
+  public static Switch speedLock =  SwitchHandler.addSwitch("Elevator - Modes - SpeedLock", false);
   public static boolean switchHit = false;
   public static double lockedSpeed = 0;
-  // Called just before this Command runs the first time
+
   @Override
   protected void initialize() {
-    // Robot.dbc.addBoolean("stalling", stallMode);
-    Robot.dbc.addBoolean("stalling", () -> speedLock);
-    // Robot.dbc.addNumber("Stall Speed", SubsystemComponents.Elevator::getStallSpeed);
-    Robot.dbc.addNumber("Stall Speed", SubsystemComponents.Elevator::getElevatorHeight);
+    super.initialize();
   }
 
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(speedLock) 
+    
+    if(speedLock.get()) 
     {
       System.out.println("Stalling Elevator: " + lockedSpeed);
-      // Robot.elevator.move(SubsystemComponents.Elevator.getStallSpeed());
       Robot.elevator.move(lockedSpeed);
     }
 
     else
     {
-      System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
+      System.out.println("Moving Elevator: " + OI.getBTJoystick());
 
-      if(Robot.oi.getBTJoystickLeft() < 0 && !switchHit && SubsystemComponents.Elevator.opticSwitch.get())
+      if(OI.getBTJoystick() < 0 && !switchHit && SubsystemComponents.Elevator.opticSwitch.get())
       {
-        SubsystemComponents.Elevator.encoder.reset();
+        encoder.reset();
         switchHit = true;
-        SubsystemComponents.Elevator.encoderWasReset = true;
+        encoderWasReset = true;
       }
 
-      if(Robot.oi.getBTJoystickLeft() > 0)
+      if(OI.getBTJoystick() > 0)
       {
         switchHit = false;
       }
 
-      if(Math.abs(Robot.oi.getBTJoystickLeft()) > 0.13) //If the elevator's joystick is moves
+      if(Math.abs(OI.getBTJoystick()) > 0.13) //If the elevator's joystick is moves
       {
-        SubsystemComponents.Gripper.PushPiston.set(Value.kReverse); //Close the hatch - 
+        Gripper.PushPiston.set(Value.kReverse); //Close the hatch - 
         // if it were open the elevator would hit itr when it moved. 
-        Robot.elevator.move(Robot.oi.getBTJoystickLeft()); //and move the elevator.
+        Robot.elevator.move(OI.getBTJoystick()); //and move the elevator.
       }
 
       else
@@ -75,43 +73,11 @@ public class ElevatorDefault extends Command {
       }
 
     }
-    
-    // if(SubsystemComponents.Elevator.opticSwitch.get()) 
-    // {
-    //   System.out.println("aaa");
-    //   SubsystemComponents.Elevator.encoderWasReset = true;
-    //   SubsystemComponents.Elevator.encoder.reset();
-    // }
-
-    // if(Robot.oi.getBTJoystickLeft()<0.05 && Robot.oi.getBTJoystickLeft()>-0.05) {
-    //   System.out.println("Stalling Elevator");
-    //   SubsystemComponents.Elevator.motorA.setNeutralMode(NeutralMode.Brake); 
-    //   SubsystemComponents.Elevator.motorB.setNeutralMode(NeutralMode.Brake);
-    // }
-
-    // else {
-    //   // stalling = false;
-    //   System.out.println("Moving Elevator: " + Robot.oi.getBTJoystickLeft());
-    //   SubsystemComponents.Elevator.motorA.setNeutralMode(NeutralMode.Coast); 
-    //   SubsystemComponents.Elevator.motorB.setNeutralMode(NeutralMode.Coast);
-    //   Robot.elevator.move(Robot.oi.getBTJoystickLeft()); 
-    // } //commented for testing
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return false;
-  }
-
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
   }
 }

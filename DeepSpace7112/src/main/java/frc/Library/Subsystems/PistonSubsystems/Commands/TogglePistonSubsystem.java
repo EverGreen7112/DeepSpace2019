@@ -5,20 +5,32 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Cameras;
+package frc.Library.Subsystems.PistonSubsystems.Commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
-import frc.robot.SubsystemConstants;
+import frc.Library.OI.Switches.Commands.CommandWithSwitch;
+import frc.Library.Subsystems.PistonSubsystems.Classes.PistonSubsystem;
 
-public class CycleCameras extends Command {
-  public static int currentCamera;
-  public CycleCameras() {
+public class TogglePistonSubsystem extends CommandWithSwitch {
+  PistonSubsystem pistons;
+  public TogglePistonSubsystem(PistonSubsystem pistons, String switchName) {
+    super(switchName);
+    requires(pistons);
+    this.pistons = pistons;
   }
+
+  public TogglePistonSubsystem(PistonSubsystem pistons, String switchName, boolean defaultValue) {
+    super(switchName, defaultValue);
+    requires(pistons);
+    this.pistons = pistons;
+  }
+
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.cameraHandler.switchCamera(++currentCamera % SubsystemConstants.CameraConsts.kCamerasNumber.get());
+    if(switchOn.get())
+    {
+      pistons.toggle();
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

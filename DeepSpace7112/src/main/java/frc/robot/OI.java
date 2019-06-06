@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -7,297 +7,95 @@
 
 package frc.robot;
 
-import frc.robot.PortMaps.ButtonMap;
-import frc.robot.commands.Elevator.ToggleSpeedLock;
-import frc.robot.commands.Generic.DriveTankWithSwitch;
-import frc.robot.commands.Gripper.TogglePushPistons;
-import frc.robot.commands.GripperMovement.FoldGripper;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.Elevator.ToggleElevatorDefault;
-import frc.robot.commands.Chassis.ToggleSmartP;
-import frc.robot.commands.Elevator.MoveElevatorToTargetWithSwitch;
-import frc.robot.commands.Generic.MoveBasicSubsystemWithSwitch;
-import frc.robot.commands.Gripper.ToggleToungePistons;
-import com.spikes2212.genericsubsystems.basicSubsystem.commands.MoveBasicSubsystem;
-import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
+import frc.Library.OI.Joysticks.ExtremeProJoystick;
+import frc.Library.OI.Joysticks.F310GamePad;
+import frc.Library.OI.Joysticks.GroupButtonBindings;
 
 /**
- * This class is the glue that binds the controls on the physical operator
- * interface to the commands and command groups that allow control of the robot.
+ * This class contains all of the joysticks and their buttons, and the methods to access them.
  */
-public class OI {
+public class OI implements CommandList {
+    /**The {@link ExtremeProJoystick Extreme 3D Pro Joystick} used for controlling the 
+     * left wheels of the robot.*/
+    private static ExtremeProJoystick drivingJSLeft;
+    /**The {@link ExtremeProJoystick Extreme 3D Pro Joystick} used for controlling the 
+     * right wheels of the robot.*/
+    private static ExtremeProJoystick drivingJSRight;
+    /**The {@link F310GamePad} used for controlling the robot's elevator, gripper, and hatch system. */
+    private static F310GamePad buttonJS;
 
-  //--------------------Decleratins--------------------
+    /*The code ran when this class is loaded - it intitilizes all the joysticks and (through their 
+     * own contructors) their buttons, and binds each button to execute the required commands by the 
+     * specific conditions.*/
+    static
+    {
+        //----------Joystick initializations----------
+            drivingJSLeft = new ExtremeProJoystick(0);
+            drivingJSRight = new ExtremeProJoystick(1);
+            buttonJS = new F310GamePad(2);
+        //----------Chassis----------
+            drivingJSRight.trigger.whileHeld(ChassisCommands.fastDrive);
+            drivingJSRight.thumb.whileHeld(ChassisCommands.slowDrive);
+            drivingJSLeft.trigger.whileHeld(ChassisCommands.toggleSmartP);
+        //----------Elevator----------
+            GroupButtonBindings.whenPressed(ElevatorCommands.moveToBottomHatch, 
+                buttonJS.LT, drivingJSRight.bottomRightBack);            
+            drivingJSRight.bottomRightMiddle.whenPressed(ElevatorCommands.moveToMiddleHatch);
+            drivingJSRight.bottomRightForward.whenPressed(ElevatorCommands.moveToTopHatch);
 
-  //----------Joysticks----------
-  /**The joystick that controlls the left motors' wheels. */
-  private Joystick drivingJSLeft;
-  /**The Joystick that conntrols the right motors' wheels. */
-  private Joystick drivingJSRight;
-  /**The button joystick which is used to execute the various commands to the robot - Climbing, catching, releasing and controlling the PID. */
-  public Joystick buttonJS;
+            GroupButtonBindings.whenPressed(ElevatorCommands.moveToBottomCargo, 
+                buttonJS.RT, drivingJSRight.bottomLeftBack);            
+            drivingJSRight.bottomLeftMiddle.whenPressed(ElevatorCommands.moveToMiddleCargo);
+            drivingJSLeft.bottomLeftForward.whenPressed(ElevatorCommands.moveToTopCargo);
 
-  //----------Buttons----------
-  /**The button that is used to catch objects with the gripper. The */
-  public Button catchButton;
-  public Button cycle;
-  /**The button that is used to release objects cought with the gripper. When it's released, the gripper catches back an object not fully released.*/
-  public Button releaseButton;
-  /**The button to switch the StreamViewer on the shuffleboard to view the Camera from port 0.  */
-  public Button switchToA;
-  /**The button to switch the StreamViewer on the shuffleboard to view the Camera from port 1.  */
-  public Button switchToB;
-  /**The button to straighten the robot (make it fix deviation from a painted line.) */
-  public Button straighten;
-  /**The button to move the gripper to the bottom hatch of the rocket or to the hatch of the cargo ship. */
-  public Button bottomHatchDRV;
-  public Button bottomHatchBT;
-  /**The button to move the gripper to the middle hatch of the rocket. */
-  public Button middleHatch;
-  /**The button to move the gripper to the top hatch of the rocket. */
-  public Button topHatch;
-  /**The button to move the gripper to the bottom cargo of the rocket or to the cargo of the cargo ship. */
-  public Button bottomCargoDRV;
-  public Button bottomCargoBT;
-  /**The button to move the gripper to the middle cargo of the rocket. */
-  public Button middleCargo;
-  /**The button to move the gripper to the top hatch of the rocket. */
-  public Button topCargo;
-  public Button lockSpeed;
-  /**The button to move forward the back wheels for the climbing movement<p>
-   * -FOR TESTING-
-   */
-  public Button ClimbingMovementF;
-  /**The button to move backwards the back wheels for the climbing movement<p>
-   * -FOR TESTING-
-   */
-  public Button ClimbingMovementB;
-  /**The button to make the robot climb the level 3 hab. It must only be pressed after the gripper is laid on the level. */
-  public Button climb;
-  /**The button to flip the gripper from "ball mode" to "hatch mode"*/
-  public Button flipGripper;
-  /**The button to move the climbing frame up */
-  public Button ClimbingFrameU;
-  /**The button to move the climbing frame down */
-  public Button ClimbingFrameD;
-  public Button openHatch;
-  public Button setPistonF;
-  public Button setPistonR;
-  public Button toggleDefense;
-  public Button slowAdjust;
-  public Button fastAdjust;
-  public Button toggleElevatorDefault;
-  public Button closeHatch;
-  public Button openTounge;
-  public Button closeTounge;
-
-
-  /**The method to adjust the Driving Joysticks' value, turning the speed by value into a curve instead of a line - 
-   * instead of each movement of the joystick increasing the speed equally, the furthest you move it the more
-   * each movement increases the speed.
-   * @param input - the joystick's axis value input to be adjusted
-   * @return The adjusted input
-    */
-  private double adjustInput(double input) {
-    return input * Math.abs(input);
-  }
-  
-  /**return the Y axis of the {@link #buttonJS Button Joytick's} left joystick, used to move the elevator, adjusted to move more slowly to increase safety.    */
-  public double getBTJoystickLeft() {
-    return -buttonJS.getRawAxis(1) * SubsystemConstants.Elevator.SpeedModifiers.kJoystickSpeedModifier.get();
-  }
-
-  public double getBTJoystickRight() {
-    return buttonJS.getRawAxis(3);
-  }
-
-  /**@return the {@link #adjustInput(double) adjusted} current Y axis of the {@link #drivingJSLeft left driving Joystic}*/
-  public double getLeftJoystick() {
-    return -adjustInput(drivingJSLeft.getY()) * 1.07; //Left deviation
-  }
-
-    
-  /**@return the {@link #adjustInput(double) adjusted} current Y axis of the {@link #drivingJSRight d riving Joystic}*/
-  public double getRightJoystick() {
-    return adjustInput(drivingJSRight.getY());
-  }
-
-  //--------------------Initializations--------------------
-    public OI() {
-      
-      //----------Joysticks----------
-        drivingJSLeft = new Joystick(0);
-        drivingJSRight = new Joystick(1);
-        buttonJS = new Joystick(2);
-      //----------Chassis----------
-        // toggleDefense = new JoystickButton(drivingJSLeft, ButtonMap.Chassis.toggleDefenseButton.get());
-        slowAdjust = new JoystickButton(drivingJSRight, ButtonMap.Chassis.slowAdjustButton.get());
-        fastAdjust = new JoystickButton(drivingJSRight, ButtonMap.Chassis.fastAdjustButton.get());
-      //----------Elevator Buttons----------
-        lockSpeed = new JoystickButton(buttonJS, ButtonMap.Elevator.lockSpeed.get());
-        toggleElevatorDefault = new JoystickButton(buttonJS, ButtonMap.Elevator.stopAutoElevator.get());
-        //-----Move To Hatch-----
-          // bottomHatch = new JoystickButton(drivingJSLeft, ButtonMap.Elevator.bottomHatch.get());
-          bottomHatchDRV = new JoystickButton(drivingJSLeft, ButtonMap.Elevator.MoveToHatch.bottomHatchDRV.get());
-          bottomHatchBT = new JoystickButton(buttonJS, ButtonMap.Elevator.MoveToHatch.bottomHatchBT.get());
-          middleHatch= new JoystickButton(drivingJSLeft, ButtonMap.Elevator.MoveToHatch.middleHatch.get());
-          topHatch = new JoystickButton(drivingJSLeft, ButtonMap.Elevator.MoveToHatch.topHatch.get());
-        //-----Move To Cargo-----
-          bottomCargoDRV = new JoystickButton(drivingJSLeft, ButtonMap.Elevator.MoveToCargo.bottomCargoDRV.get());
-          bottomCargoBT = new JoystickButton(buttonJS, ButtonMap.Elevator.MoveToCargo.bottomCargoBT.get());
-          middleCargo = new JoystickButton(drivingJSLeft, ButtonMap.Elevator.MoveToCargo.middleCargo.get());
-          topCargo = new JoystickButton(drivingJSLeft, ButtonMap.Elevator.MoveToCargo.topCargo.get());
-      //----------Gripper Buttons----------
-        catchButton = new JoystickButton(buttonJS, ButtonMap.gripper.catchPort.get());
-        releaseButton = new JoystickButton(buttonJS, ButtonMap.gripper.releasePort.get());
-        openHatch = new JoystickButton(buttonJS, ButtonMap.gripper.openHatch.get());
-        closeHatch = new JoystickButton(buttonJS, ButtonMap.gripper.closeHatch.get());
-        openTounge = new JoystickButton(buttonJS, ButtonMap.gripper.openTounge.get());
-        closeTounge = new JoystickButton(buttonJS, ButtonMap.gripper.closeTounge.get());
-      //----------Gripper Movement----------
-        flipGripper = new JoystickButton(buttonJS, ButtonMap.GripperMovement.flipGripper.get());
-      //----------Climb----------
-        // climb = new JoystickButton(buttonJS, 6); //commented due to lack of climbing
-      //----------Camera Buttons----------
-        // switchToA = new JoystickButton(drivingJSRight, ButtonMap.Cameras.switchToA.get());
-        // switchToB = new JoystickButton(drivingJSRight, ButtonMap.Cameras.switchToB.get());
-      //----------PID----------
-        straighten = new JoystickButton(drivingJSLeft, ButtonMap.PID.straighten.get()); //needs testing.
-
-      /*//----------Climbing Movement Testing---------
-        ClimbingMovementB = new JoystickButton(buttonJS, 7);
-        ClimbingMovementF = new JoystickButton(buttonJS, 8);
-      //----------Climbing Frame Testing----------
-        ClimbingFrameD = new JoystickButton(buttonJS, 2);
-        ClimbingFrameU = new JoystickButton(buttonJS, 4);*/ //commented due to lack of climbing
-      //----------Buttons' Binding----------
-        bindButtons();
+            buttonJS.BACK.whenPressed(ElevatorCommands.lockSpeed);
+        //----------Gripper----------
+            buttonJS.B.whileHeld(GripperCommands.gripperCatch);
+            buttonJS.X.whileHeld(GripperCommands.gripperRelease);
+        //----------Hatch System----------
+            GroupButtonBindings.whenPressed(HatchSystemCommands.toggleHatch, 
+                buttonJS.Y, buttonJS.A);
+            GroupButtonBindings.whenPressed(HatchSystemCommands.toggleTounge, 
+                buttonJS.LB, buttonJS.RB);
     }
 
+    /**
+     * @return The inverse value of the {@link #buttonJS button joystick's} second axis
+     * (forward-back).*/
+    public static double getBTJoystick()
+    {
+        return -buttonJS.getRawAxis(1);
+    }
 
-  /**This is the method that makes the buttons cause an action when pressed, and must be ran in the consturctor. <p>
-   * It consists of lines of button.whenPressed/whileheld(Command), where button is the button to be pressed, 
-   * when pressed or while held is the method to determine the fashion in which it activates 
-   * and ends the action and command is the action to be executed when the button is pressed or held.*/
-  private void bindButtons() 
-  {
-    // ----------Chassis----------
-    
-    // toggleDefense.whenPressed(new ToggleDefense());
-    slowAdjust.whileHeld(new DriveTankWithSwitch(Robot.drivetrain, 
-     () -> Robot.oi.getLeftJoystick() * SubsystemConstants.Chassis.kSlowSpeedModifier.get(),
-     () -> Robot.oi.getRightJoystick() * SubsystemConstants.Chassis.kSlowSpeedModifier.get(),
-     "Chassis - Slow Adjust"));
-    fastAdjust.whileHeld(new DriveTankWithSwitch(Robot.drivetrain,
-     () -> Robot.oi.getLeftJoystick() * SubsystemConstants.Chassis.kFastSpeedModifier.get(),
-     () -> Robot.oi.getRightJoystick() * SubsystemConstants.Chassis.kFastSpeedModifier.get(),
-     "Chassis - Fast Adjust"));
-    // fastAdjust.whileHeld(new MoveBasicSubsystem(Robot.drivetrain, () -> 2));
-    //----------Elevator----------
-      lockSpeed.whenPressed(new ToggleSpeedLock());
-      toggleElevatorDefault.whenPressed(new ToggleElevatorDefault());
-    //----------Elevator to Hatch----------
-    //   topHatch.whenPressed(new ElevatorMoveToTarget(SubsystaemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopHatchHeight));
-    //   middleHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketMiddleHatchHeight));
-    //   bottomHatch.whenPressed(new ElevatorMoveToTarget( SubsystemConstants.Elevator.kTargetSpeedModifier,  SubsystemConstants.Elevator.kRocketBottomHatchHeight));
-    // //----------Elevator to Cargo----------
-    //   topCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopCargoHeight));
-    //   middleCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketMiddleCargoHeight));
-    //   bottomCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketBottomCargoHeight));
-      topHatch.whenPressed(
-        new MoveElevatorToTargetWithSwitch(
-          SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier, 
-          SubsystemConstants.Elevator.RocketHeights.kTopHatch, 
-          SubsystemConstants.Elevator.RocketStall.kTopHatch,
-          "Elevator - Move To Hatch - Top"));
-      
-      middleHatch.whenPressed(
-        new MoveElevatorToTargetWithSwitch(
-          SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier, //speed
-          SubsystemConstants.Elevator.RocketHeights.kMiddleHatch, //
-          SubsystemConstants.Elevator.RocketStall.kMiddleHatch,
-          "Elevator - Move To Hatch - Middle"));
+    /**
+     * @return The inverse value of the {@link #drivingJSLeft left driving joystick}'s curreny Y 
+     * (forward-back) axis value, slightly adjusted, as the 0 point is not finenly tuned. 
+     */
+    public static double getLeftJoystick()
+    {
+        return -curve(drivingJSLeft.getY()) * 1.07;
+    }
 
-      bottomHatchDRV.whenPressed(
-        new MoveElevatorToTargetWithSwitch(
-          SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier,
-          SubsystemConstants.Elevator.RocketHeights.kBottomHatch, 
-          SubsystemConstants.Elevator.RocketStall.kBottomHatch,
-          "Elevator - Move To Hatch - Bottom - Driving JS"));
+    /**@return The {@link #drivingJSRight right driving joystick}'s Y (forward-back) axis value. */
+    public static double getRightJoystick()
+    {
+        return curve(drivingJSRight.getY());
+    }
 
-      bottomHatchBT.whenPressed(
-        new MoveElevatorToTargetWithSwitch(
-          SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier,
-          SubsystemConstants.Elevator.RocketHeights.kBottomHatch, 
-          SubsystemConstants.Elevator.RocketStall.kBottomHatch,
-          "Elevator - Move To Hatch - Bottom - Button JS"));
-    //----------Elevator to Cargo----------
-      topCargo.whenPressed(
-        new MoveElevatorToTargetWithSwitch(
-          SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier,
-          SubsystemConstants.Elevator.RocketHeights.kTopCargo, 
-          SubsystemConstants.Elevator.RocketStall.kTopCargo,
-          "Elevator - Move To Cargo - Top"));
-      
-      middleCargo.whenPressed(
-        new MoveElevatorToTargetWithSwitch(
-        SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier, 
-        SubsystemConstants.Elevator.RocketHeights.kMiddleCargo,
-        SubsystemConstants.Elevator.RocketStall.kMiddleCargo,
-        "Elevator - Move To Cargo - Middle"));
+    /**
+     * Adjust the number to the parabola graph rather than the linear graph the joysticks give:<p>
+     * By default, each equal-distance movement of the joysticks increases its value by an identical 
+     * amount.This method adjusts this values such that the further the joysticks go, the more their
+     * movements are worth - the inputs exponent rather than increase at a fixed rate. <p>
+     * This is done to make increasing or decreasing the robot's speed easier and faster. If control
+     * of a joystick with curved input is significantly hard, it is recommended to remove the effects
+     * of this method. 
+     * @param input - The linear input to be made exponential.
+     * @return The input adjusted to be exponential.
+     */
+    public static double curve(double input)
+    {
+        return input * Math.abs(input);
+    }
 
-      bottomCargoDRV.whenPressed(
-        new MoveElevatorToTargetWithSwitch(
-          SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier,
-          SubsystemConstants.Elevator.RocketHeights.kBottomCargo,
-          SubsystemConstants.Elevator.RocketStall.kBottomCargo,
-          "Elevator - Move To Cargo - Bottom - Driving JS"));
-      
-      bottomCargoBT.whenPressed(
-        new MoveElevatorToTargetWithSwitch(
-          SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier,
-          SubsystemConstants.Elevator.RocketHeights.kBottomCargo,
-          SubsystemConstants.Elevator.RocketStall.kBottomCargo,
-          "Elevator - Move To Cargo - Bottom - Button JS"));
-    //----------Gripper-----------
-        catchButton.whileHeld(new MoveBasicSubsystemWithSwitch(
-          Robot.gripper, 
-          SubsystemConstants.gripper.kGripperInSpeed, 
-          "Gripper - Catch")); //commented due to not working.
-       releaseButton.whileHeld(new MoveBasicSubsystemWithSwitch(
-         Robot.gripper, 
-         SubsystemConstants.gripper.kGripperOutSpeed,
-         "Gripper - Catch")); //commented due to not working.
-        // catchButton.whileHeld(new GripperIn());
-        // catchButton.whenReleased(new StopGripper()); //testing - GripperIn's end() did not work 
-        // releaseButton.whileHeld(new GripperOut());
-        // releaseButton.whenReleased(new StopGripper()); //testing - GripperOut's end() did not work
-        //  catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed)); //commented due to not working.
-        // releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed)); //commented due to not working.
-      openHatch.whenPressed(new TogglePushPistons(true, true));
-      closeHatch.whenPressed(new TogglePushPistons(false, true));
-      openTounge.whenPressed(new ToggleToungePistons(true, true));
-      closeTounge.whenPressed(new ToggleToungePistons(false, true));
-
-    //----------Gripper Movement----------
-      flipGripper.whenPressed(new FoldGripper());
-      // setPistonF.whenPressed(new pushPistonF());
-      // setPistonR.whenPressed(new pushPistonR());
-    //----------Cameras----------
-      // switchToA.whenPressed(new SwitchToCameraA()); //Commented since RobotB does not have cameras
-      // switchToB.whenPressed(new SwitchToCameraB()); //Commented since RobotB does not have cameras
-    // ----------PID----------
-      straighten.whenPressed(new ToggleSmartP()); 
-    //--------------------Testing--------------------
-      //----------Climbing---------
-      //----------Climbing Movement---------- 
-        // ClimbingMovementB.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeed));
-        // ClimbingMovementF.whileHeld(new MoveBasicSubsystem(Robot.climbingMovement, SubsystemConstants.ClimbingMovement.kClimbingSpeedForward));
-      //----------Climbing Frame----------
-        // ClimbingFrameD.whileHeld(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifier));
-        // ClimbingFrameU.whileHeld(new MoveBasicSubsystem(Robot.frame, SubsystemConstants.ClimbingFrame.kFrameMotorSpeedModifierUp));
-      //---------Gripper Movement---------  
-  }
 }
