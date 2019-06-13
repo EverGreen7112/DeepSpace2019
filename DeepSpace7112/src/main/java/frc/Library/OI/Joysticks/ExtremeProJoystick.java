@@ -7,20 +7,23 @@
 
 package frc.Library.OI.Joysticks;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.Library.FunctionalInterfaces.Adjuster;
 
 /**
  * A class for <a href="https://www.logitechg.com/en-roeu/products/gamepads/extreme-3d-pro-joystick.html">
- * Logitech's Extreme 3D Pro Joystick</a>, with a map for all of its buttons. <p><p>
+ * Logitech's Extreme 3D Pro Joystick</a>, with all of its buttons as members, so there is no need to 
+ * initilize or keep track of individual buttons. <p><p>
  * The Buttons are mapped as such: <p>
  * The buttons on they joystick itself are "top", and the ones on it base are "bottom".
  * The buttons on the left of the driver (with the Y axis pointoing forward) are "left", and the ones to
  * their right are "right".
- * The buttons on closer to the driver are "back" and the ones further away from them are "forward".
+ * The buttons on closer to the driver are "back" and the ones further away from them are "forward". <p><p>
+ * Note that this class inherits {@link AdjustedJoystick}, so it can be constructed with an
+ * {@link Adjuster} which will automatically adjust its getRawAxis values. 
  */
-public class ExtremeProJoystick extends Joystick {
+public class ExtremeProJoystick extends AdjustedJoystick {
     
     public Button trigger;
     public Button thumb;
@@ -38,7 +41,17 @@ public class ExtremeProJoystick extends Joystick {
     public ExtremeProJoystick(int port)
     {
         super(port);
-        
+        init();
+    }
+
+    public ExtremeProJoystick(int port, Adjuster<Double> adjuster)
+    {
+        super(port, adjuster);
+        init();
+    }
+
+    private void init()
+    {
         trigger = new JoystickButton(this, 1);
         thumb = new JoystickButton(this, 2);
         topLeftBack = new JoystickButton(this, 3);

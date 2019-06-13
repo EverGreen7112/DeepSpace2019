@@ -21,9 +21,16 @@ public class ElevatorDefault extends Command implements Elevator, SubsystemCompo
   /**The boolean for whether or not the encoder was reset yet, because before the first time, 
    * it gives incorrect value. */
   public static boolean encoderWasReset = false;
+  public static boolean showLogging;
 
   public ElevatorDefault() {
     requires(Robot.elevator);
+    showLogging = true;
+  }
+
+  public ElevatorDefault(boolean logging) {
+    requires(Robot.elevator);
+    showLogging = logging;
   }
 
   public static Switch speedLock =  SwitchHandler.addSwitch("Elevator - Modes - SpeedLock", false);
@@ -40,13 +47,20 @@ public class ElevatorDefault extends Command implements Elevator, SubsystemCompo
     
     if(speedLock.get()) 
     {
-      System.out.println("Stalling Elevator: " + lockedSpeed);
+      if(showLogging)
+      {
+        System.out.println("Stalling Elevator: " + lockedSpeed);
+      }
+      
       Robot.elevator.move(lockedSpeed);
     }
 
     else
     {
-      System.out.println("Moving Elevator: " + OI.getBTJoystick());
+      if(showLogging)
+      {
+        System.out.println("Moving Elevator: " + OI.getBTJoystick());
+      }
 
       if(OI.getBTJoystick() < 0 && !switchHit && SubsystemComponents.Elevator.opticSwitch.get())
       {

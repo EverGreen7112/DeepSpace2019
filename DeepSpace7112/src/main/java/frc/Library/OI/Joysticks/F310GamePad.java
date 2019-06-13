@@ -7,14 +7,19 @@
 
 package frc.Library.OI.Joysticks;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.Library.FunctionalInterfaces.Adjuster;
+
 
 /**
- * Add your docs here.
+ * A class for <a href="https://www.logitechg.com/en-roeu/products/gamepads/f310-gamepad.html">
+ * Logitech's F310 Gamepad</a>, with all of its buttons as members, so there is no need to 
+ * initilize or keep track of individual buttons. <p><p>
+ * Noth that this class inherits {@link AdjustedJoystick}, so it can be constructed with an
+ * {@link Adjuster} which will automatically adjust its getRawAxis values.
  */
-public class F310GamePad extends Joystick {
+public class F310GamePad extends AdjustedJoystick {
     
     public Button X;
     public Button A;
@@ -29,10 +34,29 @@ public class F310GamePad extends Joystick {
     public Button leftJoystick;
     public Button rightJoystick;
 
+    /**Constructs and returns a new F310 Gamepad joystick, connected to input port.
+     * @param port - the port the gamepad is connected to.
+     */
     public F310GamePad(int port)
     {
         super(port);
-        
+        init();
+    }
+
+    /**
+     * Constructs and returns a new F310 Gamepad joystick, connected to input port, and adjusts its
+     * axis' values according to the input adjuster.
+     * @param port - the port the gamepad is connected to.
+     * @param adjuster - the function that should adjust the joysticks' values.
+     */
+    public F310GamePad(int port, Adjuster<Double> adjuster)
+    {
+        super(port, adjuster);
+        init();
+    }
+
+    private void init()
+    {
         X = new JoystickButton(this, 1);
         A = new JoystickButton(this, 2);
         B = new JoystickButton(this, 3);

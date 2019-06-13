@@ -13,7 +13,7 @@ package frc.Library;
 public interface Exceptions {
 
     /**An exception thrown when a switch method is called, but the given key does no match
-     * any boolean on the shuffleboard. Usually */
+     * any boolean on the shuffleboard.*/
     public class SwitchNotFoundException extends RuntimeException
     {
         private static final long serialVersionUID = -8189765457487943481L;
@@ -28,6 +28,8 @@ public interface Exceptions {
             super(message);
         }
     }
+
+
 
     public class IlleagalSpeedInputException extends RuntimeException
     {
@@ -59,6 +61,23 @@ public interface Exceptions {
         {
             super(message, error);
         }
+
+    }
+
+    public class IlleagalAdjusterArraySizeException extends RuntimeException
+    {
+        private static final long serialVersionUID = 1L;
+
+        public IlleagalAdjusterArraySizeException(String message)
+        {
+            super(message);
+        }
+
+        public IlleagalAdjusterArraySizeException(String message, Throwable error)
+        {
+            super(message, error);
+        }
+
 
     }
 }
