@@ -34,6 +34,7 @@ public class BasicSubsystemWithSwitch extends BasicSubsystem implements Exceptio
         switchOn = SwitchHandler.addSwitch("Subsystem Switches - " + name, switchDefault);
     }
 
+
     @Override
     public void move(double speed) throws IlleagalSpeedInputException {
         if(switchOn.get())

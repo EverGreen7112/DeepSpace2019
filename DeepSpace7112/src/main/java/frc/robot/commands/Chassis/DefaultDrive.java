@@ -64,7 +64,19 @@ public class DefaultDrive extends Command {
 
     else {
       // System.out.println("Normal Drive");
-      Robot.drivetrain.tankDrive(OI.getLeftJoystick() * SubsystemConstants.ChassisConsts.kDrivingSpeedModifier.get(), OI.getRightJoystick() * SubsystemConstants.ChassisConsts.kDrivingSpeedModifier.get());
+      Robot.drivetrain.tankDrive(
+        OI.getLeftJoystick() 
+        * SubsystemConstants.ChassisConsts.kDrivingSpeedModifier.get(), 
+        
+        OI.getRightJoystick() 
+        * SubsystemConstants.ChassisConsts.kDrivingSpeedModifier.get());
+
+      System.out.println("Driving - Left: " +
+      OI.getRightJoystick() 
+      * SubsystemConstants.ChassisConsts.kDrivingSpeedModifier.get() 
+      + "\nRight: " +  
+      OI.getRightJoystick() 
+      * SubsystemConstants.ChassisConsts.kDrivingSpeedModifier.get());
   }
 }
 

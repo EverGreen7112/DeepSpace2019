@@ -30,9 +30,9 @@ public class OI implements CommandList {
     static
     {
         //----------Joystick initializations----------
-            drivingJSLeft = new ExtremeProJoystick(0);
-            drivingJSRight = new ExtremeProJoystick(1);
-            buttonJS = new F310GamePad(2);
+            drivingJSLeft = new ExtremeProJoystick(0, (val) -> -curve(val) * 1.07);
+            drivingJSRight = new ExtremeProJoystick(1, (val) -> curve(val));
+            buttonJS = new F310GamePad(2, (val) -> -val);
         //----------Chassis----------
             drivingJSRight.trigger.whileHeld(ChassisCommands.fastDrive);
             drivingJSRight.thumb.whileHeld(ChassisCommands.slowDrive);

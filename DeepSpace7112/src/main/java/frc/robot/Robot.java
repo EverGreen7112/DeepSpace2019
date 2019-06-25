@@ -58,6 +58,7 @@ public class Robot extends TimedRobot implements SubsystemMethods, SubsystemCons
 
   public static DashBoardController dbc;
   double test;
+  
 
   @Override
   /**The function ran whenever communications with the robot is regained. To rerun it after communication
@@ -70,14 +71,15 @@ public class Robot extends TimedRobot implements SubsystemMethods, SubsystemCons
       
       test = 0;
       
-      compressor = new Compressor();  
+      compressor = new Compressor();
       compressor.start();
       compressor.setClosedLoopControl(true);
 
       cameraHandler = new CamerasHandler(CameraConsts.kWidth.get(), CameraConsts.kHeight.get(), 
         CameraPorts.front, CameraPorts.side);
         cameraHandler.setExposure(CameraConsts.kExposure.get());
-    //----------BasicSubsystems----------
+    
+        //----------BasicSubsystems----------
       drivetrain = new TankDrivetrain(
         SubsystemComponents.Chassis.leftMotorGroup::set, 
         SubsystemComponents.Chassis.rightMotorGroup::set);
@@ -96,6 +98,7 @@ public class Robot extends TimedRobot implements SubsystemMethods, SubsystemCons
         SubsystemComponents.Gripper.toungePiston::set, 
         SubsystemComponents.Gripper.toungePiston::get, 
         "Hatch System - Tounge Pistons");
+      
       hatch = new PistonSubsystem(
         SubsystemComponents.Gripper.PushPiston::set, 
         SubsystemComponents.Gripper.PushPiston::get, 
@@ -108,7 +111,7 @@ public class Robot extends TimedRobot implements SubsystemMethods, SubsystemCons
       dbc = new DashBoardController();
     //----------DefaultCommands----------
       drivetrain.setDefaultCommand(new DefaultDrive());
-      elevator.setDefaultCommand(new ElevatorDefault());
+      elevator.setDefaultCommand(new ElevatorDefault(false));
     //----------Shuffleboard data----------
       // (Currently Unneccesary values commented)
       //-----Elevator-----
@@ -126,9 +129,11 @@ public class Robot extends TimedRobot implements SubsystemMethods, SubsystemCons
       //-----Gripper-----
         // dbc.addNumber("gripper speed", gripper::getSpeed); //Gripper Speed
       //-----Chassis-----
-        // dbc.addNumber("Chassis Left Speed", () -> oi.getLeftJoystick() * SubsystemConstants.Chassis.kDrivingSpeedModifier.get());
-        // dbc.addNumber("Chassis Right Speed", () -> oi.getRightJoystick() * SubsystemConstants.Chassis.kDrivingSpeedModifier.get());
-        // dbc.addNumber("Chassis Mean Speed", this::getChassisSpeed);
+        dbc.addNumber("Chassis Left Speed", () -> OI.getLeftJoystick() 
+            * SubsystemConstants.ChassisConsts.kDrivingSpeedModifier.get());
+        dbc.addNumber("Chassis Right Speed", () -> OI.getRightJoystick() 
+            * SubsystemConstants.ChassisConsts.kDrivingSpeedModifier.get());
+        dbc.addNumber("Chassis Mean Speed", this::getChassisSpeed);
       //-----PID-----
         // dbc.addNumber("PID X value", () -> ImageProccessingSuppliers.twoReflectivesCenter.get());
         // dbc.addNumber("PID reflective 0 X value ", () -> ImageProccessingSuppliers.Reflective0.centerXSupplier.get());

@@ -18,7 +18,7 @@ import frc.Library.OI.Switches.Classes.SwitchHandler;
 /**
  * Add your docs here.
  */
-public class TankDriveTrainWithSwitch extends TankDrivetrain implements Exceptions{
+public class TankDriveTrainWithSwitch extends TankDrivetrain implements Exceptions {
     Switch switchOn;
     public TankDriveTrainWithSwitch(Consumer<Double> controlLeft, Consumer<Double> ControlRight, 
         String name)
