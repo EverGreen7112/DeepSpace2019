@@ -40,9 +40,9 @@ public class SubsystemConstants {
 	/**The constants for the chassis subsystem, which controls the robot's wheels. */
 	public static interface Chassis {
 		public static final Supplier<Double> kDrivingSpeedModifier = ConstantHandler.addConstantDouble("Driving Speed Modifier", 0.8);
-		public static final Supplier<Double> kDefenseSpeedModifier = ConstantHandler.addConstantDouble("Defense Speed Modifier", 0.8);
-		public static final Supplier<Double> kSlowSpeedModifier = ConstantHandler.addConstantDouble("Slow Speed Modifier", 0.3);
-		public static final Supplier<Double> kFastSpeedModifier = ConstantHandler.addConstantDouble("Fast Speed Modifier", 0.9);
+		public static final Supplier<Double> kDefenseSpeedModifier = ConstantHandler.addConstantDouble("Defense Speed Modifier", 0.4);
+		public static final Supplier<Double> kSlowSpeedModifier = ConstantHandler.addConstantDouble("Slow Speed Modifier", 0.1);
+		public static final Supplier<Double> kFastSpeedModifier = ConstantHandler.addConstantDouble("Fast Speed Modifier", 0.5);
 
 
 		// public static Supplier<Double> kCurrentSpeedModifier = ConstantHandler.addConstantDouble("Current Speed Modifier", 0.8);
@@ -138,9 +138,9 @@ public class SubsystemConstants {
 					"Elevator relative maximum height voltage", 
 					trueMaxHeightVoltage.get()-minHeightVoltage.get());
 			/**The slope in the linear function that returns height from voltage - 93.333333333333  */
-			public static Supplier<Double> kLaserFunctionSlope = ConstantHandler.addConstantDouble("Laser function slope", 93.333333333333);
+			public static Supplier<Double> kLaserFunctionSlope = ConstantHandler.addConstantDouble("Laser function slope", 116.6666666666666666666666);
 			/**The b constant (y intercept) in the linear function that returns distance from the elevator's laserSensor.getVoltage - 28.8 */
-			public static Supplier<Double> kLaserFunctionB = ConstantHandler.addConstantDouble("Laser Function b",-28.8);
+			public static Supplier<Double> kLaserFunctionB = ConstantHandler.addConstantDouble("Laser Function b",-20.666666666666666666);
 		}
 
 		public static interface Sensors

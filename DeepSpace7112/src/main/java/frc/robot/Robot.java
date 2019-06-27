@@ -68,8 +68,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     //----------Sensor Configs----------
       // SubsystemComponents.Gripper.motorR.setInverted(true);
-      // SubsystemComponents.Gripper.motorR.setNeutralMode(NeutralMode.Brake);
-      // SubsystemComponents.Gripper.motorL.setNeutralMode(NeutralMode.Brake);
+      // SubsystemComponents.Elevator.motorR.setNeutralMode(NeutralMode.Brake);
+      // SubsystemComponents.Elevator.motorL.setNeutralMode(NeutralMode.Brake);
       SubsystemComponents.Gripper.motors = new SpeedControllerGroup(SubsystemComponents.Gripper.motorR, SubsystemComponents.Gripper.motorL);
       SubsystemComponents.Elevator.setupSensors(); //Configures the elevator - inverts the motors and sets the distance per pulse.
       SubsystemComponents.Gripper.PushPiston.set(Value.kForward);
