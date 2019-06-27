@@ -9,16 +9,21 @@ package frc.robot.commands.Chassis;
 
 import java.util.function.Supplier;
 
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveArcadeWithPID;
+import com.spikes2212.utils.PIDSettings;
+
 import edu.wpi.first.wpilibj.command.Command;
-import frc.Library.OI.Switches.Classes.Switch;
-import frc.Library.OI.Switches.Classes.SwitchHandler;
 import frc.robot.ImageProccessingSuppliers;
-import frc.robot.OI;
 import frc.robot.Robot;
+import frc.robot.SubsystemComponents;
 import frc.robot.SubsystemConstants;
+import frc.robot.commands.PID.GripperFocusPID;
 
 public class DefaultDrive extends Command {
-  public static Switch smartPMode = SwitchHandler.addSwitch("Chassis Switches - Smart P Mode");
+  public static boolean defenseMode;
+  public static boolean smartPMode;
+  public static boolean pidMode;
+  // public static boolean adjusted;
   public static double motorSmartInput;
   public static double leftSmartSpeed;
   public static double rightSmartSpeed;
@@ -29,30 +34,48 @@ public class DefaultDrive extends Command {
     {
       smartAdjust = -smartAdjust;
     }
+    // smartAdjust = setPoint.get() < 320 ? -smartAdjust : smartAdjust; //commented to check if an if statement will be better
     return smartAdjust;}; //half for every motor.
-
   public DefaultDrive() {
+    // Use requires() here to declare subsystem dependencies
     requires(Robot.drivetrain);
-  }
+    }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    // adjusted = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(smartPMode.get()) {
+    // if(defenseMode) {
+    //   System.out.println("Defense Drive");
+    //   Robot.drivetrain.tankDrive(Robot.oi.getLeftJoystick() * SubsystemConstants.Chassis.kSlowSpeedModifier.get(), Robot.oi.getRightJoystick() * SubsystemConstants.Chassis.kSlowSpeedModifier.get());
+    // }
+    // else
+    if(smartPMode) {
+      // double smartAdjust = fixSupplier.get()/2;
       double smartAdjust = fixSupplier.get();
+      // if(setPoint.get() == 320 || adjusted)
+      // {
+      //   adjusted = true;
+      //   smartAdjust = 0;
+      // } 
+
       leftSmartSpeed = 
-          OI.getLeftJoystick() 
-        * SubsystemConstants.ChassisConsts.kDrivingSpeedModifier.get()
-        + smartAdjust;
+          Robot.oi.getLeftJoystick() 
+        * SubsystemConstants.Chassis.kDrivingSpeedModifier.get()
+        + smartAdjust
+        // + SubsystemConstants.SmartP.kSpeedModifier.get()
+        ;
       rightSmartSpeed = 
-          OI.getRightJoystick() 
-        * SubsystemConstants.ChassisConsts.kDrivingSpeedModifier.get() 
-        + smartAdjust;
+          Robot.oi.getRightJoystick() 
+        * SubsystemConstants.Chassis.kDrivingSpeedModifier.get() 
+        + smartAdjust
+        // + SubsystemConstants.SmartP.kSpeedModifier.get()
+        ;
       Robot.drivetrain.tankDrive (leftSmartSpeed, rightSmartSpeed);
       // The input for the right motor: includes Y axis movement and adjustments from the smart input.
       // Solely for the purpose of Y axis movement
@@ -63,20 +86,9 @@ public class DefaultDrive extends Command {
     }
 
     else {
+      
       // System.out.println("Normal Drive");
-      Robot.drivetrain.tankDrive(
-        OI.getLeftJoystick() 
-        * SubsystemConstants.ChassisConsts.kDrivingSpeedModifier.get(), 
-        
-        OI.getRightJoystick() 
-        * SubsystemConstants.ChassisConsts.kDrivingSpeedModifier.get());
-
-      System.out.println("Driving - Left: " +
-      OI.getRightJoystick() 
-      * SubsystemConstants.ChassisConsts.kDrivingSpeedModifier.get() 
-      + "\nRight: " +  
-      OI.getRightJoystick() 
-      * SubsystemConstants.ChassisConsts.kDrivingSpeedModifier.get());
+      Robot.drivetrain.tankDrive(Robot.oi.getLeftJoystick() * SubsystemConstants.Chassis.kDrivingSpeedModifier.get(), Robot.oi.getRightJoystick() * SubsystemConstants.Chassis.kDrivingSpeedModifier.get());
   }
 }
 
@@ -112,10 +124,10 @@ public class DefaultDrive extends Command {
   public static double calculatePercentage(double centerPosition) //x = centerPosition 
   {
     double numerator = ((Math.pow(centerPosition-320, 2))) 
-      * (SubsystemConstants.SmartPConsts.kMaxDeviationFix.get()
-        - SubsystemConstants.SmartPConsts.kPowerParaboleA.get());
+      * (SubsystemConstants.SmartP.kMaxDeviationFix.get()
+        - SubsystemConstants.SmartP.kA.get());
     double denominator = (Math.pow(320, 2))*100;
     double fraction = (numerator/denominator)/7;
-    return fraction + SubsystemConstants.SmartPConsts.kPowerParaboleA.get();
+    return fraction + SubsystemConstants.SmartP.kA.get();
   }
 }

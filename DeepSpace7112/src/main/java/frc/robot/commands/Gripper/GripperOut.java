@@ -5,45 +5,47 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Elevator;
+package frc.robot.commands.Gripper;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.SubsystemComponents;
+import frc.robot.SubsystemConstants;
 
-public class ToggleSpeedLock extends Command {
-  public boolean finished;
-  public ToggleSpeedLock() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class GripperOut extends Command {
+  public GripperOut() {
+    requires(Robot.gripper);
+    
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("out");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    ElevatorDefault.lockedSpeed = Robot.oi.getBTJoystickLeft();
-    ElevatorDefault.speedLock = !(ElevatorDefault.speedLock);
-    finished = true;
+    SubsystemComponents.Gripper.motors.set(SubsystemConstants.gripper.kGripperOutSpeed.get());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return finished;
+    return false;
   }
 
-  // Called once after isFinished returns true
-  @Override
+  // Called once after isFinished returns tru
   protected void end() {
+    // Robot.gripper.move(0); //was constantly ran with execution
+
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

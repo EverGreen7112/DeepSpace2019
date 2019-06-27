@@ -5,16 +5,25 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Elevator;
+package frc.robot.commands.Gripper;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
 
-public class ToggleSpeedLock extends Command {
-  public boolean finished;
-  public ToggleSpeedLock() {
+import frc.robot.SubsystemComponents;;
+
+public class ToggleToungePistons extends Command {
+  public static boolean reversed = true;
+  public ToggleToungePistons() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+  }
+
+  /**Input a boolean value to specificlly open or close the thingie:
+   * True to open, false to close.
+   */
+  public ToggleToungePistons(boolean reversedSet) {
+    reversed = reversedSet;
   }
 
   // Called just before this Command runs the first time
@@ -25,15 +34,25 @@ public class ToggleSpeedLock extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    ElevatorDefault.lockedSpeed = Robot.oi.getBTJoystickLeft();
-    ElevatorDefault.speedLock = !(ElevatorDefault.speedLock);
-    finished = true;
+    if(reversed)
+    {
+      System.out.println("Set Push Piston Reverse");
+      SubsystemComponents.Gripper.toungePiston.set(Value.kForward);
+      reversed = false;
+    }
+
+    else
+    {
+      System.out.println("Set Push Piston Forward");
+      SubsystemComponents.Gripper.toungePiston.set(Value.kReverse);
+      reversed = true;
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return finished;
+    return true;
   }
 
   // Called once after isFinished returns true

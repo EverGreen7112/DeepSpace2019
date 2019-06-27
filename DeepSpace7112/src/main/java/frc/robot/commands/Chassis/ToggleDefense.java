@@ -5,14 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Elevator;
+package frc.robot.commands.Chassis;
+
+import com.spikes2212.dashboard.ConstantHandler;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import frc.robot.SubsystemComponents;
+import frc.robot.SubsystemConstants;
 
-public class ToggleSpeedLock extends Command {
-  public boolean finished;
-  public ToggleSpeedLock() {
+public class ToggleDefense extends Command {
+  public static boolean defense;
+  // public static boolean finished;
+
+  public ToggleDefense() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -20,21 +25,24 @@ public class ToggleSpeedLock extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    // finished = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    ElevatorDefault.lockedSpeed = Robot.oi.getBTJoystickLeft();
-    ElevatorDefault.speedLock = !(ElevatorDefault.speedLock);
-    finished = true;
+    DefaultDrive.defenseMode = !(DefaultDrive.defenseMode);
+    if (DefaultDrive.defenseMode == true)
+      DefaultDrive.smartPMode = false;
   }
-
+  
+ 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return finished;
+    return true;
   }
+  
 
   // Called once after isFinished returns true
   @Override
