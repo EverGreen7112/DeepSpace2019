@@ -79,6 +79,7 @@ public class Robot extends TimedRobot {
       DefaultDrive.smartPMode = false;
       ElevatorDefault.speedLock = false;
       test = 0;
+
       DefaultDrive.defenseMode = false;
       DefaultDrive.smartPMode = false;
 
@@ -88,17 +89,16 @@ public class Robot extends TimedRobot {
       RobotMap.cameraB, RobotMap.cameraA);
       // cameraHandler.setExposure(SubsystemConstants.cameras.kCameraExposure.get()); //Configures the camera handler - sets the appropriate expusure.
 
-      compressor = new Compressor();  
-      compressor.start();
-      compressor.setClosedLoopControl(true);
+      compressor = new Compressor(); //Commented because RobotB does not have working pneumatics.
+      compressor.start(); //Commented because RobotB does not have working pneumatics.
+      compressor.setClosedLoopControl(true); //Commented because RobotB does not have pneumatics.
 
     //----------BasicSubsystems----------
       drivetrain = new TankDrivetrain(SubsystemComponents.Chassis.leftMotorGroup::set, SubsystemComponents.Chassis.rightMotorGroup::set);
       
       gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new MaxLimit(
         SubsystemComponents.Gripper::isCargoCaught)); //Commented due to the MaxVoltage elevator constant not bring determined yet, making testing the gripper with this limit impossible. 
-      
-    //  gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new Limitless()); //testing
+      // gripper = new BasicSubsystem(SubsystemComponents.Gripper.motors::set, new Limitless()); //testing
       
       // elevator = new BasicSubsystem(SubsystemComponents.Elevator.motors::set, new MaxLimit (
       //   () -> (SubsystemComponents.Elevator.encoder.getDistance() >= SubsystemConstants.Elevator.kEncoderMaxHeight.get()))); 
@@ -174,9 +174,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    SubsystemComponents.Gripper.PushPiston.set(Value.kForward);
-    SubsystemComponents.GripperMovement.MovementPiston.set(Value.kForward);
-    SubsystemComponents.Gripper.toungePiston.set(Value.kReverse);
+
   }
 
   @Override

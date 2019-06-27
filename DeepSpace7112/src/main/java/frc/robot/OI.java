@@ -7,7 +7,7 @@
 
 package frc.robot;
 
-import frc.robot.commands.PID.driveArcadeWithPID;
+import frc.robot.commands.PID.TogglePID;
 import frc.robot.commands.Gripper.GripperIn;
 import frc.robot.PortMaps.ButtonMap;
 import frc.robot.PortMaps.JoystickMap;
@@ -200,15 +200,24 @@ public class OI {
     // toggleDefense.whenPressed(new ToggleDefense());
     slowAdjust.whileHeld(new DriveTank(Robot.drivetrain, 
      () -> Robot.oi.getLeftJoystick() * SubsystemConstants.Chassis.kSlowSpeedModifier.get(),
-     () -> Robot.oi.getRightJoystick() * SubsystemConstants.Chassis.kSlowSpeedModifier.get()));
-    fastAdjust.whileHeld(new DriveTank(Robot.drivetrain,
+     () -> Robot.oi.getRightJoystick() * SubsystemConstants.Chassis.kSlowSpeedModifier.get(),
+     ButtonSwitches.Chassis.slowAdjust));
+    fastAdjust.whileHeld(new DriveTankWithSwitch(Robot.drivetrain,
      () -> Robot.oi.getLeftJoystick() * SubsystemConstants.Chassis.kFastSpeedModifier.get(),
-     () -> Robot.oi.getRightJoystick() * SubsystemConstants.Chassis.kFastSpeedModifier.get()));
+     () -> Robot.oi.getRightJoystick() * SubsystemConstants.Chassis.kFastSpeedModifier.get(),
+     ButtonSwitches.Chassis.fastAdjust));
     // fastAdjust.whileHeld(new MoveBasicSubsystem(Robot.drivetrain, () -> 2));
     //----------Elevator----------
       lockSpeed.whenPressed(new ToggleSpeedLock());
       toggleElevatorDefault.whenPressed(new ToggleElevatorDefault());
     //----------Elevator to Hatch----------
+    //   topHatch.whenPressed(new ElevatorMoveToTarget(SubsystaemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopHatchHeight));
+    //   middleHatch.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketMiddleHatchHeight));
+    //   bottomHatch.whenPressed(new ElevatorMoveToTarget( SubsystemConstants.Elevator.kTargetSpeedModifier,  SubsystemConstants.Elevator.kRocketBottomHatchHeight));
+    // //----------Elevator to Cargo----------
+    //   topCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketTopCargoHeight));
+    //   middleCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketMiddleCargoHeight));
+    //   bottomCargo.whenPressed(new ElevatorMoveToTarget(SubsystemConstants.Elevator.kTargetSpeedModifier, SubsystemConstants.Elevator.kRocketBottomCargoHeight));
       topHatch.whenPressed(
         new MoveElevatorToTarget(
           SubsystemConstants.Elevator.SpeedModifiers.kTargetSpeedModifier, 
@@ -257,12 +266,21 @@ public class OI {
           SubsystemConstants.Elevator.RocketHeights.kBottomCargo,
           SubsystemConstants.Elevator.RocketStall.kBottomCargo));
     //----------Gripper----------
-     //  catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed)); //commented due to not working.
-     // releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed)); //commented due to not working.
-      catchButton.whileHeld(new GripperIn());
-      catchButton.whenReleased(new StopGripper()); //testing - GripperIn's end() did not work 
-      releaseButton.whileHeld(new GripperOut());
-      releaseButton.whenReleased(new StopGripper()); //testing - GripperOut's end() did not work
+        //----------Gripper----------
+        catchButton.whileHeld(new MoveBasicSubsystemWithSwitch(
+          Robot.gripper, 
+          SubsystemConstants.gripper.kGripperInSpeed, 
+          ButtonSwitches.Gripper.gripperIn)); //commented due to not working.
+       releaseButton.whileHeld(new MoveBasicSubsystemWithSwitch(
+         Robot.gripper, 
+         SubsystemConstants.gripper.kGripperOutSpeed,
+         ButtonSwitches.Gripper.gripperIn)); //commented due to not working.
+        // catchButton.whileHeld(new GripperIn());
+        // catchButton.whenReleased(new StopGripper()); //testing - GripperIn's end() did not work 
+        // releaseButton.whileHeld(new GripperOut());
+        // releaseButton.whenReleased(new StopGripper()); //testing - GripperOut's end() did not work
+        //  catchButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperInSpeed)); //commented due to not working.
+        // releaseButton.whileHeld(new MoveBasicSubsystem(Robot.gripper, SubsystemConstants.gripper.kGripperOutSpeed)); //commented due to not working.
       openHatch.whenPressed(new TogglePushPistons(true));
       closeHatch.whenPressed(new TogglePushPistons(false));
       openTounge.whenPressed(new ToggleToungePistons(true));

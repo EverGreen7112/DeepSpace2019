@@ -39,7 +39,7 @@ public class JoystickMap {
                 ConstantHandler.addConstantInt("Driving Joystick Top Back Left button port", 3).get(),
             topBackRight =
                 ConstantHandler.addConstantInt("Driving Joystick Top Back Right button port", 4).get(),
-            topfrontLeft = 
+            topFrontLeft = 
                 ConstantHandler.addConstantInt("Driving Joystick Top front Left button port", 5).get(),
             topfrontRight = 
                 ConstantHandler.addConstantInt("Driving Joystick Top front Right button port", 6).get(),
